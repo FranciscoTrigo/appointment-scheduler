@@ -20,9 +20,11 @@ public class FranciscoScheduler {
      */
     public static void main(String[] args) throws SQLException, Exception {
         
+        System.out.println("Scheduler app starting...");
         DBConnection.startConnection();
         //launch(args);
         DBConnection.closeConnection();
+        System.out.println("Closing scheduler app...");
     
     }}
 
