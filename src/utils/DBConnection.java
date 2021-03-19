@@ -43,12 +43,14 @@ public class DBConnection {
         }
         catch(ClassNotFoundException e)
         {
+            System.out.println("There is an error connecting!");
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
         catch(SQLException e)
         {
            // System.out.println("Error " + e.getMessage());
+            System.out.println("There is an error connecting!");
             e.printStackTrace();
         }
         return conn;
@@ -61,6 +63,7 @@ public class DBConnection {
         try {
         conn.close();
         System.out.println("Connection deleted.");
+        System.out.println("Bye bye!");
     }
         catch(Exception e)
         {
