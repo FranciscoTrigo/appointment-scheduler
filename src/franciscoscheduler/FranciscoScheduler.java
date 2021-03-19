@@ -5,6 +5,10 @@
  */
 package franciscoscheduler;
 
+import java.sql.SQLException;
+import static javafx.application.Application.launch;
+import utils.DBConnection;
+
 /**
  *
  * @author yamif
@@ -14,9 +18,11 @@ public class FranciscoScheduler {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-        System.out.println("SDFS");
-    }
+    public static void main(String[] args) throws SQLException, Exception {
+        
+        DBConnection.startConnection();
+        //launch(args);
+        DBConnection.closeConnection();
     
-}
+    }}
+
