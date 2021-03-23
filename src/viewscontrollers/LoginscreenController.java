@@ -87,7 +87,7 @@ public class LoginscreenController implements Initializable {
     }
     
     @FXML
-    private void UsernameTextFieldHandler(ActionEvent event) {
+    private void UsernameTexFieldHandler(ActionEvent event) {
     
     }
     
@@ -97,15 +97,16 @@ public class LoginscreenController implements Initializable {
     }
     
     @FXML
-    private void LogginButtonHandler(ActionEvent event) throws SQLException, IOException {
+    private void LoggingButtonHandler(ActionEvent event) throws SQLException, IOException {
+        System.out.println("ASD");
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
         Parent root;
         Stage stage;
-        User user = new User();
+
         
         if (isValidPassword(usernameInput, passwordInput)) {
-            user.setUsername(usernameInput);
+          
            
             System.out.println("Log in complete!");
             
@@ -127,6 +128,7 @@ public class LoginscreenController implements Initializable {
     
     
     private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException {
+            System.out.println("cas");
             Statement statement = DBConnection.conn.createStatement();
             String sqlStatement = "SELECT password FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
@@ -138,6 +140,8 @@ public class LoginscreenController implements Initializable {
             }
             return false;            
         }
+    
+ 
         
     }
     
