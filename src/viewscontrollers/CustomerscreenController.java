@@ -119,13 +119,6 @@ public class CustomerscreenController implements Initializable {
     ObservableList<Customer> customerOL = FXCollections.observableArrayList();
     
     
-    
-    
-    
-    
-    
-        
-
     /**
      * Initializes the controller class.
      */
@@ -154,6 +147,41 @@ public class CustomerscreenController implements Initializable {
         }
         CustomerTable.setItems(customerOL);
         System.out.println("Customer table updated!");
+    }
+    
+    
+    @FXML
+    private void CustomerIDFieldHandler(ActionEvent event) {
+    
+    }
+    
+    @FXML
+    private void CustomerNameFieldHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void AddressTextFieldHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void ZIPTextFieldHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void PhoneTextFieldHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void CountryBoxHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML private void AreaBoxHandler (ActionEvent event) {
+        
     }
     
 }
