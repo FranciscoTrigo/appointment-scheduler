@@ -34,8 +34,8 @@ public class FranciscoScheduler extends Application{
         Parent root = FXMLLoader.load(getClass().getResource("/views/loginscreen.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("My java app is this");
-        System.out.println("ca324324324234ca");
+        stage.setTitle("Scheduler");
+        //System.out.println("ca324324324234ca");
         stage.show();
     }
     

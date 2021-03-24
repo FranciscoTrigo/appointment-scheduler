@@ -112,7 +112,7 @@ public class LoginscreenController implements Initializable {
             
             // call the main menu because log in is good!
             
-            root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
             stage = (Stage) LoginButton.getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

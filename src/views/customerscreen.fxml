@@ -14,22 +14,21 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="756.0" prefWidth="723.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="viewscontrollers.CustomerscreenController">
+<AnchorPane id="AnchorPane" prefHeight="756.0" prefWidth="723.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewscontrollers.CustomerscreenController">
    <children>
-      <TableView layoutX="11.0" layoutY="94.0" prefHeight="267.0" prefWidth="702.0">
+      <TableView fx:id="CustomerTable" layoutX="11.0" layoutY="94.0" prefHeight="267.0" prefWidth="702.0">
         <columns>
-          <TableColumn prefWidth="53.0" text="ID" />
-          <TableColumn prefWidth="309.0" text="Customer Name" />
-            <TableColumn prefWidth="147.0" text="Phone" />
-            <TableColumn prefWidth="114.0" text="Area" />
+          <TableColumn fx:id="CustomerIDColumn" prefWidth="53.0" text="ID" />
+          <TableColumn fx:id="CustomerNameColumn" prefWidth="309.0" text="Customer Name" />
+            <TableColumn fx:id="CustomerPhoneColumn" prefWidth="147.0" text="Phone" />
+            <TableColumn fx:id="AreaColumn" prefWidth="114.0" text="Area" />
         </columns>
       </TableView>
       <HBox layoutX="11.0" layoutY="385.0" prefHeight="296.0" prefWidth="702.0">
          <children>
             <TitledPane animated="false" prefHeight="275.0" prefWidth="702.0" text="Customer Details">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="700.0">
+                <AnchorPane fx:id="CustomerDetailsLabel" minHeight="0.0" minWidth="0.0" prefHeight="311.0" prefWidth="700.0">
                      <children>
                         <GridPane layoutX="13.0" layoutY="6.0" prefHeight="237.0" prefWidth="695.0">
                           <columnConstraints>
@@ -46,20 +45,20 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Customer ID" />
-                              <Label text="Customer Name" GridPane.rowIndex="1" />
-                              <Label text="Address" GridPane.rowIndex="2" />
-                              <Label text="Postal Code" GridPane.rowIndex="3" />
-                              <Label text="Phone" GridPane.rowIndex="4" />
-                              <Label text="Country" GridPane.rowIndex="5" />
-                              <Label text="Area" GridPane.rowIndex="6" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField editable="false" promptText="Autopopulated" GridPane.columnIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label fx:id="CustomerIDLabel" text="Customer ID" />
+                              <Label fx:id="CustomerNameLabel" text="Customer Name" GridPane.rowIndex="1" />
+                              <Label fx:id="AddressLabel" text="Address" GridPane.rowIndex="2" />
+                              <Label fx:id="ZIPLabel" text="Postal Code" GridPane.rowIndex="3" />
+                              <Label fx:id="PhoneLabel" text="Phone" GridPane.rowIndex="4" />
+                              <Label fx:id="CountryLabel" text="Country" GridPane.rowIndex="5" />
+                              <Label fx:id="AreaLabel" text="Area" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="AreaBox" onAction="#AreaBoxHandler" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="CountryBox" onAction="#CountryBoxHandler" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="CustomerIDField" editable="false" onAction="#CustomerIDFieldHandler" promptText="Autopopulated" GridPane.columnIndex="1" />
+                              <TextField fx:id="CustomerNameField" onAction="#CustomerNameFieldHandle" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <TextField fx:id="AddressField" onAction="#AddressFieldHandle" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="ZIPField" onAction="#ZIPFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="PhoneField" onAction="#PhoneFieldHandler" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </children>
@@ -68,12 +67,12 @@
             </TitledPane>
          </children>
       </HBox>
-      <Button layoutX="283.0" layoutY="681.0" mnemonicParsing="false" text="Save Customer" />
-      <Button layoutX="400.0" layoutY="681.0" mnemonicParsing="false" text="Cancel" />
-      <Button layoutX="129.0" layoutY="681.0" mnemonicParsing="false" text="Delete Customer" />
-      <Button layoutX="23.0" layoutY="681.0" mnemonicParsing="false" text="Add customer" />
-      <Button layoutX="599.0" layoutY="681.0" mnemonicParsing="false" text="Back to main" />
-      <Label layoutX="250.0" layoutY="14.0" text="Customers">
+      <Button fx:id="SaveCustomerButton" layoutX="283.0" layoutY="681.0" mnemonicParsing="false" onAction="#SaveCustomerHandler" text="Save Customer" />
+      <Button fx:id="CancelButton" layoutX="400.0" layoutY="681.0" mnemonicParsing="false" onAction="#CancelHandler" text="Cancel" />
+      <Button fx:id="DeleteCustomerButton" layoutX="129.0" layoutY="681.0" mnemonicParsing="false" onAction="#DeleteCustomerHandler" text="Delete Customer" />
+      <Button fx:id="AddCustomerButton" layoutX="23.0" layoutY="681.0" mnemonicParsing="false" onAction="#AddCustomerHandler" text="Add customer" />
+      <Button fx:id="BackButton" layoutX="599.0" layoutY="681.0" mnemonicParsing="false" onAction="#BackHandler" text="Back to main" />
+      <Label fx:id="CustomersMainTitle" layoutX="250.0" layoutY="14.0" text="Customers">
          <font>
             <Font name="System Bold" size="45.0" />
          </font>
