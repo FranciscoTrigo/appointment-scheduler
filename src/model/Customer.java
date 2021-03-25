@@ -42,7 +42,7 @@ public class Customer {
         setCustomerAddress(address); 
         setCustomerPostalCode(postalCode);
         setCustomerPhone(phone);
-        setCustomerdivisionArea(divisionArea);
+        setCustomerDivisionArea(divisionArea);
         setCustomerLastUpdate(lastUpdate);
         setCustomerLastUpdateBy(lastUpdateBy);
 
@@ -77,7 +77,7 @@ public class Customer {
         return phone;
     }
 
-    public String getCustomerdivisionArea() {
+    public String getCustomerDivisionArea() {
         return country;
     }
 
@@ -115,7 +115,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    public void setCustomerdivisionArea(String divisionArea) {
+    public void setCustomerDivisionArea(String divisionArea) {
         this.country = country;
     }
 

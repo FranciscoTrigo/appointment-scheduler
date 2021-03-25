@@ -120,6 +120,7 @@ public class CustomerscreenController implements Initializable {
     Stage stage;
     
     ObservableList<Customer> customerOL = FXCollections.observableArrayList();
+    ObservableList<String> areaOptions = FXCollections.observableArrayList();
     
     
     /**
@@ -144,7 +145,10 @@ public class CustomerscreenController implements Initializable {
         try {
             // TODO
             updateCustomerTable();
+            areaBoxFill();
         } catch (SQLException ex) {
+            Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Hello");
@@ -172,21 +176,21 @@ public class CustomerscreenController implements Initializable {
         System.out.println("Customer table updated!");
     }
     
-//    public void countryBoxFill() throws SQLException, Exception {
-//        //statement creation
-//        Statement stmt = DBConnection.startConnection().createStatement();
-//        String sqlStatement = "SELECT country FROM countries";
-//        ResultSet result = stmt.executeQuery(sqlStatement);
-//        
-//        while (result.next()) {
-//            Customer cust = new Customer();
-//            cust.setCustomerCountry(result.getString("country"));
-//            countryOptions.add(cust.getCustomerCountry());
-//            CustomerCountryComboBox.setItems(countryOptions);
-//            }
-//        stmt.close();
-//        result.close();
-//    }
+    public void areaBoxFill() throws SQLException, Exception {
+        //statement creation
+        Statement stmt = DBConnection.startConnection().createStatement();
+        String sqlStatement = "SELECT Division FROM first_level_divisions";
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        
+        while (result.next()) {
+            Customer cust = new Customer();
+            cust.setCustomerDivisionArea(result.getString("Division"));
+            areaOptions.add(cust.getCustomerDivisionArea());
+            AreaBox.setItems(areaOptions);
+            }
+        stmt.close();
+        result.close();
+    }
     
     
     @FXML
