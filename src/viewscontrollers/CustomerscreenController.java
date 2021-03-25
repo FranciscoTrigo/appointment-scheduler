@@ -28,6 +28,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -47,6 +49,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
 
@@ -124,7 +127,27 @@ public class CustomerscreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        // Try  to fill in the table with the information from the customer table in the server!
+        //Name
+        PropertyValueFactory<Customer, String> custNameFactory = new PropertyValueFactory<>("CustomerName");
+        CustomerNameColumn.setCellValueFactory(custNameFactory);
+        //Phone
+        PropertyValueFactory<Customer, String> custPhoneFactory = new PropertyValueFactory<>("CustomerPhone");
+        CustomerPhoneColumn.setCellValueFactory(custPhoneFactory);
+        //ID cuistomer number
+        PropertyValueFactory<Customer, Integer> custCustomerIDFactory = new PropertyValueFactory<>("CustomerID");
+        CustomerIDColumn.setCellValueFactory(custCustomerIDFactory);
+        
+        
+        
+        try {
+            // TODO
+            updateCustomerTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Hello");
     }  
     
     
@@ -149,9 +172,25 @@ public class CustomerscreenController implements Initializable {
         System.out.println("Customer table updated!");
     }
     
+//    public void countryBoxFill() throws SQLException, Exception {
+//        //statement creation
+//        Statement stmt = DBConnection.startConnection().createStatement();
+//        String sqlStatement = "SELECT country FROM countries";
+//        ResultSet result = stmt.executeQuery(sqlStatement);
+//        
+//        while (result.next()) {
+//            Customer cust = new Customer();
+//            cust.setCustomerCountry(result.getString("country"));
+//            countryOptions.add(cust.getCustomerCountry());
+//            CustomerCountryComboBox.setItems(countryOptions);
+//            }
+//        stmt.close();
+//        result.close();
+//    }
+    
     
     @FXML
-    private void CustomerIDFieldHandler(ActionEvent event) {
+    private void CustomerIDFieldHandler (ActionEvent event) {
     
     }
     
@@ -161,17 +200,17 @@ public class CustomerscreenController implements Initializable {
     }
     
     @FXML
-    private void AddressTextFieldHandler (ActionEvent event) {
+    private void AddressFieldHandler (ActionEvent event) {
         
     }
     
     @FXML
-    private void ZIPTextFieldHandler (ActionEvent event) {
+    private void ZIPFieldHandler (ActionEvent event) {
         
     }
     
     @FXML
-    private void PhoneTextFieldHandler (ActionEvent event) {
+    private void PhoneFieldHandler (ActionEvent event) {
         
     }
     
@@ -181,6 +220,31 @@ public class CustomerscreenController implements Initializable {
     }
     
     @FXML private void AreaBoxHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void SaveCustomerHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void CancelHandler (ActionEvent event){
+        
+    }
+    
+    @FXML
+    private void BackHandler (ActionEvent event){
+        
+    }
+    
+    @FXML
+    private void DeleteCustomerHandler (ActionEvent event){
+        
+    }
+    
+    @FXML
+    private void AddCustomerHandler (ActionEvent event){
         
     }
     

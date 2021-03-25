@@ -88,6 +88,7 @@ public class Customer {
     public String getCustomerLastUpdateBy() {
         return lastUpdateBy;
     }
+    
 
     //setters
     
