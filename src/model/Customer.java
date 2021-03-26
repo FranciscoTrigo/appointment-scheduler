@@ -23,11 +23,11 @@ public class Customer {
     private Date createDate;
     private String createdBy;
     private String address;
-    private String address2;
     private String city;
     private String postalCode;
     private String phone;
     private String country;
+    private String divisionArea;
     private Date lastUpdate;
     private String lastUpdateBy;
 
@@ -36,7 +36,7 @@ public class Customer {
 
     }
 
-    public Customer(int customerID, String customerName, String address, String postalCode, String phone, String divisionArea, Date lastUpdate, String lastUpdateBy) {
+    public Customer(int customerID, String customerName, String address, String postalCode, String phone, String country, String divisionArea, Date lastUpdate, String lastUpdateBy) {
         setCustomerID(customerID);
         setCustomerName(customerName);
         setCustomerAddress(address); 
@@ -80,6 +80,10 @@ public class Customer {
     public String getCustomerDivisionArea() {
         return country;
     }
+    
+    public String getCustomerCountry() {
+    return country;
+    }
 
     public Date getCustomerLastUpdate() {
         return lastUpdate;
@@ -116,7 +120,11 @@ public class Customer {
     }
 
     public void setCustomerDivisionArea(String divisionArea) {
-        this.country = country;
+        this.divisionArea = divisionArea;
+    }
+    
+    public void setCustomerCountry(String divisionArea) {
+    this.country = country;
     }
 
     public void setCustomerLastUpdate(Date lastUpdate) {

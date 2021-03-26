@@ -121,6 +121,7 @@ public class CustomerscreenController implements Initializable {
     
     ObservableList<Customer> customerOL = FXCollections.observableArrayList();
     ObservableList<String> areaOptions = FXCollections.observableArrayList();
+    ObservableList<String> countryOptions = FXCollections.observableArrayList();
     
     
     /**
@@ -146,6 +147,7 @@ public class CustomerscreenController implements Initializable {
             // TODO
             updateCustomerTable();
             areaBoxFill();
+            countryBoxFill();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -187,6 +189,22 @@ public class CustomerscreenController implements Initializable {
             cust.setCustomerDivisionArea(result.getString("Division"));
             areaOptions.add(cust.getCustomerDivisionArea());
             AreaBox.setItems(areaOptions);
+            }
+        stmt.close();
+        result.close();
+    }
+    
+        public void countryBoxFill() throws SQLException, Exception {
+        //statement creation
+        Statement stmt = DBConnection.startConnection().createStatement();
+        String sqlStatement = "SELECT Country FROM countries";
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        
+        while (result.next()) {
+            Customer cust = new Customer();
+            cust.setCustomerCountry(result.getString("Country"));
+            countryOptions.add(cust.getCustomerCountry());
+            CountryBox.setItems(countryOptions);
             }
         stmt.close();
         result.close();
