@@ -144,7 +144,6 @@ public class CustomerscreenController implements Initializable {
         
         
         try {
-            // TODO
             updateCustomerTable();
             areaBoxFill();
             countryBoxFill();
@@ -209,6 +208,19 @@ public class CustomerscreenController implements Initializable {
         stmt.close();
         result.close();
     }
+        
+//    public void listenCustomer(Customer customer) throws SQLException, Exception {
+//        System.out.println("Chose your customer now");
+//        Customer cust = new Customer();
+//        cust = customer;
+//        String custName = cust.getCustomerName();
+//        int custId = cust.getCustomerID();
+//        ObservableList<Customer> CustomerOL = FXCollections.observableArrayList();
+//        
+////        customerUpdate = true;
+////        customerAdd = false;
+//        PreparedStatement ps = DBConnection.startConnection().prepareStatement("SELECT * FROM customers, countries WHERE customers.Customer_ID = ? AND address.cityId = city.cityId AND city.countryId = country.countryId");  
+   // }
     
     
     @FXML
