@@ -272,7 +272,12 @@ public class CustomerscreenController implements Initializable {
     }
     
     @FXML
-    private void BackHandler (ActionEvent event){
+    private void BackHandler (ActionEvent event)throws IOException{
+        root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
+        stage = (Stage) BackButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
         
     }
     

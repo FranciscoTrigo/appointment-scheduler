@@ -87,16 +87,28 @@ public class MainMenuController implements Initializable {
     @FXML
     private void AppointmentsButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Appointment Database");
+        root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
+        stage = (Stage) CustomersButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
             }
     
     @FXML
     private void ReportsButtonHandler(ActionEvent event) throws IOException {
         System.out.print("REPORTS");
+        root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
+        stage = (Stage) CustomersButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
             }
     
     @FXML
     private void ExitButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Time to go");
+        System.out.println("thanks for using me");
+        System.exit(0);
             }
     
     
