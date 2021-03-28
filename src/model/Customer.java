@@ -19,7 +19,6 @@ public class Customer {
 
     private int customerID; //Auto incremented in database
     private String customerName;
-    private int active;
     private Date createDate;
     private String createdBy;
     private String address;
@@ -27,7 +26,7 @@ public class Customer {
     private String postalCode;
     private String phone;
     private String country;
-    private String divisionArea;
+    private String customerArea;
     private Date lastUpdate;
     private String lastUpdateBy;
 
@@ -36,13 +35,13 @@ public class Customer {
 
     }
 
-    public Customer(int customerID, String customerName, String address, String postalCode, String phone, String country, String divisionArea, Date lastUpdate, String lastUpdateBy) {
+    public Customer(int customerID, String customerName, String address, String postalCode, String phone, String country, String customerArea, Date lastUpdate, String lastUpdateBy) {
         setCustomerID(customerID);
         setCustomerName(customerName);
         setCustomerAddress(address); 
         setCustomerPostalCode(postalCode);
         setCustomerPhone(phone);
-        setCustomerDivisionArea(divisionArea);
+        setCustomerArea(customerArea);
         setCustomerLastUpdate(lastUpdate);
         setCustomerLastUpdateBy(lastUpdateBy);
 
@@ -57,6 +56,10 @@ public class Customer {
     
     public int getCustomerID() {
         return customerID;
+    }
+    
+    public String getCustomerArea() {
+        return customerArea;
     }
 
     public String getCustomerName() {
@@ -100,6 +103,10 @@ public class Customer {
 
         this.customerID = customerID;
     }
+    
+    public void setCustomerArea(String customerArea) {
+        this.customerArea = customerArea;
+    }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
@@ -119,9 +126,9 @@ public class Customer {
         this.phone = phone;
     }
 
-    public void setCustomerDivisionArea(String divisionArea) {
-        this.divisionArea = divisionArea;
-    }
+//    public void setCustomerDivisionArea(String divisionArea) {
+//        this.divisionArea = divisionArea;
+//    }
     
     public void setCustomerCountry(String divisionArea) {
     this.country = country;

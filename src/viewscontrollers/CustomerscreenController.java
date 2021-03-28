@@ -140,7 +140,9 @@ public class CustomerscreenController implements Initializable {
         //ID cuistomer number
         PropertyValueFactory<Customer, Integer> custCustomerIDFactory = new PropertyValueFactory<>("CustomerID");
         CustomerIDColumn.setCellValueFactory(custCustomerIDFactory);
-        
+        //Customer area column
+        PropertyValueFactory<Customer, String> custAreaFactory = new PropertyValueFactory<>("CustomerArea");
+        AreaColumn.setCellValueFactory(custAreaFactory);
         
         
         try {
@@ -162,7 +164,7 @@ public class CustomerscreenController implements Initializable {
         customerOL.clear();
         Statement stmt = DBConnection.conn.createStatement();
         
-        String sqlStatement = "SELECT Customer_ID, Customer_Name, Phone, Division_ID FROM customers";
+        String sqlStatement = "SELECT Customer_ID, Customer_Name, Phone, Division FROM first_level_divisions, customers WHERE customers.Division_ID = first_level_divisions.Division_ID;";
         
         ResultSet result = stmt.executeQuery(sqlStatement);
         
@@ -171,9 +173,11 @@ public class CustomerscreenController implements Initializable {
             cust.setCustomerID(result.getInt("Customer_ID"));
             cust.setCustomerName(result.getString("Customer_Name"));
             cust.setCustomerPhone(result.getString("Phone"));
+            cust.setCustomerArea(result.getString("Division"));
             customerOL.addAll(cust);
         }
         CustomerTable.setItems(customerOL);
+        
         System.out.println("Customer table updated!");
     }
     
@@ -185,7 +189,7 @@ public class CustomerscreenController implements Initializable {
         
         while (result.next()) {
             Customer cust = new Customer();
-            cust.setCustomerDivisionArea(result.getString("Division"));
+            cust.setCustomerArea(result.getString("Division"));
             areaOptions.add(cust.getCustomerDivisionArea());
             AreaBox.setItems(areaOptions);
             }
