@@ -94,11 +94,11 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private TextField CustomerNameField;
     @FXML
-    private TextField AddressTextField;
+    private TextField AddressField;
     @FXML
-    private TextField ZIPTextField;
+    private TextField ZIPField;
     @FXML
-    private TextField PhoneTextField;
+    private TextField PhoneField;
     
     @FXML
     private ComboBox<String> CountryBox;
@@ -237,7 +237,7 @@ public class CustomerscreenController implements Initializable {
 //        customerAdd = false;
         //System.out.println("cas");
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(
-                "SELECT  * " //Customer_ID, Customer_Name,  Address, Postal_Code, Phone, Division, Country"
+                "SELECT  Customer_ID, Customer_Name,  Address, Postal_Code, Phone, Division, Country "
                 + "FROM customers, first_level_divisions, countries "
                 + "WHERE customers.Customer_ID = ? "
                 + "AND customers.Division_ID = first_level_divisions.Division_ID "
@@ -246,15 +246,15 @@ public class CustomerscreenController implements Initializable {
         System.out.println(cust.getCustomerID());
         
         ps.setInt(1, custId);
-        System.out.println("aqui es");
         ResultSet result = ps.executeQuery();
         System.out.println("send quiery");
         while (result.next()) {
             CustomerIDField.setText(Integer.toString(result.getInt("Customer_ID")));
-            CustomerNameField.setText(result.getString(result.getString("Customer_Name")));
-            AddressTextField.setText(result.getString(result.getString("Address")));
-            ZIPTextField.setText(result.getString(result.getString("Postal_Code")));
-            PhoneTextField.setText(result.getString(result.getString("Phone")));
+            //System.out.println(result.getString("Address"));   
+            CustomerNameField.setText(result.getString("Customer_Name"));
+            AddressField.setText(result.getString("Address"));
+            ZIPField.setText(result.getString("Postal_Code"));
+            PhoneField.setText(result.getString("Phone"));
         }
          
         
