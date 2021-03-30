@@ -236,9 +236,12 @@ public class CustomerscreenController implements Initializable {
 //        customerUpdate = true;
 //        customerAdd = false;
         //System.out.println("cas");
-        PreparedStatement ps = DBConnection.startConnection().prepareStatement("SELECT Customer_ID, Customer_Name,  Address, Postal_Code, Phone, Division, Country"
-                + "FROM customers, first_level_divisions, countries"
-                + "WHERE custom.Customer_ID = ? AND customers.Division_ID = first_level_divisions.Division_ID AND first_level_divisions.Country_ID = countries.Country_ID");
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement(
+                "SELECT  * " //Customer_ID, Customer_Name,  Address, Postal_Code, Phone, Division, Country"
+                + "FROM customers, first_level_divisions, countries "
+                + "WHERE customers.Customer_ID = ? "
+                + "AND customers.Division_ID = first_level_divisions.Division_ID "
+                + "AND first_level_divisions.Country_ID = countries.Country_ID");
         System.out.println("after sql");
         System.out.println(cust.getCustomerID());
         
