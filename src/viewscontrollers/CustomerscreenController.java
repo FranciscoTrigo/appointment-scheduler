@@ -123,6 +123,8 @@ public class CustomerscreenController implements Initializable {
     ObservableList<String> areaOptions = FXCollections.observableArrayList();
     ObservableList<String> countryOptions = FXCollections.observableArrayList();
     
+    private static Customer selectedCustomer = new Customer();
+    
     
     /**
      * Initializes the controller class.
@@ -155,6 +157,16 @@ public class CustomerscreenController implements Initializable {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Hello");
+        
+        CustomerTable.getSelectionModel().selectedItemProperty().addListener(
+        (observable, oldValue, newValue) -> {
+            try {
+                listenCustomer(newValue);
+            } catch (Exception e) {
+                System.out.println("Error " + e.getMessage());
+                System.out.println("Error!!!!!!!! ");
+            }
+        });
     }  
     
     
@@ -197,7 +209,7 @@ public class CustomerscreenController implements Initializable {
         result.close();
     }
     
-        public void countryBoxFill() throws SQLException, Exception {
+    public void countryBoxFill() throws SQLException, Exception {
         //statement creation
         Statement stmt = DBConnection.startConnection().createStatement();
         String sqlStatement = "SELECT Country FROM countries";
@@ -213,18 +225,37 @@ public class CustomerscreenController implements Initializable {
         result.close();
     }
         
-//    public void listenCustomer(Customer customer) throws SQLException, Exception {
-//        System.out.println("Chose your customer now");
-//        Customer cust = new Customer();
-//        cust = customer;
-//        String custName = cust.getCustomerName();
-//        int custId = cust.getCustomerID();
-//        ObservableList<Customer> CustomerOL = FXCollections.observableArrayList();
-//        
-////        customerUpdate = true;
-////        customerAdd = false;
-//        PreparedStatement ps = DBConnection.startConnection().prepareStatement("SELECT * FROM customers, countries WHERE customers.Customer_ID = ? AND address.cityId = city.cityId AND city.countryId = country.countryId");  
-   // }
+    public void listenCustomer(Customer customer) throws SQLException, Exception {
+        System.out.println("Chose your customer now");
+        Customer cust = new Customer();
+        cust = customer;
+        String custName = cust.getCustomerName();
+        int custId = cust.getCustomerID();
+        ObservableList<Customer> CustomerOL = FXCollections.observableArrayList();
+        
+//        customerUpdate = true;
+//        customerAdd = false;
+        //System.out.println("cas");
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement("SELECT Customer_ID, Customer_Name,  Address, Postal_Code, Phone, Division, Country"
+                + "FROM customers, first_level_divisions, countries"
+                + "WHERE custom.Customer_ID = ? AND customers.Division_ID = first_level_divisions.Division_ID AND first_level_divisions.Country_ID = countries.Country_ID");
+        System.out.println("after sql");
+        System.out.println(cust.getCustomerID());
+        
+        ps.setInt(1, custId);
+        System.out.println("aqui es");
+        ResultSet result = ps.executeQuery();
+        System.out.println("send quiery");
+        while (result.next()) {
+            CustomerIDField.setText(Integer.toString(result.getInt("Customer_ID")));
+            CustomerNameField.setText(result.getString(result.getString("Customer_Name")));
+            AddressTextField.setText(result.getString(result.getString("Address")));
+            ZIPTextField.setText(result.getString(result.getString("Postal_Code")));
+            PhoneTextField.setText(result.getString(result.getString("Phone")));
+        }
+         
+        
+    }
     
     
     @FXML
