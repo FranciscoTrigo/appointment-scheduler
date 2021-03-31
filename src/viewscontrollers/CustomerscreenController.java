@@ -169,7 +169,22 @@ public class CustomerscreenController implements Initializable {
         });
     }  
     
-    
+    public void deleteCustomer() throws SQLException, Exception {
+        System.out.println("Deleting selected customer....");
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement(""
+                + "DELETE FROM customers "
+                + "WHERE Customer_ID = ?");
+        String byeID = CustomerIDField.getText();
+        ps.setString(1, byeID);
+        ResultSet result = ps.executeQuery();
+        while(result.next()) {
+        System.out.println("Deleted customer.");
+        }
+        clearFields();
+        updateCustomerTable();
+        
+        
+    }
     
     public void updateCustomerTable() throws SQLException {
         System.out.println("Updating customer table.......... .");
@@ -236,8 +251,8 @@ public class CustomerscreenController implements Initializable {
                 + "WHERE customers.Customer_ID = ? "
                 + "AND customers.Division_ID = first_level_divisions.Division_ID "
                 + "AND first_level_divisions.Country_ID = countries.Country_ID");
-        System.out.println("after sql");
-        System.out.println(cust.getCustomerID());
+//        System.out.println("after sql");
+//        System.out.println(cust.getCustomerID());
         
         ps.setInt(1, custId);
         ResultSet result = ps.executeQuery();
@@ -295,6 +310,8 @@ public class CustomerscreenController implements Initializable {
             
             int resultado = ps2.executeUpdate();
             System.out.println("Customer saved!");
+            clearFields();
+            updateCustomerTable();
         } catch (SQLException e) {
             
             System.out.println("Hola soy un error!");
@@ -366,7 +383,8 @@ public class CustomerscreenController implements Initializable {
     }
     
     @FXML
-    private void DeleteCustomerHandler (ActionEvent event){
+    private void DeleteCustomerHandler (ActionEvent event) throws Exception{
+        deleteCustomer();
         
     }
     
