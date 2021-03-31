@@ -294,6 +294,7 @@ public class CustomerscreenController implements Initializable {
             ps2.setInt(5, areaID);
             
             int resultado = ps2.executeUpdate();
+            System.out.println("Customer saved!");
         } catch (SQLException e) {
             
             System.out.println("Hola soy un error!");
@@ -351,7 +352,7 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void CancelHandler (ActionEvent event){
-        
+        clearFields();
     }
     
     @FXML
