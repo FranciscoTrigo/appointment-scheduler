@@ -151,6 +151,7 @@ public class CustomerscreenController implements Initializable {
             updateCustomerTable();
             areaBoxFill();
             countryBoxFill();
+            disableFields();
         } catch (SQLException ex) {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -271,6 +272,26 @@ public class CustomerscreenController implements Initializable {
         System.out.println("Updated customer fields");
             }
     
+    public void disableFields() {
+        CustomerIDField.setDisable(true);
+        CustomerNameField.setDisable(true);
+        AddressField.setDisable(true);
+        ZIPField.setDisable(true);
+        PhoneField.setDisable(true);
+        AreaBox.setDisable(true);
+        CountryBox.setDisable(true);
+    }
+    
+    public void enableFields() {
+        CustomerIDField.setDisable(false);
+        CustomerNameField.setDisable(false);
+        AddressField.setDisable(false);
+        ZIPField.setDisable(false);
+        PhoneField.setDisable(false);
+        AreaBox.setDisable(false);
+        CountryBox.setDisable(false);
+        
+    }
     
     public void clearFields() {
         CustomerIDField.setText("");
@@ -278,6 +299,8 @@ public class CustomerscreenController implements Initializable {
         AddressField.setText("");
         ZIPField.setText("");
         PhoneField.setText("");
+        AreaBox.setValue(null);
+        CountryBox.setValue(null);
              
     }
     
@@ -314,6 +337,7 @@ public class CustomerscreenController implements Initializable {
             System.out.println("Customer saved!");
             clearFields();
             updateCustomerTable();
+            disableFields();
         } catch (SQLException e) {
             
             System.out.println("Hola soy un error!");
@@ -397,6 +421,7 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void AddCustomerHandler (ActionEvent event){
+        enableFields();
         
     }
     
