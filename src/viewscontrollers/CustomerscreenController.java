@@ -175,11 +175,12 @@ public class CustomerscreenController implements Initializable {
                 + "DELETE FROM customers "
                 + "WHERE Customer_ID = ?");
         String byeID = CustomerIDField.getText();
+        System.out.println(byeID);
         ps.setString(1, byeID);
-        ResultSet result = ps.executeQuery();
-        while(result.next()) {
+        ps.executeUpdate();
+        
         System.out.println("Deleted customer.");
-        }
+        
         clearFields();
         updateCustomerTable();
         
@@ -266,7 +267,8 @@ public class CustomerscreenController implements Initializable {
             PhoneField.setText(result.getString("Phone"));
             CountryBox.setValue(result.getString("Country"));
             AreaBox.setValue(result.getString("Division"));
-                    }      
+                    }
+        System.out.println("Updated customer fields");
             }
     
     
@@ -383,8 +385,13 @@ public class CustomerscreenController implements Initializable {
     }
     
     @FXML
-    private void DeleteCustomerHandler (ActionEvent event) throws Exception{
-        deleteCustomer();
+    private void DeleteCustomerHandler (ActionEvent event) {
+        try {
+            deleteCustomer();
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+            Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, e);
+        }
         
     }
     
