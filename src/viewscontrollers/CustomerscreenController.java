@@ -255,6 +255,9 @@ public class CustomerscreenController implements Initializable {
             AddressField.setText(result.getString("Address"));
             ZIPField.setText(result.getString("Postal_Code"));
             PhoneField.setText(result.getString("Phone"));
+            CountryBox.setValue(result.getString("Country"));
+            AreaBox.setValue(result.getString("Division"));
+            
         }
          
         
