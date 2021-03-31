@@ -200,10 +200,7 @@ public class CustomerscreenController implements Initializable {
         ResultSet result = stmt.executeQuery(sqlStatement);
         
         while (result.next()) {
-            Customer cust = new Customer();
-            cust.setCustomerArea(result.getString("Division"));
-            areaOptions.add(cust.getCustomerDivisionArea());
-            AreaBox.setItems(areaOptions);
+            AreaBox.getItems().add(result.getString("Division"));
             }
         stmt.close();
         result.close();
@@ -216,10 +213,7 @@ public class CustomerscreenController implements Initializable {
         ResultSet result = stmt.executeQuery(sqlStatement);
         
         while (result.next()) {
-            Customer cust = new Customer();
-            cust.setCustomerCountry(result.getString("Country"));
-            countryOptions.add(cust.getCustomerCountry());
-            CountryBox.setItems(countryOptions);
+            CountryBox.getItems().add(result.getString("Country"));
             }
         stmt.close();
         result.close();
@@ -270,6 +264,45 @@ public class CustomerscreenController implements Initializable {
              
     }
     
+    public void saveCustomer() throws Exception {
+        System.out.println("SAVING CUSTOMER");
+        try {
+            // get Division ID
+            System.out.println("Getting division ID");
+            System.out.println(AreaBox.getValue());
+            PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Division_ID "
+                    + "FROM first_level_divisions "
+                    + "WHERE Division = ?");
+           // String areaName = ""; Probably not need this time
+            ps1.setString(1, AreaBox.getValue());
+            
+            int areaID = 0;
+            ResultSet result = ps1.executeQuery();
+            while (result.next()) {
+                areaID = result.getInt("Division_ID");
+            }
+            System.out.println("Area ID IS: " + areaID);
+            
+            // now we add customer
+            PreparedStatement ps2 = DBConnection.startConnection().prepareStatement(""
+                    + "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID)"
+                    +                "VALUES (?, ?, ?, ?, ?)");
+            ps2.setString(1, CustomerNameField.getText());
+            ps2.setString(2, AddressField.getText());
+            ps2.setString(3, ZIPField.getText());
+            ps2.setString(4, PhoneField.getText());
+            ps2.setInt(5, areaID);
+            
+            int resultado = ps2.executeUpdate();
+        } catch (SQLException e) {
+            
+            System.out.println("Hola soy un error!");
+            System.out.println("Error " + e.getMessage());
+        }
+            
+
+    }
+    
     @FXML
     private void CustomerIDFieldHandler (ActionEvent event) {
     
@@ -306,6 +339,13 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void SaveCustomerHandler (ActionEvent event) {
+        try {
+            ///////////
+            saveCustomer();
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
     }
     
