@@ -257,12 +257,18 @@ public class CustomerscreenController implements Initializable {
             PhoneField.setText(result.getString("Phone"));
             CountryBox.setValue(result.getString("Country"));
             AreaBox.setValue(result.getString("Division"));
-            
-        }
-         
-        
-    }
+                    }      
+            }
     
+    
+    public void clearFields() {
+        CustomerIDField.setText("");
+        CustomerNameField.setText("");
+        AddressField.setText("");
+        ZIPField.setText("");
+        PhoneField.setText("");
+             
+    }
     
     @FXML
     private void CustomerIDFieldHandler (ActionEvent event) {
