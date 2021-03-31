@@ -236,7 +236,7 @@ public class CustomerscreenController implements Initializable {
     }
         
     public void listenCustomer(Customer customer) throws SQLException, Exception {
-        System.out.println("Chose your customer now");
+        System.out.println("Updating customer fields...");
         Customer cust = new Customer();
         cust = customer;
         String custName = cust.getCustomerName();
