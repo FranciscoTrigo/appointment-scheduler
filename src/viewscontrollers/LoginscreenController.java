@@ -46,6 +46,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.user;
 
 /**
  * FXML Controller class
@@ -98,7 +99,7 @@ public class LoginscreenController implements Initializable {
     
     @FXML
     private void LoggingButtonHandler(ActionEvent event) throws SQLException, IOException {
-        System.out.println("ASD");
+        //System.out.println("ASD");
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
         Parent root;
@@ -128,13 +129,16 @@ public class LoginscreenController implements Initializable {
     
     
     private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException {
-            System.out.println("cas");
+           // System.out.println("cas");
             Statement statement = DBConnection.conn.createStatement();
-            String sqlStatement = "SELECT password FROM users WHERE User_Name ='" + usernameInput + "'";;
+            String sqlStatement = "SELECT password, user_ID FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
+                    //currentUser.setUser_ID(0);
+//                    System.out.println(currentUser.getUserID());
+                 //  System.out.println(user.getUsername());
                     return true;
                 }
             }
