@@ -163,6 +163,7 @@ public class CustomerscreenController implements Initializable {
         (observable, oldValue, newValue) -> {
             try {
                 listenCustomer(newValue);
+                disableFields();
             } catch (Exception e) {
                 System.out.println("Error " + e.getMessage());
                 System.out.println("Error!!!!!!!! ");
@@ -184,6 +185,8 @@ public class CustomerscreenController implements Initializable {
         
         clearFields();
         updateCustomerTable();
+        disableFields();
+        
         
         
     }
@@ -396,6 +399,7 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private void CancelHandler (ActionEvent event){
         clearFields();
+        disableFields();
     }
     
     @FXML
