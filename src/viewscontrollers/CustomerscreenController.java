@@ -115,8 +115,6 @@ public class CustomerscreenController implements Initializable {
     private Button CancelButton;
     @FXML
     private Button BackButton;
-    @FXML
-    private Button EditCustomerButton;
     
     Parent root;
     Stage stage;
@@ -239,7 +237,6 @@ public class CustomerscreenController implements Initializable {
     }
         
     public void listenCustomer(Customer customer) throws SQLException, Exception {
-        disableFields();
         System.out.println("Updating customer fields...");
         Customer cust = new Customer();
         cust = customer;
@@ -345,54 +342,9 @@ public class CustomerscreenController implements Initializable {
             
             System.out.println("Hola soy un error!");
             System.out.println("Error " + e.getMessage());
-        }         
-    }
-    
-    private void updateCustomer() throws Exception {
-        System.out.println("Updating customer with ID: " + CustomerIDField.getText());
-        try {
-                        // get Division ID
-            System.out.println("Getting division ID");
-            System.out.println(AreaBox.getValue());
-            PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Division_ID "
-                    + "FROM first_level_divisions "
-                    + "WHERE Division = ?");
-           // String areaName = ""; Probably not need this time
-            ps1.setString(1, AreaBox.getValue());
+        }
             
-            int areaID = 0;
-            ResultSet result = ps1.executeQuery();
-            while (result.next()) {
-                areaID = result.getInt("Division_ID");
-            }
-            System.out.println("Area ID IS: " + areaID);
-            ///////////////////////////
-            
-            PreparedStatement ps;
-            ps = DBConnection.startConnection().prepareStatement(""
-                    + "UPDATE customers "
-                    + "SET Customer_Name = ?, "
-                    + "Address = ?, "
-                    + "Postal_Code = ?, "
-                    + "Phone = ?, "
-                    + "Division_ID = ? "
-                    + "WHERE Customer_ID = ?");
-            ps.setString(1,CustomerNameField.getText());
-            ps.setString(2, AddressField.getText());
-            ps.setString(3, ZIPField.getText());
-            ps.setString(4, PhoneField.getText());
-            ps.setInt(5, areaID);
-            ps.setString(6, CustomerIDField.getText());
-            
-            ps.executeUpdate();
-            System.out.println("Customer updated!");
-            clearFields();
-            updateCustomerTable();
-            disableFields();
-        } catch (SQLException e) {
-            System.out.println("Hola soy un error!");
-            System.out.println("Error " + e.getMessage()); 
-        }   
+
     }
     
     @FXML
@@ -402,12 +354,6 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void CustomerNameFieldHandler (ActionEvent event) {
-        
-    }
-    
-    @FXML
-    private void EditCustomerHandler (ActionEvent event) {
-        enableFields();
         
     }
     
@@ -437,20 +383,11 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void SaveCustomerHandler (ActionEvent event) {
-        if ( CustomerIDField.getText() != null) {
-            try {
-                updateCustomer();
-            } catch (Exception ex) {
-                Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else{
-        
         try {
             ///////////
             saveCustomer();
         } catch (Exception ex) {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         }
         
         
@@ -459,7 +396,6 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private void CancelHandler (ActionEvent event){
         clearFields();
-        disableFields();
     }
     
     @FXML
@@ -485,7 +421,6 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void AddCustomerHandler (ActionEvent event){
-        clearFields();
         enableFields();
         
     }

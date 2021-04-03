@@ -77,6 +77,5 @@
             <Font name="System Bold" size="45.0" />
          </font>
       </Label>
-      <Button fx:id="EditCustomerButton" layoutX="23.0" layoutY="717.0" mnemonicParsing="false" onAction="#EditCustomerHandler" prefHeight="25.0" prefWidth="91.0" text="Edit Customer" />
    </children>
 </AnchorPane>

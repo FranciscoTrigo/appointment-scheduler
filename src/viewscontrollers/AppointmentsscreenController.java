@@ -81,18 +81,18 @@ public class AppointmentsscreenController implements Initializable {
     
     
     public void updateApptTable() throws SQLException, Exception {
-        System.out.println("Updating Appt table");
-        PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement(""
-                + "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Start, End, Customer_ID "
-                + "FROM appointments");
-        ResultSet rs = ps.executeQuery();
-        System.out.println("SQL Worked!");
-        appointmentsOL.clear();
-        
-        while(rs.next()) {
-            
-        }
+//        System.out.println("Updating Appt table");
+//        PreparedStatement ps;
+//        ps = DBConnection.startConnection().prepareStatement(""
+//                + "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Start, End, Customer_ID "
+//                + "FROM appointments");
+//        ResultSet rs = ps.executeQuery();
+//        System.out.println("SQL Worked!");
+//        appointmentsOL.clear();
+//        
+//        while(rs.next()) {
+//            
+//        }
         
         
     }
