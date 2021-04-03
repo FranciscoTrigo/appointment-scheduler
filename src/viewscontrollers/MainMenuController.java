@@ -5,8 +5,6 @@
  */
 package viewscontrollers;
 import java.net.URL;
-import model.user;
-import viewscontrollers.LoginscreenController;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import utils.DBConnection;
@@ -80,9 +78,7 @@ public class MainMenuController implements Initializable {
         
     @FXML
     private void CustomersButtonHandler(ActionEvent event) throws IOException {
-        
         System.out.println("Customer database");
-        user.getUserID(); //////////////////////////////////
         root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
         Scene scene = new Scene(root);
@@ -93,7 +89,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private void AppointmentsButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Appointment Database");
-        root = FXMLLoader.load(getClass().getResource("/views/Appointmentsscreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

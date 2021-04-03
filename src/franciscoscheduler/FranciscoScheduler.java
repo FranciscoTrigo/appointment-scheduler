@@ -22,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import model.user;
 
 /**
  *
@@ -45,7 +44,7 @@ public class FranciscoScheduler extends Application{
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, Exception {
-        user currentUser = new user();
+        
         System.out.println("Scheduler app starting...");
         DBConnection.startConnection();
         launch(args);
