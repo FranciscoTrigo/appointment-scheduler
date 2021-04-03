@@ -399,7 +399,6 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private void CancelHandler (ActionEvent event){
         clearFields();
-        disableFields();
     }
     
     @FXML
