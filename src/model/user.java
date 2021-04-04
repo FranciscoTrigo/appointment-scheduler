@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 
 /**
  *
- * @author yamif
+ * @author Francisco Trigo
  */
 public class user {
     private static int userID;

@@ -56,7 +56,7 @@ import model.Customer;
 /**
  * FXML Controller class
  *
- * @author yamif
+ * @author Francisco Trigo
  */
 public class CustomerscreenController implements Initializable {
     

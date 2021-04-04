@@ -49,7 +49,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author yamif
+ * @author Francisco Trigo
  */
 
 

@@ -12,7 +12,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 /**
  *
- * @author yamif
+ * @author Francisco Trigo
  */
 public class appointment {
     

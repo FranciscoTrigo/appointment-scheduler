@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author yamif
+ * @author Francisco Trigo
  */
 public class FranciscoScheduler extends Application{
     
