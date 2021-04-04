@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -56,7 +57,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
-import model.appointment;
+//import model.appointment;
 
 /**
  * FXML Controller class
@@ -81,7 +82,7 @@ public class AppointmentsscreenController implements Initializable {
     
     
     public void updateApptTable() throws SQLException, Exception {
-//        System.out.println("Updating Appt table");
+        System.out.println("Updating Appt table");
 //        PreparedStatement ps;
 //        ps = DBConnection.startConnection().prepareStatement(""
 //                + "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Start, End, Customer_ID "
@@ -91,8 +92,8 @@ public class AppointmentsscreenController implements Initializable {
 //        appointmentsOL.clear();
 //        
 //        while(rs.next()) {
-//            
-//        }
+            
+        //}
         
         
     }
@@ -136,4 +137,3 @@ public class AppointmentsscreenController implements Initializable {
             }
     }
     
-

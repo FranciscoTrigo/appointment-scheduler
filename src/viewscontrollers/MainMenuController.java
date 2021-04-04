@@ -89,7 +89,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private void AppointmentsButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Appointment Database");
-        root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
