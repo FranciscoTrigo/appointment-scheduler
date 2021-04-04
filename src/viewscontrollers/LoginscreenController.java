@@ -56,7 +56,7 @@ public class LoginscreenController implements Initializable {
     @FXML
     private TextField UsernameTextField;
     @FXML 
-    private TextField PasswordTextField;
+    private PasswordField PasswordTextField;
     
     @FXML
     private Label titleLabel;
