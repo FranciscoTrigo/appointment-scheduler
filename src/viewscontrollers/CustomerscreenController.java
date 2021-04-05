@@ -167,8 +167,8 @@ public class CustomerscreenController implements Initializable {
                 listenCustomer(newValue);
                 //disableFields();
             } catch (Exception e) {
-                System.out.println("Error " + e.getMessage());
-                System.out.println("Error!!!!!!!! ");
+                System.out.println("Error!!!! " + e.getMessage());
+               // System.out.println("Error!!!!!!!! ");
             }
         });
     }  
@@ -320,7 +320,7 @@ public class CustomerscreenController implements Initializable {
         
         ps.setInt(1, custId);
         ResultSet result = ps.executeQuery();
-        System.out.println("send quiery");
+       // System.out.println("send quiery");
         while (result.next()) {
             CustomerIDField.setText(Integer.toString(result.getInt("Customer_ID")));
             //System.out.println(result.getString("Address"));   
@@ -371,7 +371,7 @@ public class CustomerscreenController implements Initializable {
         System.out.println("SAVING CUSTOMER");
         try {
             // get Division ID
-            System.out.println("Getting division ID");
+            System.out.println("Getting division ID for SQL statement");
             System.out.println(AreaBox.getValue());
             PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Division_ID "
                     + "FROM first_level_divisions "
@@ -438,7 +438,7 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private void CountryBoxHandler (ActionEvent event) {
         try {
-            System.out.println(CountryBox.getValue());
+            
             areaBoxFill();
         } catch (Exception ex) {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
@@ -467,6 +467,7 @@ public class CustomerscreenController implements Initializable {
           System.out.println("Updating customer");
           try {
               updateCustomer();
+              System.out.println("Customer updated");
           } catch (Exception ex) {
               Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
           }
