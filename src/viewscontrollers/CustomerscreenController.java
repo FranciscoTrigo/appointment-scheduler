@@ -151,7 +151,7 @@ public class CustomerscreenController implements Initializable {
         
         try {
             updateCustomerTable();
-            areaBoxFill();
+           // areaBoxFill();
             countryBoxFill();
             disableFields();
         } catch (SQLException ex) {
@@ -217,15 +217,23 @@ public class CustomerscreenController implements Initializable {
     
     public void areaBoxFill() throws SQLException, Exception {
         //statement creation
-        Statement stmt = DBConnection.startConnection().createStatement();
-        String sqlStatement = "SELECT Division FROM first_level_divisions";
-        ResultSet result = stmt.executeQuery(sqlStatement);
-        
+        PreparedStatement ps;
+        ps = DBConnection.startConnection().prepareStatement("SELECT Country_ID FROM countries WHERE Country = ?");
+        ps.setString(1, CountryBox.getValue());
+        int countryID = 0;
+        ResultSet result = ps.executeQuery();
         while (result.next()) {
-            AreaBox.getItems().add(result.getString("Division"));
+                countryID = result.getInt("Country_ID");
             }
-        stmt.close();
-        result.close();
+
+        PreparedStatement ps1;
+        ps1 = DBConnection.startConnection().prepareStatement("SELECT Division FROM first_level_divisions WHERE Country_ID = ?");
+        ps1.setInt(1, countryID);
+        ResultSet result2 = ps1.executeQuery();    
+        while (result2.next()) {
+            AreaBox.getItems().add(result2.getString("Division"));
+            }
+        AreaBox.setDisable(false);
     }
     
     public void countryBoxFill() throws SQLException, Exception {
@@ -324,6 +332,7 @@ public class CustomerscreenController implements Initializable {
             AreaBox.setValue(result.getString("Division"));
                     }
         System.out.println("Updated customer fields");
+        disableFields();
             }
     
     public void disableFields() {
@@ -342,7 +351,7 @@ public class CustomerscreenController implements Initializable {
         AddressField.setDisable(false);
         ZIPField.setDisable(false);
         PhoneField.setDisable(false);
-        AreaBox.setDisable(false);
+       // AreaBox.setDisable(false);
         CountryBox.setDisable(false);
         
     }
@@ -428,6 +437,12 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void CountryBoxHandler (ActionEvent event) {
+        try {
+            System.out.println(CountryBox.getValue());
+            areaBoxFill();
+        } catch (Exception ex) {
+            Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
