@@ -51,13 +51,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
-//import model.appointment;
+import model.appointment;
 
 /**
  * FXML Controller class
@@ -70,28 +71,100 @@ public class AppointmentsscreenController implements Initializable {
     
     @FXML
     private Button BackButton;
+    @FXML
+    private Button UpdateButton;
+    @FXML
+    private Button DeleteButton;
+    @FXML
+    private Button AddButton;
+    
+    @FXML
+    private Label Titlelabel;
+    
+    @FXML
+    private RadioButton weekRadio;
+    @FXML
+    private RadioButton monthRadio;
+    
+    @FXML
+    private TableView<appointment> appTable;
+    @FXML
+    private TableColumn<appointment, String> AppIDColumn;
+    @FXML
+    private TableColumn<appointment, String> TitleColumn;
+    @FXML
+    private TableColumn<appointment, String> DescriptionColumn;
+        @FXML
+    private TableColumn<appointment, String> LocationColumn;
+        @FXML
+    private TableColumn<appointment, String> ContactColumn;
+        @FXML
+    private TableColumn<appointment, String> TypeColumn;
+        @FXML
+    private TableColumn<appointment, String> StartColumn;
+            @FXML
+    private TableColumn<appointment, String> EndColumn;
+                @FXML
+    private TableColumn<appointment, String> CustomerIDColumn;
+    
+                
+    ObservableList<appointment> appointmentsOL = FXCollections.observableArrayList();
+   // private static appointment selectedAppointment = new appointment();
+    
+    
+    
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        // TODO
+        
+        try {
+            updateApptTable();
+                    
+                    // TODO
+                    } catch (Exception ex) {
+            Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }  
     
     
     public void updateApptTable() throws SQLException, Exception {
         System.out.println("Updating Appt table");
-//        PreparedStatement ps;
-//        ps = DBConnection.startConnection().prepareStatement(""
-//                + "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Start, End, Customer_ID "
-//                + "FROM appointments");
-//        ResultSet rs = ps.executeQuery();
-//        System.out.println("SQL Worked!");
-//        appointmentsOL.clear();
-//        
-//        while(rs.next()) {
+        PreparedStatement ps;
+        ps = DBConnection.startConnection().prepareStatement(""
+                + "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Type, Start, End, Customer_ID "
+                + "FROM appointments");
+        ResultSet rs = ps.executeQuery();
+        System.out.println("SQL Worked!");
+        appointmentsOL.clear();
+        
+        while(rs.next()) {
+            System.out.println("Fill it"
+                    + "Create appointment obj");
+            appointment appt = new appointment();
+            
+            // try different way, maybe its easier
+            int appointmentID = rs.getInt("Appointment_ID");
+            String appointmentTitle = rs.getString("Title");
+            String appointmentDescription = rs.getString("Description");
+            String appointmentLocation = rs.getString("Location");
+            int appointmentContactID = rs.getInt("Contact_ID");
+            String appointmentType = rs.getString("Type");
+            int appointmentCustomerID = rs.getInt("Customer_ID");
+            
+            int appointmentUserID = 1;
+            
+            String appointmentStart = rs.getString("Start");
+            String appointmentEnd = rs.getString("end");
+            
+            // Add to the table, lets try!
+            
+            appointmentsOL.add(new appointment(appointmentID, appointmentCustomerID, appointmentUserID, appointmentCustomerID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd));
+            appTable.setItems(appointmentsOL);
+        }
             
         //}
         

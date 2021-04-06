@@ -24,13 +24,12 @@ public class appointment {
     private String title;
     private String description;
     private String location;
-    private String contact;
     private String type;
     private String startTime;
     private String endTime; 
     
     
-    public appointment(int appointmentID, int customerID, int userID, int contactID, String title, String description, String location, String contact, String type, String startTime, String endTime) {
+    public appointment(int appointmentID, int customerID, int userID, int contactID, String title, String description, String location, String type, String startTime, String endTime) {
         //
         appointmentID = appointmentID;
         customerID = customerID;
@@ -39,10 +38,17 @@ public class appointment {
         title = title;
         description = description;
         location = location;
-        contact = contact;
         type = type;
         startTime = startTime;
         endTime = endTime;
+    }
+
+//    public appointment() {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//    }
+
+    public appointment() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     
