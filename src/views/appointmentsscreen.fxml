@@ -34,12 +34,12 @@
         <columns>
           <TableColumn fx:id="AppIDColumn" prefWidth="75.0" text="App. ID" />
           <TableColumn fx:id="TitleColumn" prefWidth="75.0" text="Title" />
-            <TableColumn fx:id="DecriptionColumn" prefWidth="75.0" text="Description" />
+            <TableColumn fx:id="DescriptionColumn" prefWidth="75.0" text="Description" />
             <TableColumn fx:id="LocationColumn" prefWidth="75.0" text="Location" />
             <TableColumn fx:id="ContactColumn" prefWidth="75.0" text="Contact" />
             <TableColumn fx:id="TypeColumn" prefWidth="75.0" text="Type" />
             <TableColumn fx:id="StartColumn" prefWidth="75.0" text="Start" />
-            <TableColumn fx:id="EndCOlumn" prefWidth="75.0" text="End" />
+            <TableColumn fx:id="EndColumn" prefWidth="75.0" text="End" />
             <TableColumn fx:id="CustomerIDColumn" prefWidth="75.0" text="CustomerID" />
         </columns>
       </TableView>

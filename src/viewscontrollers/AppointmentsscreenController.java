@@ -89,27 +89,27 @@ public class AppointmentsscreenController implements Initializable {
     @FXML
     private TableView<appointment> appTable;
     @FXML
-    private TableColumn<appointment, String> AppIDColumn;
+    private TableColumn<appointment, Integer> AppIDColumn;
     @FXML
     private TableColumn<appointment, String> TitleColumn;
     @FXML
     private TableColumn<appointment, String> DescriptionColumn;
-        @FXML
+    @FXML
     private TableColumn<appointment, String> LocationColumn;
-        @FXML
-    private TableColumn<appointment, String> ContactColumn;
-        @FXML
+    @FXML
+    private TableColumn<appointment, Integer> ContactColumn;
+    @FXML
     private TableColumn<appointment, String> TypeColumn;
-        @FXML
+    @FXML
     private TableColumn<appointment, String> StartColumn;
-            @FXML
+    @FXML
     private TableColumn<appointment, String> EndColumn;
-                @FXML
-    private TableColumn<appointment, String> CustomerIDColumn;
+    @FXML
+    private TableColumn<appointment, Integer> CustomerIDColumn;
     
                 
     ObservableList<appointment> appointmentsOL = FXCollections.observableArrayList();
-   // private static appointment selectedAppointment = new appointment();
+    private static appointment selectedAppointment = new appointment();
     
     
     
@@ -120,6 +120,37 @@ public class AppointmentsscreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        // Now we set the table values to what they are supposed to be
+        PropertyValueFactory<appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
+        AppIDColumn.setCellValueFactory(apptIDFactory);
+        
+        PropertyValueFactory<appointment, String> apptTitleFactory = new PropertyValueFactory<>("title");
+        TitleColumn.setCellValueFactory(apptTitleFactory);
+        
+        PropertyValueFactory<appointment, String> apptDescriptionFactory = new PropertyValueFactory<>("description");
+        DescriptionColumn.setCellValueFactory(apptDescriptionFactory);
+        
+        PropertyValueFactory<appointment, String> apptLocationFactory = new PropertyValueFactory<>("location");
+        LocationColumn.setCellValueFactory(apptLocationFactory);
+        
+        PropertyValueFactory<appointment, Integer> apptContactFactory = new PropertyValueFactory<>("contactID");
+        ContactColumn.setCellValueFactory(apptContactFactory);
+        
+        PropertyValueFactory<appointment, String> apptTypeFactory = new PropertyValueFactory<>("type");
+        TypeColumn.setCellValueFactory(apptTypeFactory);
+        
+        PropertyValueFactory<appointment, String> apptStartFactory = new PropertyValueFactory<>("startTime");
+        StartColumn.setCellValueFactory(apptStartFactory);
+        
+        PropertyValueFactory<appointment, String> apptEndFactory = new PropertyValueFactory<>("endTime");
+        EndColumn.setCellValueFactory(apptEndFactory);
+        
+        PropertyValueFactory<appointment, Integer> apptCustomerID = new PropertyValueFactory<>("customerID");
+        CustomerIDColumn.setCellValueFactory(apptCustomerID);
+        
+        
+        
         
         try {
             updateApptTable();
@@ -133,43 +164,42 @@ public class AppointmentsscreenController implements Initializable {
     
     public void updateApptTable() throws SQLException, Exception {
         System.out.println("Updating Appt table");
-        PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement(""
-                + "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Type, Start, End, Customer_ID "
-                + "FROM appointments");
-        ResultSet rs = ps.executeQuery();
+        appointmentsOL.clear();
+        Statement stmt = DBConnection.conn.createStatement();
+        //PreparedStatement ps;
+        //ps = DBConnection.startConnection().prepareStatement(""
+        String sqlStatement = "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Type, Start, End, Customer_ID "
+                + "FROM appointments";
+        //ResultSet rs = ps.executeQuery();
+        ResultSet rs = stmt.executeQuery(sqlStatement);
         System.out.println("SQL Worked!");
         appointmentsOL.clear();
         
         while(rs.next()) {
             System.out.println("Fill it"
-                    + "Create appointment obj");
+                    + " \n Create appointment obj");
             appointment appt = new appointment();
-            
-            // try different way, maybe its easier
-            int appointmentID = rs.getInt("Appointment_ID");
-            String appointmentTitle = rs.getString("Title");
-            String appointmentDescription = rs.getString("Description");
-            String appointmentLocation = rs.getString("Location");
-            int appointmentContactID = rs.getInt("Contact_ID");
-            String appointmentType = rs.getString("Type");
-            int appointmentCustomerID = rs.getInt("Customer_ID");
-            
-            int appointmentUserID = 1;
-            
-            String appointmentStart = rs.getString("Start");
-            String appointmentEnd = rs.getString("end");
-            
-            // Add to the table, lets try!
-            
-            appointmentsOL.add(new appointment(appointmentID, appointmentUserID, appointmentCustomerID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd));
-            appTable.setItems(appointmentsOL);
+            appt.setApptID(rs.getInt("Appointment_ID"));
+            System.out.println(appt.getApptID());
+            appt.setContactID(rs.getInt("Contact_ID"));
+            System.out.println(appt.getContactID());
+            appt.setTitle(rs.getString("Title"));
+            appt.setDescription(rs.getString("Description"));
+            appt.setLocation(rs.getString("Location"));
+            appt.setType(rs.getString("Type"));
+            appt.setStartTime(rs.getString("Start"));
+            appt.setEndTime(rs.getString("End"));
+            appt.setCustomerID(rs.getInt("Customer_ID"));
+            appointmentsOL.addAll(appt);
         }
-            
-        //}
-        
-        
+        appTable.setItems(appointmentsOL);
     }
+
+        
+       
+
+        
+    
 
     
     /////////////////////////////////////////////////////////////////////
