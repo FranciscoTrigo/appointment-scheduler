@@ -54,7 +54,7 @@ public class appointment {
     
     // get em
     
-    public int getApptID(){
+    public int getAppointmentID(){
         return appointmentID;
     }
     
@@ -92,7 +92,7 @@ public class appointment {
     
     // set them
     
-    public void setApptID(int appointmentID) {
+    public void setAppointmentID(int appointmentID) {
         this.appointmentID = appointmentID;
     }
     

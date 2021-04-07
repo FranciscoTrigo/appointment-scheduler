@@ -176,13 +176,10 @@ public class AppointmentsscreenController implements Initializable {
         appointmentsOL.clear();
         
         while(rs.next()) {
-            System.out.println("Fill it"
-                    + " \n Create appointment obj");
+            System.out.println("Fill it");
             appointment appt = new appointment();
-            appt.setApptID(rs.getInt("Appointment_ID"));
-            System.out.println(appt.getApptID());
+            appt.setAppointmentID(rs.getInt("Appointment_ID"));
             appt.setContactID(rs.getInt("Contact_ID"));
-            System.out.println(appt.getContactID());
             appt.setTitle(rs.getString("Title"));
             appt.setDescription(rs.getString("Description"));
             appt.setLocation(rs.getString("Location"));
