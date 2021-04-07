@@ -162,7 +162,7 @@ public class AppointmentsscreenController implements Initializable {
             
             // Add to the table, lets try!
             
-            appointmentsOL.add(new appointment(appointmentID, appointmentCustomerID, appointmentUserID, appointmentCustomerID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd));
+            appointmentsOL.add(new appointment(appointmentID, appointmentUserID, appointmentCustomerID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd));
             appTable.setItems(appointmentsOL);
         }
             
