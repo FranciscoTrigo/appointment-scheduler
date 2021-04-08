@@ -216,13 +216,14 @@ public class AppointmentsscreenController implements Initializable {
         }
         //appTable.setItems(appointmentsOL);
         if (isWeek == true && noFilter == false) {
-            System.out.println("Week");
+            System.out.println("Week filter");
             filterWeek(appointmentsOL);
                     } else if (noFilter == true && isWeek == false){
+                            System.out.println("No filter");
                             appTable.setItems(appointmentsOL);
                             }
                         else if (isWeek == false && noFilter == false){
-            System.out.println("Month");
+            System.out.println("Month filter");
             filterMonth(appointmentsOL);
         }
     }
