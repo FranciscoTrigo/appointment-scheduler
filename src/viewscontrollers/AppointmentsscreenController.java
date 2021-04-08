@@ -69,6 +69,8 @@ public class AppointmentsscreenController implements Initializable {
     Parent root;
     Stage stage;
     
+    private boolean isWeek;
+    
     @FXML
     private Button BackButton;
     @FXML
@@ -218,11 +220,23 @@ public class AppointmentsscreenController implements Initializable {
     
     @FXML
     private void weekRadioHandler (ActionEvent event){
+        isWeek = true;
+        try {
+            updateApptTable();
+        } catch (Exception ex) {
+            Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
     @FXML
     private void monthRadioHandler (ActionEvent event) {
+        isWeek = false;
+        try {
+            updateApptTable();
+        } catch (Exception ex) {
+            Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
