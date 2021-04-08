@@ -56,6 +56,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
@@ -71,6 +72,7 @@ public class AppointmentsscreenController implements Initializable {
     Stage stage;
     
     private boolean isWeek;
+    private boolean noFilter;
     
     @FXML
     private Button BackButton;
@@ -84,10 +86,18 @@ public class AppointmentsscreenController implements Initializable {
     @FXML
     private Label Titlelabel;
     
+    
+    final ToggleGroup filterGroup = new ToggleGroup();
+    
     @FXML
     private RadioButton weekRadio;
     @FXML
     private RadioButton monthRadio;
+    @FXML
+    private RadioButton noFilterRadio;
+    
+    
+    
     
     @FXML
     private TableView<appointment> appTable;
@@ -129,6 +139,11 @@ public class AppointmentsscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        weekRadio.setToggleGroup(filterGroup);
+        monthRadio.setToggleGroup(filterGroup);
+        noFilterRadio.setToggleGroup(filterGroup);
+        noFilterRadio.setSelected(true);
+        
         // Now we set the table values to what they are supposed to be
         PropertyValueFactory<appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
         AppIDColumn.setCellValueFactory(apptIDFactory);
@@ -161,7 +176,8 @@ public class AppointmentsscreenController implements Initializable {
         
         
         try {
-            isWeek = true;
+
+            
             updateApptTable();
                     
                     // TODO
@@ -198,11 +214,14 @@ public class AppointmentsscreenController implements Initializable {
             appt.setCustomerID(rs.getInt("Customer_ID"));
             appointmentsOL.addAll(appt);
         }
-        appTable.setItems(appointmentsOL);
-        if (isWeek) {
+        //appTable.setItems(appointmentsOL);
+        if (isWeek == true && noFilter == false) {
             System.out.println("Week");
             filterWeek(appointmentsOL);
-                    } else {
+                    } else if (noFilter == true && isWeek == false){
+                            appTable.setItems(appointmentsOL);
+                            }
+                        else if (isWeek == false && noFilter == false){
             System.out.println("Month");
             filterMonth(appointmentsOL);
         }
@@ -262,6 +281,7 @@ public class AppointmentsscreenController implements Initializable {
     @FXML
     private void weekRadioHandler (ActionEvent event){
         isWeek = true;
+        noFilter = false;
         try {
             updateApptTable();
         } catch (Exception ex) {
@@ -273,6 +293,19 @@ public class AppointmentsscreenController implements Initializable {
     @FXML
     private void monthRadioHandler (ActionEvent event) {
         isWeek = false;
+        noFilter = false;
+        try {
+            updateApptTable();
+        } catch (Exception ex) {
+            Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    @FXML
+    private void noFilterRadioHandler (ActionEvent event) {
+        isWeek = false;
+        noFilter = true;
         try {
             updateApptTable();
         } catch (Exception ex) {
