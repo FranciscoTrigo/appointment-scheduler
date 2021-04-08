@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -109,6 +110,11 @@ public class AppointmentsscreenController implements Initializable {
     @FXML
     private TableColumn<appointment, Integer> CustomerIDColumn;
     
+    
+    private final DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    //private final ZoneId localZoneID = ZoneId.of("UTC-8");
+//    private final ZoneId localZoneID = ZoneId.systemDefault();
+//    private final ZoneId utcZoneID = ZoneId.of("UTC");
                 
     ObservableList<appointment> appointmentsOL = FXCollections.observableArrayList();
     private static appointment selectedAppointment = new appointment();
@@ -155,6 +161,7 @@ public class AppointmentsscreenController implements Initializable {
         
         
         try {
+            isWeek = true;
             updateApptTable();
                     
                     // TODO
@@ -178,7 +185,7 @@ public class AppointmentsscreenController implements Initializable {
         appointmentsOL.clear();
         
         while(rs.next()) {
-            System.out.println("Fill it");
+            
             appointment appt = new appointment();
             appt.setAppointmentID(rs.getInt("Appointment_ID"));
             appt.setContactID(rs.getInt("Contact_ID"));
@@ -192,6 +199,40 @@ public class AppointmentsscreenController implements Initializable {
             appointmentsOL.addAll(appt);
         }
         appTable.setItems(appointmentsOL);
+        if (isWeek) {
+            System.out.println("Week");
+            filterWeek(appointmentsOL);
+                    } else {
+            System.out.println("Month");
+            filterMonth(appointmentsOL);
+        }
+    }
+    
+    public void filterMonth(ObservableList appointmentsOL) {
+        // WE are gonna try to filter the table by week now
+        LocalDate now = LocalDate.now();
+        LocalDate nextMonth = now.plusMonths(1);
+        
+        FilteredList<appointment> filteredData = new FilteredList<>(appointmentsOL);
+        filteredData.setPredicate(row -> {
+            LocalDate rowDate = LocalDate.parse(row.getStartTime(), datetimeDTF);
+            return rowDate.isAfter(now.minusDays(1)) && rowDate.isBefore(nextMonth);
+        }
+        );
+        appTable.setItems(filteredData);
+    }
+    
+    public void filterWeek(ObservableList appointmentsOL) {
+        // filer week
+        LocalDate now = LocalDate.now();
+        LocalDate nextWeek = now.plusWeeks(1);
+        
+        FilteredList<appointment> filteredData = new FilteredList<>(appointmentsOL);
+        filteredData.setPredicate(row -> {
+            LocalDate rowDate = LocalDate.parse(row.getStartTime(), datetimeDTF);
+            return rowDate.isAfter(now.minusDays(1)) && rowDate.isBefore(nextWeek);
+        });
+        appTable.setItems(filteredData);
     }
 
         
