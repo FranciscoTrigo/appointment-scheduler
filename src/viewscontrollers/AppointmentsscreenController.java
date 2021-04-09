@@ -277,7 +277,12 @@ public class AppointmentsscreenController implements Initializable {
     public void deleteAppointment() throws SQLException, Exception{
 
               //System.out.println(selectedAppointmentID);
-              appTable.getSelectionModel().select(-1);
+              //appTable.getSelectionModel().select(-1);
+              if (selectedAppointment == null) {
+                  System.out.println("Nothing selected");
+              } else {
+                  
+              
               System.out.println("Deleting selected appointment");
               PreparedStatement ps = DBConnection.startConnection().prepareStatement(""
                 + "DELETE FROM appointments "
@@ -287,7 +292,7 @@ public class AppointmentsscreenController implements Initializable {
         
         System.out.println("Deleted appointment.");
         
-        updateApptTable();
+        updateApptTable();}
 
         }
 
