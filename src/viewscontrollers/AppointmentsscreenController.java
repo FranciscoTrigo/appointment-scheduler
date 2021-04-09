@@ -54,6 +54,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -131,7 +132,7 @@ public class AppointmentsscreenController implements Initializable {
     
     
     
-    
+    public int selectedAppointmentID;
 
     /**
      * Initializes the controller class.
@@ -184,6 +185,24 @@ public class AppointmentsscreenController implements Initializable {
                     } catch (Exception ex) {
             Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+        final Label selected = new Label();
+        appTable.getSelectionModel().selectedItemProperty().addListener(
+        (observable, oldValue, newValue) -> {
+            appointment selectedApp = new appointment();
+            selectedApp = newValue;
+            //int polio;
+            if (selectedApp == null) {
+                System.out.println();
+            } else{
+            selectedAppointmentID = selectedApp.getAppointmentID();
+            }           
+ 
+            }
+            
+        
+        );
     }  
     
     
@@ -254,14 +273,24 @@ public class AppointmentsscreenController implements Initializable {
         });
         appTable.setItems(filteredData);
     }
-
-        
-       
-
-        
     
+    public void deleteAppointment() throws SQLException, Exception{
 
-    
+              //System.out.println(selectedAppointmentID);
+              appTable.getSelectionModel().select(-1);
+              System.out.println("Deleting selected appointment");
+              PreparedStatement ps = DBConnection.startConnection().prepareStatement(""
+                + "DELETE FROM appointments "
+                + "WHERE Appointment_ID = ?");
+        ps.setInt(1, selectedAppointmentID);
+        ps.executeUpdate();
+        
+        System.out.println("Deleted appointment.");
+        
+        updateApptTable();
+
+        }
+
     /////////////////////////////////////////////////////////////////////
     
     @FXML
@@ -270,7 +299,8 @@ public class AppointmentsscreenController implements Initializable {
     }
     
     @FXML
-    private void DeleteHandler (ActionEvent event) {
+    private void DeleteHandler (ActionEvent event) throws Exception {
+        deleteAppointment();
         
     }
     
