@@ -180,6 +180,7 @@ public class AppointmentsscreenController implements Initializable {
 
             
             updateApptTable();
+            noFilterRadio.setSelected(true);
                     
                     // TODO
                     } catch (Exception ex) {
@@ -300,6 +301,15 @@ public class AppointmentsscreenController implements Initializable {
     
     @FXML
     private void AddAppointmentHandler (ActionEvent event){
+        try {
+            root = FXMLLoader.load(getClass().getResource("/views/addappointmentsscreen.fxml"));
+            stage = (Stage) AddButton.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene); 
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
