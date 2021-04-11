@@ -94,6 +94,8 @@ public class AddAppointmentController implements Initializable {
     private Label startLabel;
     @FXML
     private Label endLabel;
+    @FXML
+    private Label appointmentIDLabel;
     
     @FXML
     private TextField titleField;
@@ -113,11 +115,20 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private ComboBox startHourCombo;
     @FXML
-    private ComboBox startMinueCombo;
+    private ComboBox startMinuteCombo;
     @FXML
     private ComboBox endHourCombo;
     @FXML
     private ComboBox endMinuteCombo;
+    @FXML
+    private ComboBox locationBox;
+    @FXML
+    private ComboBox typeBox;
+    
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button saveButton;
     
     Parent root;
     Stage stage;
@@ -128,10 +139,43 @@ public class AddAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        fillTimeBoxes();
+        fillLocationBox();
+        fillTypeBox();
         // TODO
     }    
     
+    public void fillTimeBoxes() {
+        for (int i = 0; i <= 23; i++){
+        startHourCombo.getItems().addAll(i);
+        endHourCombo.getItems().addAll(i);
+    }
+        for (int i =0; i <= 59; i++) {
+            startMinuteCombo.getItems().addAll(i);
+            endMinuteCombo.getItems().addAll(i);
+        }
+                
+    }
     
+    public void fillLocationBox() {
+        locationBox.getItems().addAll(
+        "McDonalds",
+        "Park",
+        "Lunchroom",
+        "Office",
+        "Virtual",
+        "Laundromat",
+        "location"
+        );         
+    }
+    
+    public void fillTypeBox() {
+        typeBox.getItems().addAll(
+        "Meeting",
+        "Lunch",
+           "Planning",
+           "type ");
+    }
     
     @FXML
     private void contactBoxHandler (ActionEvent event) {
@@ -154,8 +198,24 @@ public class AddAppointmentController implements Initializable {
     }
     
     @FXML
-    private void cancelButtonHandler (ActionEvent event) {
+    private void locationBoxHandler (ActionEvent event) {
         
     }
     
-}
+    @FXML
+    private void typeBoxHandler (ActionEvent event) {
+        
+    }
+    
+    @FXML
+    private void cancelButtonHandler (ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
+        stage = (Stage) cancelButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
+            }
+        
+    }
+    
+
