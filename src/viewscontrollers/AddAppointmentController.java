@@ -147,15 +147,26 @@ public class AddAppointmentController implements Initializable {
     
     public void fillTimeBoxes() {
         for (int i = 0; i <= 23; i++){
+            if (i < 10) {
+                String leadzero = String.format("%02d", i);
+                startHourCombo.getItems().addAll(leadzero);
+                endHourCombo.getItems().addAll(leadzero);
+            } else {
         startHourCombo.getItems().addAll(i);
         endHourCombo.getItems().addAll(i);
+            }
     }
         for (int i =0; i <= 59; i++) {
-            startMinuteCombo.getItems().addAll(i);
-            endMinuteCombo.getItems().addAll(i);
-        }
+               if (i < 10) {
+                String leadzero = String.format("%02d", i);
+                startMinuteCombo.getItems().addAll(leadzero);
+                endMinuteCombo.getItems().addAll(leadzero);
+            } else {
+        startMinuteCombo.getItems().addAll(i);
+        endMinuteCombo.getItems().addAll(i);
+            }
                 
-    }
+        }}
     
     public void fillLocationBox() {
         locationBox.getItems().addAll(
@@ -173,8 +184,8 @@ public class AddAppointmentController implements Initializable {
         typeBox.getItems().addAll(
         "Meeting",
         "Lunch",
-           "Planning",
-           "type ");
+       "Planning",
+        "type ");
     }
     
     @FXML
