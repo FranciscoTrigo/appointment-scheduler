@@ -231,7 +231,7 @@ public class AddAppointmentController implements Initializable {
             while (result.next()) {
                 CustID = result.getInt("Customer_ID");
             }
-            System.out.println("Customer ID IS: " + CustID);
+            //System.out.println("Customer ID IS: " + CustID);
             
         // Getting Contact ID
                 PreparedStatement ps2 = DBConnection.startConnection().prepareStatement("SELECT * "
@@ -243,23 +243,41 @@ public class AddAppointmentController implements Initializable {
             while (result1.next()) {
                 ContactID = result1.getInt("Contact_ID");
             }
-            System.out.println("Contact ID IS: " + ContactID);
+            //System.out.println("Contact ID IS: " + ContactID);
             
         // Get start and end time
         // START
         String startHH = startHourCombo.getValue();
         String startMM = startMinuteCombo.getValue();
         String startHour = startHH + ":" + startMM + ":00";
-        System.out.println(startHour);
+        //System.out.println(startHour);
+        String startTime = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + startHour;
+        //System.out.println(startTime);
+        
+        
         // END
         String endHH = endHourCombo.getValue();
         String endMM = endMinuteCombo.getValue();
         String endHour = endHH + ":" + endMM + ":00";
-        System.out.println(endHour);
+        //System.out.println(endHour);
+        String endTime = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + endHour;
+        // System.out.println(endTime);
         
-        //Get date
-        //String apptDate = 
-        System.out.println(selectDateBox.getValue());
+        
+        // Now we finally update it
+                    PreparedStatement ps3 = DBConnection.startConnection().prepareStatement(""
+                    + "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID)"
+                    +                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            ps3.setString(1, titleField.getText());
+            ps3.setString(2, descriptionField.getText());
+            ps3.setString(3, locationBox.getValue());
+            ps3.setString(4, typeBox.getValue());
+            ps3.setString(5, startTime);
+            ps3.setString(6, endTime);
+            ps3.setInt(7, CustID);
+            ps3.setInt(8, ContactID);
+            int resultado = ps3.executeUpdate();
+            System.out.println("Appointment saved!");
     }
     
     @FXML
