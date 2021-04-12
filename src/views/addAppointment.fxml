@@ -19,10 +19,10 @@
       <DatePicker fx:id="selectDateBox" layoutX="251.0" layoutY="310.0" onAction="#selectDateBoxHandler" promptText="Select a date" />
       <Button fx:id="saveButton" layoutX="233.0" layoutY="518.0" mnemonicParsing="false" onAction="#saveButtonHandler" text="Save" />
       <Button fx:id="cancelButton" layoutX="354.0" layoutY="518.0" mnemonicParsing="false" onAction="#cancelButtonHandler" text="Cancel" />
-      <ComboBox fx:id="startMinuteCombo" layoutX="305.0" layoutY="412.0" prefHeight="26.0" prefWidth="44.0" />
-      <ComboBox fx:id="startHourCombo" layoutX="244.0" layoutY="412.0" prefHeight="26.0" prefWidth="54.0" />
-      <ComboBox fx:id="endHourCombo" layoutX="244.0" layoutY="451.0" prefHeight="26.0" prefWidth="54.0" />
-      <ComboBox fx:id="endMinuteCombo" layoutX="305.0" layoutY="451.0" prefHeight="26.0" prefWidth="51.0" />
+      <ComboBox fx:id="startMinuteCombo" layoutX="338.0" layoutY="411.0" prefHeight="26.0" prefWidth="74.0" />
+      <ComboBox fx:id="startHourCombo" layoutX="244.0" layoutY="412.0" prefHeight="26.0" prefWidth="81.0" />
+      <ComboBox fx:id="endHourCombo" layoutX="244.0" layoutY="451.0" prefHeight="26.0" prefWidth="82.0" />
+      <ComboBox fx:id="endMinuteCombo" layoutX="338.0" layoutY="451.0" prefHeight="26.0" prefWidth="74.0" />
       <TextField fx:id="titleField" layoutX="253.0" layoutY="128.0" promptText="Title" />
       <Label fx:id="titleLabel" layoutX="103.0" layoutY="132.0" text="Apppointment title:" />
       <Label fx:id="descriptionLabel" layoutX="87.0" layoutY="179.0" text="Appointment Description:" />

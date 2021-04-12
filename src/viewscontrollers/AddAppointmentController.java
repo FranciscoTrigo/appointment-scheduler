@@ -101,29 +101,27 @@ public class AddAppointmentController implements Initializable {
     private TextField titleField;
     @FXML
     private TextField descriptionField;
-    @FXML
-    private TextField locationField;
-    @FXML
-    private TextField typeField;
+
     @FXML
     private DatePicker selectDateBox;
     
     @FXML
-    private ComboBox contactBox;
+    private ComboBox<String> contactBox;
     @FXML
-    private ComboBox customerBox;
+    private ComboBox<String> customerBox;
     @FXML
-    private ComboBox startHourCombo;
+    private ComboBox<String> startHourCombo;
     @FXML
-    private ComboBox startMinuteCombo;
+    private ComboBox<String> startMinuteCombo;
     @FXML
-    private ComboBox endHourCombo;
+    private ComboBox<String> endHourCombo;
     @FXML
-    private ComboBox endMinuteCombo;
+    private ComboBox<String> endMinuteCombo;
     @FXML
-    private ComboBox locationBox;
+    private ComboBox<String> locationBox;
     @FXML
-    private ComboBox typeBox;
+    private ComboBox<String> typeBox;
+   
     
     @FXML
     private Button cancelButton;
@@ -139,10 +137,16 @@ public class AddAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fillTimeBoxes();
-        fillLocationBox();
-        fillTypeBox();
-        // TODO
+        try {
+            fillTimeBoxes();
+            fillLocationBox();
+            fillTypeBox();
+            fillCustomerBox();
+            fillContactBox();
+            // TODO
+        } catch (Exception ex) {
+            Logger.getLogger(AddAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }    
     
     public void fillTimeBoxes() {
@@ -152,8 +156,8 @@ public class AddAppointmentController implements Initializable {
                 startHourCombo.getItems().addAll(leadzero);
                 endHourCombo.getItems().addAll(leadzero);
             } else {
-        startHourCombo.getItems().addAll(i);
-        endHourCombo.getItems().addAll(i);
+        startHourCombo.getItems().addAll(String.valueOf(i));
+        endHourCombo.getItems().addAll(String.valueOf(i));
             }
     }
         for (int i =0; i <= 59; i++) {
@@ -162,8 +166,8 @@ public class AddAppointmentController implements Initializable {
                 startMinuteCombo.getItems().addAll(leadzero);
                 endMinuteCombo.getItems().addAll(leadzero);
             } else {
-        startMinuteCombo.getItems().addAll(i);
-        endMinuteCombo.getItems().addAll(i);
+        startMinuteCombo.getItems().addAll(String.valueOf(i));
+        endMinuteCombo.getItems().addAll(String.valueOf(i));
             }
                 
         }}
@@ -188,6 +192,76 @@ public class AddAppointmentController implements Initializable {
         "type ");
     }
     
+    public void fillContactBox() throws SQLException, Exception {
+        //statement creation
+        Statement stmt = DBConnection.startConnection().createStatement();
+        String sqlStatement = "SELECT Contact_Name FROM contacts";
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        
+        while (result.next()) {
+            contactBox.getItems().add(result.getString("Contact_name"));
+            }
+        stmt.close();
+        result.close();
+    }
+    
+    public void fillCustomerBox() throws SQLException, Exception {
+                //statement creation
+        Statement stmt = DBConnection.startConnection().createStatement();
+        String sqlStatement = "SELECT Customer_Name FROM customers";
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        
+        while (result.next()) {
+            customerBox.getItems().add(result.getString("Customer_Name"));
+            }
+        stmt.close();
+        result.close();
+    }
+    
+    public void saveAppointment() throws SQLException, Exception {
+        System.out.println("Saving the appointment...");
+        
+        // Getting the Customer_ID
+        PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Customer_ID "
+                    + "FROM customers "
+                    + "WHERE Customer_Name = ?");
+        ps1.setString(1, customerBox.getValue());
+        int CustID = 0;
+        ResultSet result = ps1.executeQuery();
+            while (result.next()) {
+                CustID = result.getInt("Customer_ID");
+            }
+            System.out.println("Customer ID IS: " + CustID);
+            
+        // Getting Contact ID
+                PreparedStatement ps2 = DBConnection.startConnection().prepareStatement("SELECT * "
+                    + "FROM contacts "
+                    + "WHERE Contact_Name = ?");
+        ps2.setString(1, contactBox.getValue());
+        int ContactID = 0;
+        ResultSet result1 = ps2.executeQuery();
+            while (result1.next()) {
+                ContactID = result1.getInt("Contact_ID");
+            }
+            System.out.println("Contact ID IS: " + ContactID);
+            
+        // Get start and end time
+        // START
+        String startHH = startHourCombo.getValue();
+        String startMM = startMinuteCombo.getValue();
+        String startHour = startHH + ":" + startMM + ":00";
+        System.out.println(startHour);
+        // END
+        String endHH = endHourCombo.getValue();
+        String endMM = endMinuteCombo.getValue();
+        String endHour = endHH + ":" + endMM + ":00";
+        System.out.println(endHour);
+        
+        //Get date
+        //String apptDate = 
+        System.out.println(selectDateBox.getValue());
+    }
+    
     @FXML
     private void contactBoxHandler (ActionEvent event) {
         
@@ -204,7 +278,8 @@ public class AddAppointmentController implements Initializable {
     }
     
     @FXML
-    private void saveButtonHandler (ActionEvent event) {
+    private void saveButtonHandler (ActionEvent event) throws Exception {
+        saveAppointment();
         
     }
     
