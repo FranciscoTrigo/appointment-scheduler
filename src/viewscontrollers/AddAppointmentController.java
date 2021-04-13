@@ -169,8 +169,18 @@ public class AddAppointmentController implements Initializable {
         startMinuteCombo.getItems().addAll(String.valueOf(i));
         endMinuteCombo.getItems().addAll(String.valueOf(i));
             }
+               
                 
         }}
+    
+    public void goBack() throws IOException {
+                root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
+        stage = (Stage) cancelButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
+            }
+    
     
     public void fillLocationBox() {
         locationBox.getItems().addAll(
@@ -180,7 +190,8 @@ public class AddAppointmentController implements Initializable {
         "Office",
         "Virtual",
         "Laundromat",
-        "location"
+        "location",
+        "Other"
         );         
     }
     
@@ -189,7 +200,8 @@ public class AddAppointmentController implements Initializable {
         "Meeting",
         "Lunch",
        "Planning",
-        "type ");
+        "type ",
+        "Other");
     }
     
     public void fillContactBox() throws SQLException, Exception {
@@ -278,6 +290,7 @@ public class AddAppointmentController implements Initializable {
             ps3.setInt(8, ContactID);
             int resultado = ps3.executeUpdate();
             System.out.println("Appointment saved!");
+            goBack();
     }
     
     @FXML
