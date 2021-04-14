@@ -77,12 +77,13 @@ public class MainMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    System.out.println("in the mainmenu this is the number  "+ currentUser);
+    System.out.println("in the mainmenu this is the number  "+ thetext);
     }
         
     @FXML
     private void CustomersButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Customer database");
+        System.out.println(thetext);
         root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
         CustomerscreenController.setCurrentUser(currentUser);
@@ -119,14 +120,12 @@ public class MainMenuController implements Initializable {
         System.exit(0);
             }
     
-    public static void setCurrentUser(int currentUser) {
-        currentUser = currentUser;
-        System.out.println("Current user is: " + currentUser);
+    public static void setCurrentUser(String thetext) {
+        thetext = thetext;
+        System.out.println("Current user is: " + thetext);
+        
     }
     
-    public void setLabelText(String thetext) {
-        MainMenuLabel.setText(thetext);
-    }
     
     }    
     

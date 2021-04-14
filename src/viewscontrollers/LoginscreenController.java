@@ -12,6 +12,7 @@ import utils.DBConnection;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.lang.System.load;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.PreparedStatement;
@@ -35,6 +36,8 @@ import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import static javafx.fxml.FXMLLoader.load;
+import static javafx.fxml.FXMLLoader.load;
 import javafx.fxml.Initializable;
 import javafx.fxml.LoadException;
 import javafx.scene.Parent;
@@ -56,7 +59,7 @@ import viewscontrollers.CustomerscreenController;
 
 public class LoginscreenController implements Initializable {
     
-    int currentUser = 0;
+    String currentUser = "0";
     
     @FXML
     private TextField UsernameTextField;
@@ -109,7 +112,7 @@ public class LoginscreenController implements Initializable {
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
  
-        Parent root;
+        //Parent root;
         Stage stage;
 
         
@@ -120,13 +123,16 @@ public class LoginscreenController implements Initializable {
             
             // call the main menu because log in is good!
             
-            root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/views/MainMenu.fxml"));
+            Parent root = loader.load();
             stage = (Stage) LoginButton.getScene().getWindow();
            
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            MainMenuController MainMenuController = loader.getController();
             MainMenuController.setCurrentUser(currentUser);
-            MainMenuController.setLabelText(currentUser);
+            //MainMenuController.setLabelText(currentUser);
             stage.show();            
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -146,7 +152,7 @@ public class LoginscreenController implements Initializable {
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
-                    currentUser = result.getInt("User_ID");
+                    currentUser = result.getString("User_ID");
                     return true;
                 }
                // int currentUser = result.getInt("User_ID");
