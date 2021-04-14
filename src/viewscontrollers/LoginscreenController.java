@@ -46,13 +46,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import viewscontrollers.CustomerscreenController;
 
 /**
  * FXML Controller class
  *
  * @author Francisco Trigo
  */
+
 public class LoginscreenController implements Initializable {
+    
+    int currentUser = 0;
+    
     @FXML
     private TextField UsernameTextField;
     @FXML 
@@ -73,6 +78,8 @@ public class LoginscreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       // currentUser = 0;
+        
         System.out.println("Getting resource bundle...");
         try {
             rb = ResourceBundle.getBundle("Properties.login", Locale.getDefault());
@@ -98,9 +105,10 @@ public class LoginscreenController implements Initializable {
     
     @FXML
     private void LoggingButtonHandler(ActionEvent event) throws SQLException, IOException {
-        System.out.println("ASD");
+        //System.out.println("ASD");
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
+ 
         Parent root;
         Stage stage;
 
@@ -114,8 +122,11 @@ public class LoginscreenController implements Initializable {
             
             root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
             stage = (Stage) LoginButton.getScene().getWindow();
+           
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            MainMenuController.setCurrentUser(currentUser);
+            MainMenuController.setLabelText(currentUser);
             stage.show();            
         } else {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -128,20 +139,22 @@ public class LoginscreenController implements Initializable {
     
     
     private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException {
-            System.out.println("cas");
+     //       System.out.println("cas");
             Statement statement = DBConnection.conn.createStatement();
-            String sqlStatement = "SELECT password FROM users WHERE User_Name ='" + usernameInput + "'";;
+            String sqlStatement = "SELECT password, User_ID FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
+                    currentUser = result.getInt("User_ID");
                     return true;
                 }
+               // int currentUser = result.getInt("User_ID");
             }
             return false;            
         }
     
- 
+
         
     }
     

@@ -71,6 +71,9 @@ import model.appointment;
 public class AppointmentsscreenController implements Initializable {
     Parent root;
     Stage stage;
+    int currentUser;
+    
+    int currentAppointment = 0;
     
     private boolean isWeek;
     private boolean noFilter;
@@ -144,6 +147,7 @@ public class AppointmentsscreenController implements Initializable {
         monthRadio.setToggleGroup(filterGroup);
         noFilterRadio.setToggleGroup(filterGroup);
         noFilterRadio.setSelected(true);
+        System.out.println("ussee  " + currentUser);
         
         // Now we set the table values to what they are supposed to be
         PropertyValueFactory<appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
@@ -273,6 +277,11 @@ public class AppointmentsscreenController implements Initializable {
             return rowDate.isAfter(now.minusDays(1)) && rowDate.isBefore(nextWeek);
         });
         appTable.setItems(filteredData);
+    }
+    
+        public static void setCurrentUser(int currentUser) {
+        currentUser = currentUser;
+        System.out.println("Current user is: " + currentUser);
     }
     
     public void deleteAppointment() throws SQLException, Exception{

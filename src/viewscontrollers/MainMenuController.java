@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -54,7 +54,9 @@ import javafx.stage.Stage;
 
 
 public class MainMenuController implements Initializable {
-
+    int currentUser;
+    String thetext;
+    
     /**
      * Initializes the controller class.
      * 
@@ -74,13 +76,16 @@ public class MainMenuController implements Initializable {
     Stage stage;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle rb) {
+    System.out.println("in the mainmenu this is the number  "+ currentUser);
+    }
         
     @FXML
     private void CustomersButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Customer database");
         root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
+        CustomerscreenController.setCurrentUser(currentUser);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();  
@@ -91,6 +96,7 @@ public class MainMenuController implements Initializable {
         System.out.println("Appointment Database");
         root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
         stage = (Stage) AppointmentsButton.getScene().getWindow();
+        AppointmentsscreenController.setCurrentUser(currentUser);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show(); 
@@ -113,6 +119,14 @@ public class MainMenuController implements Initializable {
         System.exit(0);
             }
     
+    public static void setCurrentUser(int currentUser) {
+        currentUser = currentUser;
+        System.out.println("Current user is: " + currentUser);
+    }
+    
+    public void setLabelText(String thetext) {
+        MainMenuLabel.setText(thetext);
+    }
     
     }    
     

@@ -58,6 +58,7 @@ import model.Customer;
  *
  * @author Francisco Trigo
  */
+
 public class CustomerscreenController implements Initializable {
     
     @FXML
@@ -127,6 +128,8 @@ public class CustomerscreenController implements Initializable {
     
     private static Customer selectedCustomer = new Customer();
     
+//    Static int currentUser = 0;
+    
     
     /**
      * Initializes the controller class.
@@ -134,6 +137,7 @@ public class CustomerscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        int currentUser;
         // Try  to fill in the table with the information from the customer table in the server!
         //Name
         PropertyValueFactory<Customer, String> custNameFactory = new PropertyValueFactory<>("CustomerName");
@@ -408,6 +412,11 @@ public class CustomerscreenController implements Initializable {
         }
             
 
+    }
+    
+    public static void setCurrentUser(int currentUser) {
+        currentUser = currentUser;
+        System.out.println("Current user is: " + currentUser);
     }
     
     @FXML
