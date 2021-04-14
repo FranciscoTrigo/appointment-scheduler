@@ -54,8 +54,8 @@ import javafx.stage.Stage;
 
 
 public class MainMenuController implements Initializable {
-    int currentUser;
-    String thetext;
+    //int currentUser;
+    //String thetext;
     
     /**
      * Initializes the controller class.
@@ -77,16 +77,16 @@ public class MainMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    System.out.println("in the mainmenu this is the number  "+ thetext);
+    //System.out.println("in the mainmenu this is the number  "+ thetext);
     }
         
     @FXML
     private void CustomersButtonHandler(ActionEvent event) throws IOException {
         System.out.println("Customer database");
-        System.out.println(thetext);
+      //  System.out.println(thetext);
         root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
-        CustomerscreenController.setCurrentUser(currentUser);
+        //CustomerscreenController.setCurrentUser(currentUser);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();  
@@ -97,7 +97,7 @@ public class MainMenuController implements Initializable {
         System.out.println("Appointment Database");
         root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
         stage = (Stage) AppointmentsButton.getScene().getWindow();
-        AppointmentsscreenController.setCurrentUser(currentUser);
+        //AppointmentsscreenController.setCurrentUser(currentUser);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show(); 
@@ -120,11 +120,11 @@ public class MainMenuController implements Initializable {
         System.exit(0);
             }
     
-    public static void setCurrentUser(String thetext) {
-        thetext = thetext;
-        System.out.println("Current user is: " + thetext);
-        
-    }
+//    public static void setCurrentUser(String thetext) {
+//        thetext = thetext;
+//        System.out.println("Current user is: " + thetext);
+//        
+//    }
     
     
     }    

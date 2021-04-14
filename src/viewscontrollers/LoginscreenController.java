@@ -108,7 +108,7 @@ public class LoginscreenController implements Initializable {
     
     @FXML
     private void LoggingButtonHandler(ActionEvent event) throws SQLException, IOException {
-        //System.out.println("ASD");
+        //System.out.println("ASD");ooo
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
  
@@ -130,8 +130,8 @@ public class LoginscreenController implements Initializable {
            
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            MainMenuController MainMenuController = loader.getController();
-            MainMenuController.setCurrentUser(currentUser);
+            //MainMenuController MainMenuController = loader.getController();
+            //MainMenuController.setCurrentUser(currentUser);
             //MainMenuController.setLabelText(currentUser);
             stage.show();            
         } else {

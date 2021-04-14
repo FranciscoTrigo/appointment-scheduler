@@ -137,7 +137,7 @@ public class CustomerscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        int currentUser;
+//        int currentUser;
         // Try  to fill in the table with the information from the customer table in the server!
         //Name
         PropertyValueFactory<Customer, String> custNameFactory = new PropertyValueFactory<>("CustomerName");
@@ -414,11 +414,11 @@ public class CustomerscreenController implements Initializable {
 
     }
     
-    public static void setCurrentUser(int currentUser) {
-        currentUser = currentUser;
-        System.out.println("Current user is: " + currentUser);
-    }
-    
+//    public static void setCurrentUser(int currentUser) {
+//        currentUser = currentUser;
+//        System.out.println("Current user is: " + currentUser);
+//    }
+//    
     @FXML
     private void CustomerIDFieldHandler (ActionEvent event) {
     
@@ -436,7 +436,7 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void ZIPFieldHandler (ActionEvent event) {
-        
+                            
     }
     
     @FXML
