@@ -144,15 +144,16 @@ public class LoginscreenController implements Initializable {
     }
     
     
-    private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException {
+    private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException, IOException {
      //       System.out.println("cas");
             Statement statement = DBConnection.conn.createStatement();
-            String sqlStatement = "SELECT password, User_ID FROM users WHERE User_Name ='" + usernameInput + "'";;
+            String sqlStatement = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
                     currentUser = result.getString("User_ID");
+                    textLog(result.getString("User_Name"));
                     return true;
                 }
                // int currentUser = result.getInt("User_ID");
@@ -160,9 +161,29 @@ public class LoginscreenController implements Initializable {
             return false;            
         }
     
-
+    private void textLog(String user) throws IOException {
+        try {
+            String fileName = "loginLog.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            //writer.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
+            writer.append(user);
+            System.out.println("Updating the log!");
+            writer.flush();
+            writer.close();
+        } catch  (IOException e) {
+            System.out.println("Error: " + e);
+        };
+            
+            
+            
+            
+        }
         
     }
+    
+
+        
+    
     
     
         
