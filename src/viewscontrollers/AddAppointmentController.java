@@ -64,6 +64,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
+import model.User;
 import model.appointment;
 
 /**
@@ -137,6 +138,7 @@ public class AddAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        System.out.println(User.getUserID());
         try {
             fillTimeBoxes();
             fillLocationBox();
@@ -278,8 +280,8 @@ public class AddAppointmentController implements Initializable {
         
         // Now we finally update it
                     PreparedStatement ps3 = DBConnection.startConnection().prepareStatement(""
-                    + "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID)"
-                    +                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID, Created_By)"
+                    +                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps3.setString(1, titleField.getText());
             ps3.setString(2, descriptionField.getText());
             ps3.setString(3, locationBox.getValue());
@@ -287,6 +289,7 @@ public class AddAppointmentController implements Initializable {
             ps3.setString(5, startTime);
             ps3.setString(6, endTime);
             ps3.setInt(7, CustID);
+            ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
             int resultado = ps3.executeUpdate();
             System.out.println("Appointment saved!");

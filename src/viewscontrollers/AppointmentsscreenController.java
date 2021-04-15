@@ -61,6 +61,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
+import model.User;
 import model.appointment;
 
 /**
@@ -71,7 +72,7 @@ import model.appointment;
 public class AppointmentsscreenController implements Initializable {
     Parent root;
     Stage stage;
-    int currentUser;
+    //int currentUser;
     
     int currentAppointment = 0;
     
@@ -147,7 +148,7 @@ public class AppointmentsscreenController implements Initializable {
         monthRadio.setToggleGroup(filterGroup);
         noFilterRadio.setToggleGroup(filterGroup);
         noFilterRadio.setSelected(true);
-        System.out.println("ussee  " + currentUser);
+        System.out.println("User is: " + User.getUserID());
         
         // Now we set the table values to what they are supposed to be
         PropertyValueFactory<appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
