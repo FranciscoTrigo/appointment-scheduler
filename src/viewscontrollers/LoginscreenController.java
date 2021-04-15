@@ -8,7 +8,7 @@ package viewscontrollers;
 import model.User;
 import model.Customer;
 import model.User;
-import model.appointment;
+import model.Appointment;
 import utils.DBConnection;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -140,6 +140,8 @@ public class LoginscreenController implements Initializable {
             Statement statement = DBConnection.conn.createStatement();
             String sqlStatement = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
+                                Appointment appointment = new Appointment();
+                    appointment.setType("LOL");
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {

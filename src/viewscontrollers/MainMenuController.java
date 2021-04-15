@@ -7,6 +7,7 @@ package viewscontrollers;
 
 //import model.User;
 import model.User;
+import model.Appointment;
 //import viewscontrollers.LoginscreenController;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -82,6 +83,7 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     System.out.println("User name is " + User.getUsername()+ "!!! and the id is: " + User.getUserID());
+    System.out.println("Appointment: " + Appointment.getType());
     //System.out.println("in the mainmenu this is the number  "+ thetext);
     }
         

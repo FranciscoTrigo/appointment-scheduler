@@ -75,7 +75,7 @@ import model.Appointment;
 
 
 
-public class AddAppointmentController implements Initializable {
+public class UpdateAppointmentController implements Initializable {
     
     @FXML
     private Label titleLabel;
@@ -139,6 +139,7 @@ public class AddAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(User.getUserID());
+        //System.out.println("ppointment id: " + appointment.getTitle());
         try {
             fillTimeBoxes();
             fillLocationBox();

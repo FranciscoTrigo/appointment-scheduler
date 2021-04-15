@@ -14,27 +14,47 @@ import javafx.beans.property.StringProperty;
  *
  * @author Francisco Trigo
  */
-public class appointment {
+public class Appointment {
     
     private int appointmentID;
     private int customerID;
     private int userID;
     private int contactID;
     
-    private String title;
+    private static String title;
     private String description;
     private String location;
-    private String type;
+    private static String type;
     private String startTime;
     private String endTime; 
     
     //constructor
     
-    public appointment() {
+    public Appointment() {
+        appointmentID  = 0;
+        customerID = 0;
+        userID = 0;
+        contactID =0 ;
+        
+        title = null;
+        description = null;
+        location = null;
+        type = null;
+        startTime = null;
+        endTime = null;
         
     }
     
-    public appointment(int appointmentID, int CustomerID, int userID, String title, String description, String location, String type, String startTime, String endTime){
+    public Appointment(int appointmentID, int CustomerID, int userID, String title, String description, String location, String type, String startTime, String endTime){
+        this.appointmentID = appointmentID;
+        this.customerID= CustomerID;
+        this.userID = userID;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.startTime = startTime;
+        this.endTime = endTime;
         
     }
 //    
@@ -66,7 +86,7 @@ public class appointment {
         return contactID;
     }
     
-    public String getTitle(){
+    public static String getTitle(){
         return title;
     }
     
@@ -78,7 +98,7 @@ public class appointment {
         return location;
     }
     
-    public String getType(){
+    public static String getType(){
         return type;
     }
     

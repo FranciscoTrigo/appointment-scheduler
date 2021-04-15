@@ -62,7 +62,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
 import model.User;
-import model.appointment;
+import model.Appointment;
 
 /**
  * FXML Controller class
@@ -105,25 +105,25 @@ public class AppointmentsscreenController implements Initializable {
     
     
     @FXML
-    private TableView<appointment> appTable;
+    private TableView<Appointment> appTable;
     @FXML
-    private TableColumn<appointment, Integer> AppIDColumn;
+    private TableColumn<Appointment, Integer> AppIDColumn;
     @FXML
-    private TableColumn<appointment, String> TitleColumn;
+    private TableColumn<Appointment, String> TitleColumn;
     @FXML
-    private TableColumn<appointment, String> DescriptionColumn;
+    private TableColumn<Appointment, String> DescriptionColumn;
     @FXML
-    private TableColumn<appointment, String> LocationColumn;
+    private TableColumn<Appointment, String> LocationColumn;
     @FXML
-    private TableColumn<appointment, Integer> ContactColumn;
+    private TableColumn<Appointment, Integer> ContactColumn;
     @FXML
-    private TableColumn<appointment, String> TypeColumn;
+    private TableColumn<Appointment, String> TypeColumn;
     @FXML
-    private TableColumn<appointment, String> StartColumn;
+    private TableColumn<Appointment, String> StartColumn;
     @FXML
-    private TableColumn<appointment, String> EndColumn;
+    private TableColumn<Appointment, String> EndColumn;
     @FXML
-    private TableColumn<appointment, Integer> CustomerIDColumn;
+    private TableColumn<Appointment, Integer> CustomerIDColumn;
     
     
     private final DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -131,8 +131,8 @@ public class AppointmentsscreenController implements Initializable {
 //    private final ZoneId localZoneID = ZoneId.systemDefault();
 //    private final ZoneId utcZoneID = ZoneId.of("UTC");
                 
-    ObservableList<appointment> appointmentsOL = FXCollections.observableArrayList();
-    private static appointment selectedAppointment = new appointment();
+    ObservableList<Appointment> appointmentsOL = FXCollections.observableArrayList();
+    private static Appointment selectedAppointment = new Appointment();
     
     
     
@@ -151,31 +151,31 @@ public class AppointmentsscreenController implements Initializable {
         System.out.println("User is: " + User.getUserID());
         
         // Now we set the table values to what they are supposed to be
-        PropertyValueFactory<appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
+        PropertyValueFactory<Appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
         AppIDColumn.setCellValueFactory(apptIDFactory);
         
-        PropertyValueFactory<appointment, String> apptTitleFactory = new PropertyValueFactory<>("title");
+        PropertyValueFactory<Appointment, String> apptTitleFactory = new PropertyValueFactory<>("title");
         TitleColumn.setCellValueFactory(apptTitleFactory);
         
-        PropertyValueFactory<appointment, String> apptDescriptionFactory = new PropertyValueFactory<>("description");
+        PropertyValueFactory<Appointment, String> apptDescriptionFactory = new PropertyValueFactory<>("description");
         DescriptionColumn.setCellValueFactory(apptDescriptionFactory);
         
-        PropertyValueFactory<appointment, String> apptLocationFactory = new PropertyValueFactory<>("location");
+        PropertyValueFactory<Appointment, String> apptLocationFactory = new PropertyValueFactory<>("location");
         LocationColumn.setCellValueFactory(apptLocationFactory);
         
-        PropertyValueFactory<appointment, Integer> apptContactFactory = new PropertyValueFactory<>("contactID");
+        PropertyValueFactory<Appointment, Integer> apptContactFactory = new PropertyValueFactory<>("contactID");
         ContactColumn.setCellValueFactory(apptContactFactory);
         
-        PropertyValueFactory<appointment, String> apptTypeFactory = new PropertyValueFactory<>("type");
+        PropertyValueFactory<Appointment, String> apptTypeFactory = new PropertyValueFactory<>("type");
         TypeColumn.setCellValueFactory(apptTypeFactory);
         
-        PropertyValueFactory<appointment, String> apptStartFactory = new PropertyValueFactory<>("startTime");
+        PropertyValueFactory<Appointment, String> apptStartFactory = new PropertyValueFactory<>("startTime");
         StartColumn.setCellValueFactory(apptStartFactory);
         
-        PropertyValueFactory<appointment, String> apptEndFactory = new PropertyValueFactory<>("endTime");
+        PropertyValueFactory<Appointment, String> apptEndFactory = new PropertyValueFactory<>("endTime");
         EndColumn.setCellValueFactory(apptEndFactory);
         
-        PropertyValueFactory<appointment, Integer> apptCustomerID = new PropertyValueFactory<>("customerID");
+        PropertyValueFactory<Appointment, Integer> apptCustomerID = new PropertyValueFactory<>("customerID");
         CustomerIDColumn.setCellValueFactory(apptCustomerID);
         
         
@@ -194,9 +194,8 @@ public class AppointmentsscreenController implements Initializable {
         
         
         final Label selected = new Label();
-        appTable.getSelectionModel().selectedItemProperty().addListener(
-        (observable, oldValue, newValue) -> {
-            appointment selectedApp = new appointment();
+        appTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            Appointment selectedApp = new Appointment();
             selectedApp = newValue;
             //int polio;
             if (selectedApp == null) {
@@ -227,7 +226,7 @@ public class AppointmentsscreenController implements Initializable {
         
         while(rs.next()) {
             
-            appointment appt = new appointment();
+            Appointment appt = new Appointment();
             appt.setAppointmentID(rs.getInt("Appointment_ID"));
             appt.setContactID(rs.getInt("Contact_ID"));
             appt.setTitle(rs.getString("Title"));
@@ -258,7 +257,7 @@ public class AppointmentsscreenController implements Initializable {
         LocalDate now = LocalDate.now();
         LocalDate nextMonth = now.plusMonths(1);
         
-        FilteredList<appointment> filteredData = new FilteredList<>(appointmentsOL);
+        FilteredList<Appointment> filteredData = new FilteredList<>(appointmentsOL);
         filteredData.setPredicate(row -> {
             LocalDate rowDate = LocalDate.parse(row.getStartTime(), datetimeDTF);
             return rowDate.isAfter(now.minusDays(1)) && rowDate.isBefore(nextMonth);
@@ -272,7 +271,7 @@ public class AppointmentsscreenController implements Initializable {
         LocalDate now = LocalDate.now();
         LocalDate nextWeek = now.plusWeeks(1);
         
-        FilteredList<appointment> filteredData = new FilteredList<>(appointmentsOL);
+        FilteredList<Appointment> filteredData = new FilteredList<>(appointmentsOL);
         filteredData.setPredicate(row -> {
             LocalDate rowDate = LocalDate.parse(row.getStartTime(), datetimeDTF);
             return rowDate.isAfter(now.minusDays(1)) && rowDate.isBefore(nextWeek);
@@ -327,7 +326,12 @@ public class AppointmentsscreenController implements Initializable {
     }
     
     @FXML
-    private void UpdateHandler (ActionEvent event){
+    private void UpdateHandler (ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("/views/UpdateAppointment.fxml"));
+        stage = (Stage) AddButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
         
     }
     

@@ -8,7 +8,7 @@ package franciscoscheduler;
 
 import model.Customer;
 import model.User;
-import model.appointment;
+import model.Appointment;
 import java.sql.SQLException;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
