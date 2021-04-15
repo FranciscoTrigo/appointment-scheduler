@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package viewscontrollers;
+
+//import model.User;
+import model.User;
+//import viewscontrollers.LoginscreenController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -77,6 +81,7 @@ public class MainMenuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+    System.out.println("User name is " + User.getUsername()+ "!!! and the id is: " + User.getUserID());
     //System.out.println("in the mainmenu this is the number  "+ thetext);
     }
         

@@ -52,6 +52,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Customer;
+import model.User;
 
 /**
  * FXML Controller class
@@ -152,7 +153,7 @@ public class CustomerscreenController implements Initializable {
         PropertyValueFactory<Customer, String> custAreaFactory = new PropertyValueFactory<>("CustomerArea");
         AreaColumn.setCellValueFactory(custAreaFactory);
         
-        
+            System.out.println("User name is " + User.getUsername()+ "!!! and the id is: " + User.getUserID());
         try {
             updateCustomerTable();
            // areaBoxFill();

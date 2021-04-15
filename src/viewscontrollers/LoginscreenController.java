@@ -5,41 +5,28 @@
  */
 package viewscontrollers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import model.User;
+import model.Customer;
+import model.User;
+import model.appointment;
 import utils.DBConnection;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import static java.lang.System.load;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.util.Date;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import static javafx.fxml.FXMLLoader.load;
-import static javafx.fxml.FXMLLoader.load;
 import javafx.fxml.Initializable;
-import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -49,7 +36,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import viewscontrollers.CustomerscreenController;
 
 /**
  * FXML Controller class
@@ -111,12 +97,16 @@ public class LoginscreenController implements Initializable {
         //System.out.println("ASD");ooo
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
+        
  
         //Parent root;
         Stage stage;
 
         
         if (isValidPassword(usernameInput, passwordInput)) {
+//            User user = new User();
+//            user.setUsername(UsernameTextField.getText());
+            
           
            
             System.out.println("Log in complete!");
@@ -153,6 +143,9 @@ public class LoginscreenController implements Initializable {
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
                     currentUser = result.getString("User_ID");
+                    User user = new User();
+                    user.setUsername(result.getString("User_Name"));
+                    user.setUserID(result.getInt("User_ID"));
                     textLog(result.getString("User_Name"));
                     return true;
                 }
@@ -166,7 +159,9 @@ public class LoginscreenController implements Initializable {
             String fileName = "loginLog.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
             //writer.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
-            writer.append(user);
+            Date date = new Date();
+            Timestamp ts = new Timestamp(date.getTime());
+            writer.append("\nSuccesful login: " + user + " at "+ ts);
             System.out.println("Updating the log!");
             writer.flush();
             writer.close();
