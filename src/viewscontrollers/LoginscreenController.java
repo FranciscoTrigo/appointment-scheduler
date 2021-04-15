@@ -168,23 +168,21 @@ public class LoginscreenController implements Initializable {
         } catch  (IOException e) {
             System.out.println("Error: " + e);
         };
-            
-            
-            
-            
-        }
         
-    }
-    
-
-        
-    
-    
-    
-        
-        
-        
-        // TODO
-       
-    
+    private void textLogBad(String user) throws IOException {
+        try {
+            String fileName = "loginLog.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            //writer.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
+            Date date = new Date();
+            Timestamp ts = new Timestamp(date.getTime());
+            writer.append("\nWRONG login: " + user + " at "+ ts);
+            System.out.println("Updating the log!");
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error " + e);           
+        };    
+    };
  
+        }
