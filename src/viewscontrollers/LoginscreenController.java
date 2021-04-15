@@ -125,6 +125,7 @@ public class LoginscreenController implements Initializable {
             //MainMenuController.setLabelText(currentUser);
             stage.show();            
         } else {
+            textLogBad(UsernameTextField.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("WRONG");
             alert.setHeaderText("Incorrect username or password, or both");
@@ -142,23 +143,39 @@ public class LoginscreenController implements Initializable {
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
-                    currentUser = result.getString("User_ID");
+                   // currentUser = result.getString("User_ID");
                     User user = new User();
                     user.setUsername(result.getString("User_Name"));
                     user.setUserID(result.getInt("User_ID"));
                     textLog(result.getString("User_Name"));
                     return true;
-                }
+                } 
+                   
+                
                // int currentUser = result.getInt("User_ID");
             }
             return false;            
         }
     
+    
+        private void textLogBad(String user) throws IOException {
+        try {
+            String fileName = "loginLog.txt";
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
+            Date date = new Date();
+            Timestamp ts = new Timestamp(date.getTime());
+            writer.append("\nWRONG login: " + user + " at "+ ts);
+            System.out.println("Updating the log!");
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("Error: " + e);           
+        }; 
+    };
     private void textLog(String user) throws IOException {
         try {
             String fileName = "loginLog.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            //writer.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
             writer.append("\nSuccesful login: " + user + " at "+ ts);
@@ -168,21 +185,8 @@ public class LoginscreenController implements Initializable {
         } catch  (IOException e) {
             System.out.println("Error: " + e);
         };
-        
-    private void textLogBad(String user) throws IOException {
-        try {
-            String fileName = "loginLog.txt";
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
-            //writer.append(DateTime.getTimeStamp() + " " + user + " " + "\n");
-            Date date = new Date();
-            Timestamp ts = new Timestamp(date.getTime());
-            writer.append("\nWRONG login: " + user + " at "+ ts);
-            System.out.println("Updating the log!");
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            System.out.println("Error " + e);           
-        };    
     };
+}
+      
  
-        }
+       
