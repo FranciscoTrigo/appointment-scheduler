@@ -179,11 +179,19 @@ public class CustomerscreenController implements Initializable {
     }  
     
     public void deleteCustomer() throws SQLException, Exception {
+        //First we delete any related appoointment
+        PreparedStatement ps0 = DBConnection.startConnection().prepareStatement(""
+                + "DELETE FROM appointments "
+                + "WHERE Customer_ID = ?");
+        String byeID = CustomerIDField.getText();
+        ps0.setString(1, byeID);
+        ps0.executeUpdate();
+        
+        
         System.out.println("Deleting selected customer....");
         PreparedStatement ps = DBConnection.startConnection().prepareStatement(""
                 + "DELETE FROM customers "
                 + "WHERE Customer_ID = ?");
-        String byeID = CustomerIDField.getText();
         System.out.println(byeID);
         ps.setString(1, byeID);
         ps.executeUpdate();
@@ -282,14 +290,16 @@ public class CustomerscreenController implements Initializable {
                     + "Address = ?, "
                     + "Postal_Code = ?, "
                     + "Phone = ?, "
-                    + "Division_ID = ? "
-                    + "WHERE Customer_ID = ?");
+                    + "Division_ID = ?, "
+                    + "Last_Updated_By = ? "
+                    + "WHERE Customer_ID = ? ");
             ps.setString(1,CustomerNameField.getText());
             ps.setString(2, AddressField.getText());
             ps.setString(3, ZIPField.getText());
             ps.setString(4, PhoneField.getText());
             ps.setInt(5, areaID);
-            ps.setString(6, CustomerIDField.getText());
+            ps.setString(6, User.getUsername());
+            ps.setString(7, CustomerIDField.getText());
             
             ps.executeUpdate();
             System.out.println("Customer updated!");
@@ -393,13 +403,14 @@ public class CustomerscreenController implements Initializable {
             
             // now we add customer
             PreparedStatement ps2 = DBConnection.startConnection().prepareStatement(""
-                    + "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID)"
-                    +                "VALUES (?, ?, ?, ?, ?)");
+                    + "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID, Created_By)"
+                    +                "VALUES (?, ?, ?, ?, ?, ?)");
             ps2.setString(1, CustomerNameField.getText());
             ps2.setString(2, AddressField.getText());
             ps2.setString(3, ZIPField.getText());
             ps2.setString(4, PhoneField.getText());
             ps2.setInt(5, areaID);
+            ps2.setString(6, User.getUsername());
             
             int resultado = ps2.executeUpdate();
             System.out.println("Customer saved!");
