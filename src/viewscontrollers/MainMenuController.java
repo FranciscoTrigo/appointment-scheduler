@@ -50,6 +50,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Dummy;
 
 /**
  * FXML Controller class
@@ -83,8 +84,8 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     System.out.println("User name is " + User.getUsername()+ "!!! and the id is: " + User.getUserID());
-    System.out.println("Appointment: " + Appointment.getType());
-    //System.out.println("in the mainmenu this is the number  "+ thetext);
+    System.out.println("Appointment: " + Dummy.getAppointmentID());
+
     }
         
     @FXML

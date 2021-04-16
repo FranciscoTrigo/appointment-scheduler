@@ -21,10 +21,10 @@ public class Appointment {
     private int userID;
     private int contactID;
     
-    private static String title;
+    private String title;
     private String description;
     private String location;
-    private static String type;
+    private String type;
     private String startTime;
     private String endTime; 
     
@@ -69,8 +69,11 @@ public class Appointment {
 //        location = location;
 //        type = type;
 //        startTime = startTime;
-//        endTime = endTime;
+//        endTime = endTime;a
 //    }
+    
+    
+    // waaa
     
     // get em
     
@@ -86,7 +89,7 @@ public class Appointment {
         return contactID;
     }
     
-    public static String getTitle(){
+    public String getTitle(){
         return title;
     }
     
@@ -98,7 +101,7 @@ public class Appointment {
         return location;
     }
     
-    public static String getType(){
+    public String getType(){
         return type;
     }
     

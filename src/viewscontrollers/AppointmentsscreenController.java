@@ -63,6 +63,7 @@ import javafx.stage.Stage;
 import model.Customer;
 import model.User;
 import model.Appointment;
+import model.Dummy;
 
 /**
  * FXML Controller class
@@ -202,6 +203,8 @@ public class AppointmentsscreenController implements Initializable {
                 System.out.println();
             } else{
             selectedAppointmentID = selectedApp.getAppointmentID();
+            Dummy.setAppointmentID(selectedAppointmentID);
+            System.out.println("Selected appointment is: " + Dummy.getAppointmentID());
             }           
  
             }
