@@ -16,17 +16,18 @@ import javafx.beans.property.StringProperty;
  */
 public class Appointment {
     
-    private static int appointmentID;
-    private static int customerID;
-    private static int userID;
-    private static int contactID;
+    private int appointmentID;
+    private  int customerID;
+    private  int userID;
+    private int contactID;
     
-    private static String title;
-    private static String description;
-    private static String location;
-    private static String type;
-    private static String startTime;
-    private static String endTime; 
+    private String title;
+    private String description;
+    private String location;
+    private String type;
+    private String startTime;
+    private String endTime; 
+
     
     //constructor
     
@@ -69,8 +70,11 @@ public class Appointment {
 //        location = location;
 //        type = type;
 //        startTime = startTime;
-//        endTime = endTime;
+//        endTime = endTime;a
 //    }
+    
+    
+    // waaa
     
     // get em
     
@@ -86,7 +90,7 @@ public class Appointment {
         return contactID;
     }
     
-    public static String getTitle(){
+    public String getTitle(){
         return title;
     }
     
@@ -98,7 +102,7 @@ public class Appointment {
         return location;
     }
     
-    public static String getType(){
+    public String getType(){
         return type;
     }
     

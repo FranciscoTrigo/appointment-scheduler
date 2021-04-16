@@ -7,6 +7,7 @@ package viewscontrollers;
 
 import model.User;
 import model.Customer;
+import model.Dummy;
 import model.User;
 import model.Appointment;
 import utils.DBConnection;
@@ -141,7 +142,9 @@ public class LoginscreenController implements Initializable {
             String sqlStatement = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
            // Appointment appointment = new Appointment();
-           // Appointment.setType("LOL");
+            Dummy dummy = new Dummy();
+            Dummy.setAppointmentID(4);
+
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
