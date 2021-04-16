@@ -144,6 +144,7 @@ public class LoginscreenController implements Initializable {
            // Appointment appointment = new Appointment();
             Dummy dummy = new Dummy();
             Dummy.setAppointmentID(4);
+
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {

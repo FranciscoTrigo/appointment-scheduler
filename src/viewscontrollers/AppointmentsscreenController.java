@@ -133,9 +133,8 @@ public class AppointmentsscreenController implements Initializable {
 //    private final ZoneId utcZoneID = ZoneId.of("UTC");
                 
     ObservableList<Appointment> appointmentsOL = FXCollections.observableArrayList();
+    
     private static Appointment selectedAppointment = new Appointment();
-    
-    
     
     public int selectedAppointmentID;
 
@@ -149,7 +148,7 @@ public class AppointmentsscreenController implements Initializable {
         monthRadio.setToggleGroup(filterGroup);
         noFilterRadio.setToggleGroup(filterGroup);
         noFilterRadio.setSelected(true);
-        System.out.println("User is: " + User.getUserID());
+        //System.out.println("User is: " + User.getUserID());
         
         // Now we set the table values to what they are supposed to be
         PropertyValueFactory<Appointment, Integer> apptIDFactory = new PropertyValueFactory<>("appointmentID");
@@ -178,15 +177,13 @@ public class AppointmentsscreenController implements Initializable {
         
         PropertyValueFactory<Appointment, Integer> apptCustomerID = new PropertyValueFactory<>("customerID");
         CustomerIDColumn.setCellValueFactory(apptCustomerID);
-        
-        
-        
+ 
         
         try {
 
             
             updateApptTable();
-            noFilterRadio.setSelected(true);
+            //noFilterRadio.setSelected(true);
                     
                     // TODO
                     } catch (Exception ex) {
@@ -195,37 +192,31 @@ public class AppointmentsscreenController implements Initializable {
         
         
         final Label selected = new Label();
+        
         appTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Appointment selectedApp = new Appointment();
             selectedApp = newValue;
-            //int polio;
             if (selectedApp == null) {
                 System.out.println();
             } else{
             selectedAppointmentID = selectedApp.getAppointmentID();
             Dummy.setAppointmentID(selectedAppointmentID);
             System.out.println("Selected appointment is: " + Dummy.getAppointmentID());
+
             }           
- 
             }
-            
-        
         );
-    }  
+    } 
     
     
     public void updateApptTable() throws SQLException, Exception {
         System.out.println("Updating Appt table");
         appointmentsOL.clear();
         Statement stmt = DBConnection.conn.createStatement();
-        //PreparedStatement ps;
-        //ps = DBConnection.startConnection().prepareStatement(""
         String sqlStatement = "SELECT Appointment_ID, Title, Description, Location, Contact_ID, Type, Start, End, Customer_ID "
                 + "FROM appointments";
-        //ResultSet rs = ps.executeQuery();
         ResultSet rs = stmt.executeQuery(sqlStatement);
         System.out.println("SQL Worked!");
-        appointmentsOL.clear();
         
         while(rs.next()) {
             
@@ -239,9 +230,14 @@ public class AppointmentsscreenController implements Initializable {
             appt.setStartTime(rs.getString("Start"));
             appt.setEndTime(rs.getString("End"));
             appt.setCustomerID(rs.getInt("Customer_ID"));
+            
             appointmentsOL.addAll(appt);
+            System.out.println(appt.getAppointmentID() + " " + appt.getContactID() + " " + appt.getTitle());
+
         }
-        //appTable.setItems(appointmentsOL);
+        appTable.setItems(appointmentsOL);
+        System.out.println(appointmentsOL.sorted());
+        
         if (isWeek == true && noFilter == false) {
             System.out.println("Week filter");
             filterWeek(appointmentsOL);
@@ -282,15 +278,11 @@ public class AppointmentsscreenController implements Initializable {
         appTable.setItems(filteredData);
     }
     
-        public static void setCurrentUser(int currentUser) {
-        currentUser = currentUser;
-        System.out.println("Current user is: " + currentUser);
-    }
     
     public void deleteAppointment() throws SQLException, Exception{
 
-              //System.out.println(selectedAppointmentID);
-              //appTable.getSelectionModel().select(-1);
+              System.out.println(selectedAppointmentID);
+              appTable.getSelectionModel().select(-1);
               if (selectedAppointment == null) {
                   System.out.println("Nothing selected");
               } else {

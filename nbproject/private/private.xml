@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/yamif/Documents/GitHub/Scheduilling-app/src/viewscontrollers/LoginscreenController.java</file>
-            <file>file:/C:/Users/yamif/Documents/GitHub/Scheduilling-app/src/viewscontrollers/AppointmentsscreenController.java</file>
-            <file>file:/C:/Users/yamif/Documents/GitHub/Scheduilling-app/src/model/User.java</file>
-            <file>file:/C:/Users/yamif/Documents/GitHub/Scheduilling-app/src/viewscontrollers/MainMenuController.java</file>
-            <file>file:/C:/Users/yamif/Documents/GitHub/Scheduilling-app/src/viewscontrollers/UpdateAppointmentController.java</file>
-            <file>file:/C:/Users/yamif/Documents/GitHub/Scheduilling-app/src/model/Appointment.java</file>
+            <file>file:/C:/Users/yamif/Documents/NetBeansProjects/FranciscoScheduler/Scheduilling-app/src/model/appointment.java</file>
+            <file>file:/C:/Users/yamif/Documents/NetBeansProjects/FranciscoScheduler/Scheduilling-app/src/viewscontrollers/AppointmentsscreenController.java</file>
+            <file>file:/C:/Users/yamif/Documents/NetBeansProjects/FranciscoScheduler/Scheduilling-app/src/franciscoscheduler/FranciscoScheduler.java</file>
         </group>
     </open-files>
 </project-private>

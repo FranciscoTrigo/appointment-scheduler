@@ -84,8 +84,8 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     System.out.println("User name is " + User.getUsername()+ "!!! and the id is: " + User.getUserID());
-    System.out.println("Appointment: " + Dummy.getAppointmentID());
 
+    System.out.println("Appointment: " + Dummy.getAppointmentID());
     }
         
     @FXML
