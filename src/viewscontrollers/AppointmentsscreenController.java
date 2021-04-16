@@ -202,6 +202,8 @@ public class AppointmentsscreenController implements Initializable {
                 System.out.println();
             } else{
             selectedAppointmentID = selectedApp.getAppointmentID();
+            //appointment.setAppointmentID(selectedAppointmentID);
+           // Appointment.setType("LOL");
             }           
  
             }

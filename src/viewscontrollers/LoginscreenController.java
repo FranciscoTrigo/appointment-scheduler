@@ -140,8 +140,8 @@ public class LoginscreenController implements Initializable {
             Statement statement = DBConnection.conn.createStatement();
             String sqlStatement = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
-                                Appointment appointment = new Appointment();
-                    appointment.setType("LOL");
+            Appointment appointment = new Appointment();
+            Appointment.setType("LOL");
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {

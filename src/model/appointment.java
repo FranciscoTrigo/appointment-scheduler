@@ -16,17 +16,17 @@ import javafx.beans.property.StringProperty;
  */
 public class Appointment {
     
-    private int appointmentID;
-    private int customerID;
-    private int userID;
-    private int contactID;
+    private static int appointmentID;
+    private static int customerID;
+    private static int userID;
+    private static int contactID;
     
     private static String title;
-    private String description;
-    private String location;
+    private static String description;
+    private static String location;
     private static String type;
-    private String startTime;
-    private String endTime; 
+    private static String startTime;
+    private static String endTime; 
     
     //constructor
     
@@ -34,7 +34,7 @@ public class Appointment {
         appointmentID  = 0;
         customerID = 0;
         userID = 0;
-        contactID =0 ;
+        contactID = 0 ;
         
         title = null;
         description = null;
@@ -74,15 +74,15 @@ public class Appointment {
     
     // get em
     
-    public int getAppointmentID(){
+    public static int getAppointmentID(){
         return appointmentID;
     }
     
-    public int getCustomerID(){
+    public static int getCustomerID(){
         return customerID;
     }
     
-    public int getContactID(){
+    public static int getContactID(){
         return contactID;
     }
     
@@ -90,11 +90,11 @@ public class Appointment {
         return title;
     }
     
-    public String getDescription(){
+    public static String getDescription(){
         return description;
     }
     
-    public String getLocation(){
+    public static String getLocation(){
         return location;
     }
     
@@ -102,49 +102,49 @@ public class Appointment {
         return type;
     }
     
-    public String getStartTime(){
+    public static String getStartTime(){
         return startTime;
     }
     
-    public String getEndTime(){
+    public static String getEndTime(){
         return endTime;
     }
     
     // set them
     
-    public void setAppointmentID(int appointmentID) {
-        this.appointmentID = appointmentID;
+    public static void setAppointmentID(int appointmentID) {
+        Appointment.appointmentID = appointmentID;
     }
     
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public static void setCustomerID(int customerID) {
+        Appointment.customerID = customerID;
     }
     
-    public void setContactID(int contactID) {
-        this.contactID = contactID;
+    public static void setContactID(int contactID) {
+        Appointment.contactID = contactID;
     }
     
-    public void setTitle(String title) {
-        this.title = title;
+    public static void setTitle(String title) {
+        Appointment.title = title;
     }
     
-    public void setDescription(String description){
-        this.description = description;
+    public static void setDescription(String description){
+        Appointment.description = description;
     }
     
-    public void setLocation(String location){
-        this.location = location;
+    public static void setLocation(String location){
+        Appointment.location = location;
     }
     
-    public void setType(String type){
-        this.type = type;
+    public static void setType(String type){
+        Appointment.type = type;
     }
     
-    public void setStartTime(String startTime){
-        this.startTime = startTime;
+    public static void setStartTime(String startTime){
+        Appointment.startTime = startTime;
     }
     
-    public void setEndTime(String endTime){
-        this.endTime = endTime;
+    public static void setEndTime(String endTime){
+        Appointment.endTime = endTime;
     }
 }
