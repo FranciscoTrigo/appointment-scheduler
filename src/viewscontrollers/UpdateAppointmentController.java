@@ -365,8 +365,18 @@ public class UpdateAppointmentController implements Initializable {
         
         // Now we finally update it
                     PreparedStatement ps3 = DBConnection.startConnection().prepareStatement(""
-                    + "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID, Created_By)"
-                    +                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "UPDATE appointments "
+                    + "SET Title = ?,"
+                    + " Description = ?,"
+                    + " Location = ?,"
+                    + " Type = ?,"
+                    + " Start = ?, "
+                    + "End = ?, "
+                    + "Customer_ID = ?,"
+                    + " Contact_ID = ?, "
+                    + "Last_Updated_By = ? "
+                    + "WHERE Appointment_ID = ?"
+                    );
             ps3.setString(1, titleField.getText());
             ps3.setString(2, descriptionField.getText());
             ps3.setString(3, locationBox.getValue());
@@ -376,8 +386,9 @@ public class UpdateAppointmentController implements Initializable {
             ps3.setInt(7, CustID);
             ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
+            ps3.setInt(10, Dummy.getAppointmentID());
             int resultado = ps3.executeUpdate();
-            System.out.println("Appointment saved!");
+            System.out.println("Appointment updated!");
             goBack();
     }
     

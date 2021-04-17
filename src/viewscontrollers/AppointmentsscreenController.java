@@ -183,6 +183,7 @@ public class AppointmentsscreenController implements Initializable {
 
             
             updateApptTable();
+            UpdateButton.setDisable(true);
             //noFilterRadio.setSelected(true);
                     
                     // TODO
@@ -203,7 +204,7 @@ public class AppointmentsscreenController implements Initializable {
             Dummy.setAppointmentID(selectedAppointmentID);
             Dummy.setContactID(selectedApp.getContactID());
             Dummy.setCustomerID(selectedApp.getCustomerID());
-            System.out.println("Selected appointment is: " + Dummy.getAppointmentID());
+            UpdateButton.setDisable(false);
             
 
             }           
