@@ -201,7 +201,10 @@ public class AppointmentsscreenController implements Initializable {
             } else{
             selectedAppointmentID = selectedApp.getAppointmentID();
             Dummy.setAppointmentID(selectedAppointmentID);
+            Dummy.setContactID(selectedApp.getContactID());
+            Dummy.setCustomerID(selectedApp.getCustomerID());
             System.out.println("Selected appointment is: " + Dummy.getAppointmentID());
+            
 
             }           
             }

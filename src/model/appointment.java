@@ -78,15 +78,15 @@ public class Appointment {
     
     // get em
     
-    public static int getAppointmentID(){
+    public  int getAppointmentID(){
         return appointmentID;
     }
     
-    public static int getCustomerID(){
+    public  int getCustomerID(){
         return customerID;
     }
     
-    public static int getContactID(){
+    public  int getContactID(){
         return contactID;
     }
     
@@ -94,11 +94,11 @@ public class Appointment {
         return title;
     }
     
-    public static String getDescription(){
+    public  String getDescription(){
         return description;
     }
     
-    public static String getLocation(){
+    public  String getLocation(){
         return location;
     }
     
@@ -106,49 +106,49 @@ public class Appointment {
         return type;
     }
     
-    public static String getStartTime(){
+    public  String getStartTime(){
         return startTime;
     }
     
-    public static String getEndTime(){
+    public  String getEndTime(){
         return endTime;
     }
     
     // set them
     
-    public static void setAppointmentID(int appointmentID) {
-        Appointment.appointmentID = appointmentID;
+    public  void setAppointmentID(int appointmentID) {
+        this.appointmentID = appointmentID;
     }
     
-    public static void setCustomerID(int customerID) {
-        Appointment.customerID = customerID;
+    public  void setCustomerID(int customerID) {
+        this.customerID = customerID;
     }
     
-    public static void setContactID(int contactID) {
-        Appointment.contactID = contactID;
+    public  void setContactID(int contactID) {
+        this.contactID = contactID;
     }
     
-    public static void setTitle(String title) {
-        Appointment.title = title;
+    public  void setTitle(String title) {
+        this.title = title;
     }
     
-    public static void setDescription(String description){
-        Appointment.description = description;
+    public  void setDescription(String description){
+        this.description = description;
     }
     
-    public static void setLocation(String location){
-        Appointment.location = location;
+    public  void setLocation(String location){
+        this.location = location;
     }
     
-    public static void setType(String type){
-        Appointment.type = type;
+    public  void setType(String type){
+        this.type = type;
     }
     
-    public static void setStartTime(String startTime){
-        Appointment.startTime = startTime;
+    public  void setStartTime(String startTime){
+        this.startTime = startTime;
     }
     
-    public static void setEndTime(String endTime){
-        Appointment.endTime = endTime;
+    public  void setEndTime(String endTime){
+        this.endTime = endTime;
     }
 }

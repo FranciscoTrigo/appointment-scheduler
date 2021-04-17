@@ -20,19 +20,25 @@ import javafx.beans.property.StringProperty;
 //class is used to store current user data
 public class Dummy {
 
-    private static int appointmentID; 
+    private static int appointmentID;
+    private static int customerID;
+    private static int contactID;
 
     
     public Dummy() {
         appointmentID = 0;
+        customerID = 0;
+        contactID = 0;
 
 
     }
 
     
     //constructor
-    public Dummy(int appointmentiD) {
+    public Dummy(int appointmentiD, int customerID, int contactID) {
         this.appointmentID = appointmentID;
+        this.customerID = customerID;
+        this.contactID = contactID;
 
     }
 
@@ -40,12 +46,26 @@ public class Dummy {
     public static int getAppointmentID() {
         return appointmentID;
     }
+    
+    public static int getCustomerID() {
+    return customerID;
+}
+    public static int getContactID() {
+        return contactID;
+    }
 
 
     //set them
     public static void setAppointmentID(int AppointmentID) {
         Dummy.appointmentID = AppointmentID;
     }
-
+    
+    public static void setContactID(int contactID) {
+        Dummy.contactID = contactID;
+    }
+    
+    public static void setCustomerID(int customerID) {
+        Dummy.customerID = customerID;
+    }
 
 }

@@ -66,6 +66,7 @@ import javafx.stage.Stage;
 import model.Customer;
 import model.User;
 import model.Appointment;
+import model.Dummy;
 
 /**
  * FXML Controller class
@@ -102,7 +103,8 @@ public class UpdateAppointmentController implements Initializable {
     private TextField titleField;
     @FXML
     private TextField descriptionField;
-
+    @FXML
+    private TextField appointmentTextField;
     @FXML
     private DatePicker selectDateBox;
     
@@ -146,6 +148,7 @@ public class UpdateAppointmentController implements Initializable {
             fillTypeBox();
             fillCustomerBox();
             fillContactBox();
+            getAppointmentInfo();
             // TODO
         } catch (Exception ex) {
             Logger.getLogger(AddAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -175,6 +178,64 @@ public class UpdateAppointmentController implements Initializable {
                
                 
         }}
+    
+    public void getAppointmentInfo() throws SQLException, Exception {
+        // Fill uout the information to latter edit it
+        
+        // get customer_id ...
+        String apptCustomer = "";
+        PreparedStatement ps0 = DBConnection.startConnection().prepareStatement("SELECT "
+                + "Customer_Name "
+                + "FROM customers "
+                + "WHERE Customer_ID = ? ");
+        ps0.setInt(1, Dummy.getCustomerID());
+        ResultSet result0 = ps0.executeQuery();
+        while (result0.next()) {
+            apptCustomer = result0.getString("Customer_Name");
+        }
+        
+        /////////////////
+        // Get Contact ID
+        String apptContact = "";
+        PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT "
+                + "Contact_Name "
+                + "FROM contacts "
+                + "WHERE Contact_ID = ? ");
+        ps1.setInt(1, Dummy.getContactID());
+        ResultSet result1 = ps1.executeQuery();
+        while (result1.next()) {
+            apptContact = result1.getString("Contact_Name");
+        }
+        
+        
+        System.out.println("Gathering information...");
+        PreparedStatement ps = DBConnection.startConnection().prepareStatement("SELECT "
+                + "Title, Description, Location, Type, Start, End, Customer_ID, User_ID, "
+                + "Contact_ID "
+                + "FROM appointments "
+                + "WHERE Appointment_ID = ? ");
+//                + "AND customers.Customer_ID = ? "
+//                + "AND contacts.Contact_ID = ? ");
+        ps.setInt(1, Dummy.getAppointmentID());
+//        ps.setString(2, apptCustomer);
+//        ps.setString(3, apptContact);
+        ResultSet result = ps.executeQuery();
+        String thedate = "";
+        String thedate2 = "";
+        while (result.next()) {
+            titleField.setText(result.getString("Title"));
+            descriptionField.setText(result.getString("Description"));
+            locationBox.setValue(result.getString("Location"));
+            typeBox.setValue(result.getString("Type"));
+            thedate = result.getString("Start");
+            thedate2 = result.getString("End");
+            customerBox.setValue(apptCustomer);
+            contactBox.setValue(apptContact);
+            appointmentTextField.setText(Integer.toString(Dummy.getAppointmentID()));
+   
+        }
+        
+    }
     
     public void goBack() throws IOException {
                 root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
