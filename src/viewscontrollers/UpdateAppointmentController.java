@@ -76,6 +76,7 @@ import model.Dummy;
 
 
 
+
 public class UpdateAppointmentController implements Initializable {
     
     @FXML
@@ -154,6 +155,12 @@ public class UpdateAppointmentController implements Initializable {
             Logger.getLogger(AddAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
+    
+    public static final LocalDate LOCAL_DATE (String dateString){
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    LocalDate localDate = LocalDate.parse(dateString, formatter);
+    return localDate;
+}
     
     public void fillTimeBoxes() {
         for (int i = 0; i <= 23; i++){
@@ -234,6 +241,22 @@ public class UpdateAppointmentController implements Initializable {
             appointmentTextField.setText(Integer.toString(Dummy.getAppointmentID()));
    
         }
+        // 1029-09-09 hh:mm:ss
+        //Fill out the datepicker
+        String year = thedate.substring(0,10);
+        selectDateBox.setValue(LOCAL_DATE(year));
+        //fill start hour
+        String startHora = thedate.substring(11, 13);
+        startHourCombo.setValue(startHora);
+        startHora = thedate.substring(14,16);
+        startMinuteCombo.setValue(startHora);
+        //fil end hour
+        String endHora = thedate2.substring(11, 13);
+        endHourCombo.setValue(endHora);
+        endHora = thedate2.substring(14, 16);
+        endMinuteCombo.setValue(endHora);
+        
+        
         
     }
     
