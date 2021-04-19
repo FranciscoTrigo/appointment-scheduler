@@ -138,7 +138,7 @@ public class CustomerscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-//        int currentUser;
+
         // Try  to fill in the table with the information from the customer table in the server!
         //Name
         PropertyValueFactory<Customer, String> custNameFactory = new PropertyValueFactory<>("CustomerName");
@@ -179,6 +179,7 @@ public class CustomerscreenController implements Initializable {
     }  
     
     public void deleteCustomer() throws SQLException, Exception {
+        // This functions deletes the selected customer in the table, if there are any related appointments, it will delete them all fisrt.
         //First we delete any related appoointment
         PreparedStatement ps0 = DBConnection.startConnection().prepareStatement(""
                 + "DELETE FROM appointments "
@@ -207,6 +208,7 @@ public class CustomerscreenController implements Initializable {
     }
     
     public void updateCustomerTable() throws SQLException {
+        // We will update the customer table with the latest info from SQL tables
         System.out.println("Updating customer table.......... .");
         customerOL.clear();
         Statement stmt = DBConnection.conn.createStatement();
@@ -229,6 +231,7 @@ public class CustomerscreenController implements Initializable {
     }
     
     public void areaBoxFill() throws SQLException, Exception {
+        // Fills in the area combo box with correct informtion depending on the country selected. Very neat 
         //statement creation
         PreparedStatement ps;
         ps = DBConnection.startConnection().prepareStatement("SELECT Country_ID FROM countries WHERE Country = ?");
@@ -250,6 +253,7 @@ public class CustomerscreenController implements Initializable {
     }
     
     public void countryBoxFill() throws SQLException, Exception {
+        // fill the country box with ocountries
         //statement creation
         Statement stmt = DBConnection.startConnection().createStatement();
         String sqlStatement = "SELECT Country FROM countries";
@@ -263,6 +267,7 @@ public class CustomerscreenController implements Initializable {
     }
         
     private void updateCustomer() throws Exception {
+        // updates the selected customer in the table, with info from the text fields and combobox
         System.out.println("Updating customer with ID: " + CustomerIDField.getText());
         try {
                         // get Division ID
@@ -313,6 +318,7 @@ public class CustomerscreenController implements Initializable {
     }
     
     public void listenCustomer(Customer customer) throws SQLException, Exception {
+        //Looks at what customer is selected in the table and fills in the information in the text fields for close reviewing or edit
         System.out.println("Updating customer fields...");
         disableFields();
         Customer cust = new Customer();
@@ -383,6 +389,7 @@ public class CustomerscreenController implements Initializable {
     }
     
     public void saveCustomer() throws Exception {
+        //Saves the csutomer to the table
         System.out.println("SAVING CUSTOMER");
         try {
             // get Division ID
@@ -426,11 +433,7 @@ public class CustomerscreenController implements Initializable {
 
     }
     
-//    public static void setCurrentUser(int currentUser) {
-//        currentUser = currentUser;
-//        System.out.println("Current user is: " + currentUser);
-//    }
-//    
+
     @FXML
     private void CustomerIDFieldHandler (ActionEvent event) {
     
@@ -473,6 +476,8 @@ public class CustomerscreenController implements Initializable {
     
     @FXML
     private void SaveCustomerHandler (ActionEvent event) {
+        // Checks if the CustomerID text field is populated to decide whether to save new customer or update exsisting one.
+        // CustomerID field is disabled to user and only populated when a editing a current customer.
       if ( CustomerIDField.getText().equals("")) {
           System.out.println("Saving New Customer");
           try {

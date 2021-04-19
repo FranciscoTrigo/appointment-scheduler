@@ -59,6 +59,10 @@ import model.Dummy;
  */
 
 
+// just a main menu, not much to see here i think
+// Will take you to different screens
+
+
 public class MainMenuController implements Initializable {
     //int currentUser;
     //String thetext;
@@ -128,11 +132,7 @@ public class MainMenuController implements Initializable {
         System.exit(0);
             }
     
-//    public static void setCurrentUser(String thetext) {
-//        thetext = thetext;
-//        System.out.println("Current user is: " + thetext);
-//        
-//    }
+
     
     
     }    

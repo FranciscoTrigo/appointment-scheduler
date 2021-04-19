@@ -103,7 +103,7 @@ public class LoginscreenController implements Initializable {
         //Parent root;
         Stage stage;
 
-        
+        // see if password is correct
         if (isValidPassword(usernameInput, passwordInput)) {
 //            User user = new User();
 //            user.setUsername(UsernameTextField.getText());
@@ -137,18 +137,21 @@ public class LoginscreenController implements Initializable {
     
     
     private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException, IOException {
+        /// This function checks if the password is right for the user
      //       System.out.println("cas");poo
             Statement statement = DBConnection.conn.createStatement();
             String sqlStatement = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
            // Appointment appointment = new Appointment();
+           // Create dummy object to keep appt info later on...
             Dummy dummy = new Dummy();
-            Dummy.setAppointmentID(4);
+      
 
             
             while (result.next()) {
                 if (result.getString("password").equals(passwordInput)) {
                    // currentUser = result.getString("User_ID");
+                   // create user object that will be used thru the app
                     User user = new User();
                     user.setUsername(result.getString("User_Name"));
                     user.setUserID(result.getInt("User_ID"));
@@ -164,6 +167,7 @@ public class LoginscreenController implements Initializable {
     
     
         private void textLogBad(String user) throws IOException {
+            // Logs to a txt file if the login is unsucessful. It logs in attempted username, result of the operation and timestamp
         try {
             String fileName = "login_activity.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
@@ -178,6 +182,7 @@ public class LoginscreenController implements Initializable {
         }; 
     };
     private void textLog(String user) throws IOException {
+        // logs to txt file when log in is successful. logs username, result, and timestamp
         try {
             String fileName = "login_activity.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
