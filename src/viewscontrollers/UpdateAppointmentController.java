@@ -397,7 +397,7 @@ public class UpdateAppointmentController implements Initializable {
         
     }
     
-    @FXML
+    @FXML 
     private void customerBoxHandler (ActionEvent event) {
         
     }

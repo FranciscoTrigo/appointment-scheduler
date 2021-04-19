@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="678.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="viewscontrollers.ReportsController">
+   <children>
+      <TabPane layoutX="13.0" layoutY="14.0" prefHeight="574.0" prefWidth="650.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab fx:id="contactTabController" text="contact schedule">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane prefHeight="546.0" prefWidth="650.0">
+                           <children>
+                              <ComboBox fx:id="contactBox" layoutY="25.0" onAction="#contactBoxController" prefWidth="150.0" promptText="contact" />
+                              <TableView fx:id="contactTable" layoutY="60.0" prefHeight="534.0" prefWidth="650.0">
+                                <columns>
+                                  <TableColumn fx:id="AppointmentIDColumn" prefWidth="75.0" text="Appointment ID" />
+                                  <TableColumn fx:id="TitleColumn" prefWidth="75.0" text="Title" />
+                                    <TableColumn fx:id="TypeColumn" prefWidth="75.0" text="Type" />
+                                    <TableColumn fx:id="DescriptionColumn" prefWidth="75.0" text="Description" />
+                                    <TableColumn fx:id="startColumn" prefWidth="75.0" text="start" />
+                                    <TableColumn fx:id="endColumn" prefWidth="75.0" text="end" />
+                                    <TableColumn fx:id="customerColumn" prefWidth="75.0" text="customer" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab fx:id="ownTab" text="??" />
+          <Tab fx:id="MonthTab" text="Month appointments" />
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

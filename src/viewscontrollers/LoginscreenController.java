@@ -165,7 +165,7 @@ public class LoginscreenController implements Initializable {
     
         private void textLogBad(String user) throws IOException {
         try {
-            String fileName = "loginLog.txt";
+            String fileName = "login_activity.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
@@ -179,7 +179,7 @@ public class LoginscreenController implements Initializable {
     };
     private void textLog(String user) throws IOException {
         try {
-            String fileName = "loginLog.txt";
+            String fileName = "login_activity.txt";
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
             Date date = new Date();
             Timestamp ts = new Timestamp(date.getTime());
