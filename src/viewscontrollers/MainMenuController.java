@@ -118,7 +118,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private void ReportsButtonHandler(ActionEvent event) throws IOException {
         System.out.print("REPORTS");
-        root = FXMLLoader.load(getClass().getResource("/views/customerscreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("/views/reports.fxml"));
         stage = (Stage) CustomersButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
