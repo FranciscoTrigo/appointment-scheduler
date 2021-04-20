@@ -70,6 +70,10 @@ import model.Dummy;
  *
  * @author Francisco Trigo
  */
+
+// mostly just a table to see appointments
+// can be filtered to show appointmets whithin next week, month, or no filter
+
 public class AppointmentsscreenController implements Initializable {
     Parent root;
     Stage stage;
@@ -144,6 +148,9 @@ public class AppointmentsscreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        // i set the radio button in a group so that only one can be selected at the time
+        // and try to set noFilter as a default, but seems like it does not work??! 
+        
         weekRadio.setToggleGroup(filterGroup);
         monthRadio.setToggleGroup(filterGroup);
         noFilterRadio.setToggleGroup(filterGroup);
@@ -192,21 +199,20 @@ public class AppointmentsscreenController implements Initializable {
         }
         
         
-        final Label selected = new Label();
+        // this part looks for the selected row and do something!
         
         appTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Appointment selectedApp = new Appointment();
             selectedApp = newValue;
             if (selectedApp == null) {
                 System.out.println();
-            } else{
+            } else {
+            // When selected, it puts the appt ID to a variable for later deletion, and also puts info into the dummy object for editing
             selectedAppointmentID = selectedApp.getAppointmentID();
             Dummy.setAppointmentID(selectedAppointmentID);
             Dummy.setContactID(selectedApp.getContactID());
             Dummy.setCustomerID(selectedApp.getCustomerID());
             UpdateButton.setDisable(false);
-            
-
             }           
             }
         );
@@ -214,6 +220,7 @@ public class AppointmentsscreenController implements Initializable {
     
     
     public void updateApptTable() throws SQLException, Exception {
+        // Grabs all the info from sql appointment table and puts it into the table
         System.out.println("Updating Appt table");
         appointmentsOL.clear();
         Statement stmt = DBConnection.conn.createStatement();
@@ -223,7 +230,7 @@ public class AppointmentsscreenController implements Initializable {
         System.out.println("SQL Worked!");
         
         while(rs.next()) {
-            
+            // Set things from sql result
             Appointment appt = new Appointment();
             appt.setAppointmentID(rs.getInt("Appointment_ID"));
             appt.setContactID(rs.getInt("Contact_ID"));
@@ -241,7 +248,7 @@ public class AppointmentsscreenController implements Initializable {
         }
         appTable.setItems(appointmentsOL);
         System.out.println(appointmentsOL.sorted());
-        
+        //looks at what filter is selected and applies it
         if (isWeek == true && noFilter == false) {
             System.out.println("Week filter");
             filterWeek(appointmentsOL);
