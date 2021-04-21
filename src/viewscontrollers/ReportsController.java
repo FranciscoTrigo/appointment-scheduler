@@ -5,6 +5,7 @@
  */
 package viewscontrollers;
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -65,6 +66,7 @@ import javafx.stage.Stage;
 import model.Customer;
 import model.User;
 import model.Appointment;
+import model.Cita;
 import model.Dummy;
 
 /**
@@ -72,6 +74,8 @@ import model.Dummy;
  *
  * @author yamif
  */
+
+
 public class ReportsController implements Initializable {
     Parent root;
     Stage stage;
@@ -95,6 +99,24 @@ public class ReportsController implements Initializable {
     private TableColumn<Appointment, String> endColumn;
     @FXML
     private TableColumn<Appointment, Integer> customerColumn;
+    
+    @FXML
+    private TableView<Cita> typeNumberTable;
+    @FXML
+    private TableColumn<Cita, String> typeNumberColumn;
+    @FXML
+    private TableColumn<Cita, Integer> numberNumberColumn;
+    
+    @FXML
+    private TableView<Cita> monthNumberTable;
+    @FXML
+    private TableColumn<Cita, String>  monthNumberColumn;
+    @FXML
+    private TableColumn<Cita, Integer> numberMonthColumn;
+    
+    
+    
+    
     @FXML
     private Tab ownTab;
     @FXML
@@ -105,6 +127,8 @@ public class ReportsController implements Initializable {
     private static int contactID;
     
     ObservableList<Appointment> report1OL = FXCollections.observableArrayList();
+    ObservableList<Cita> monthOL = FXCollections.observableArrayList();
+    ObservableList<Cita> typeOL = FXCollections.observableArrayList();
 
     /**
      * Initializes the controller class.
@@ -137,10 +161,23 @@ public class ReportsController implements Initializable {
             //////////////////////////////////////////////////
             /////////////////////////////////
             
+        PropertyValueFactory<Cita, String> typeFactory = new PropertyValueFactory<>("type");
+        PropertyValueFactory<Cita, Integer> manyTypeFactory = new PropertyValueFactory<>("manyType");
+        typeNumberColumn.setCellValueFactory(typeFactory);
+        numberNumberColumn.setCellValueFactory(manyTypeFactory);
+        
+        PropertyValueFactory<Cita, String> monthFactory = new PropertyValueFactory<>("month");
+        PropertyValueFactory<Cita, Integer> manyMonthFactory = new PropertyValueFactory<>("manyMonth");
+        monthNumberColumn.setCellValueFactory(monthFactory);
+        numberMonthColumn.setCellValueFactory(manyMonthFactory);
+        
+        
+            
         try {
 
 
             contactBoxFill();
+            fillSecondTabTable();
         } catch (Exception ex) {
             Logger.getLogger(ReportsController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -191,6 +228,47 @@ public class ReportsController implements Initializable {
         }
         contactTable.setItems(report1OL);
         System.out.println("Updated table");
+    }
+    
+    
+    public void fillSecondTabTable() throws SQLException, Exception {
+        monthOL.clear();
+        typeOL.clear();
+        
+        PreparedStatement ps;
+        ps = DBConnection.startConnection().prepareStatement("SELECT Type, count(*) FROM appointments group by Type");
+        ResultSet result = ps.executeQuery();
+        while (result.next()) {
+            Cita cita = new Cita();
+            cita.setType(result.getString("Type"));
+            cita.setManyType(result.getInt("Count(*)"));
+            typeOL.addAll(cita);
+        }
+        typeNumberTable.setItems(typeOL);
+//        select Type, count(*)
+//FROM appointments
+//group by Type
+
+//select substr(Start, 6,2) as Start, count(*)
+//from appointments
+//GROUP BY substr(Start, 6, 2)
+      PreparedStatement ps1;
+      ps1 = DBConnection.startConnection().prepareStatement("SELECT substr(Start, 6, 2) as Month, count(*) "
+              + "FROM appointments "
+              + "GROUP BY substr(Start, 6, 2)");
+      ResultSet result1 = ps1.executeQuery();
+         java.sql.ResultSetMetaData rsmd = result1.getMetaData();
+   System.out.println("querying SELECT * FROM XXX");
+   int columnsNumber = rsmd.getColumnCount();
+   while (result1.next()) {
+
+          Cita cita = new Cita();
+          cita.setMonth(result1.getString("Month"));
+          cita.setManyMonth(result1.getInt("Count(*)"));
+          monthOL.addAll(cita);           
+      }
+      monthNumberTable.setItems(monthOL);   
+      System.out.println("Updated tables");
     }
     
     @FXML
