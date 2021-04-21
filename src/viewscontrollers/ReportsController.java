@@ -119,7 +119,7 @@ public class ReportsController implements Initializable {
     @FXML
     private TableColumn<Cita, String> locationReportColumn;
     @FXML 
-    private TableColumn<Cita, Integer> locationManyColumnl;
+    private TableColumn<Cita, Integer> locationManyColumn;
     
     
     @FXML
@@ -176,12 +176,18 @@ public class ReportsController implements Initializable {
         monthNumberColumn.setCellValueFactory(monthFactory);
         numberMonthColumn.setCellValueFactory(manyMonthFactory);
         
+        PropertyValueFactory<Cita, String> locationFactory = new PropertyValueFactory<>("location");
+        PropertyValueFactory<Cita, Integer> manyLocationFactory = new PropertyValueFactory<>("manyLocation");
+        locationReportColumn.setCellValueFactory(locationFactory);
+        locationManyColumn.setCellValueFactory(manyLocationFactory);
+        
         
             
         try {
 
 
             contactBoxFill();
+            fillOwnTable();
             fillSecondTabTable();
         } catch (Exception ex) {
             Logger.getLogger(ReportsController.class.getName()).log(Level.SEVERE, null, ex);
