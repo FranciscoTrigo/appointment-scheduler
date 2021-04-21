@@ -73,7 +73,8 @@ import model.Dummy;
  * @author yamif
  */
 public class ReportsController implements Initializable {
-
+    Parent root;
+    Stage stage;
     @FXML
     private Tab contactTabController;
     @FXML
@@ -98,6 +99,8 @@ public class ReportsController implements Initializable {
     private Tab ownTab;
     @FXML
     private Tab MonthTab;
+    @FXML
+    private Button backButton;
     
     private static int contactID;
     
@@ -194,5 +197,14 @@ public class ReportsController implements Initializable {
     private void contactBoxController(ActionEvent event) throws Exception {
         getContactID();
     }
+    
+        @FXML
+    private void backbuttonHandler (ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
+        stage = (Stage) backButton.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show(); 
+            }
     
 }
