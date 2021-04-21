@@ -14,6 +14,8 @@ public class Cita {
     private int manyType;
     private String month;
     private int manyMonth;
+    private String location;
+    private int manyLocation;
     
 
 
@@ -22,11 +24,13 @@ public Cita() {
 
 }
 
-public Cita(String type, int manyType, String month, int manyMonth) {
+public Cita(String type, int manyType, String month, int manyMonth, String location, int manyLocation) {
     setType(type);
     setManyType(manyType);
     setMonth(month);
-    setManyMonth(manyMonth);
+    setManyMonth(manyMonth); 
+    setLocation(location);
+    setManyLocation(manyLocation);
 }
 
 public String getType() {
@@ -43,6 +47,14 @@ public String getMonth() {
 
 public int getManyMonth() {
     return manyMonth;
+}
+
+public String getLocation() {
+    return location;
+}
+
+public int getManyLocation() {
+    return manyLocation;
 }
 
 
@@ -62,6 +74,14 @@ public void setMonth(String month) {
 
 public void setManyMonth(int manyMonth) {
     this.manyMonth = manyMonth;
+}
+
+public void setLocation(String location) {
+    this.location = location;
+}
+
+public void setManyLocation(int manyLocation) {
+    this.manyLocation = manyLocation;
 }
 
 

@@ -114,7 +114,12 @@ public class ReportsController implements Initializable {
     @FXML
     private TableColumn<Cita, Integer> numberMonthColumn;
     
-    
+    @FXML
+    private TableView<Cita> locationTable;
+    @FXML
+    private TableColumn<Cita, String> locationReportColumn;
+    @FXML 
+    private TableColumn<Cita, Integer> locationManyColumnl;
     
     
     @FXML
@@ -129,7 +134,7 @@ public class ReportsController implements Initializable {
     ObservableList<Appointment> report1OL = FXCollections.observableArrayList();
     ObservableList<Cita> monthOL = FXCollections.observableArrayList();
     ObservableList<Cita> typeOL = FXCollections.observableArrayList();
-
+    ObservableList<Cita> locationOL = FXCollections.observableArrayList();
     /**
      * Initializes the controller class.
      */
@@ -257,10 +262,7 @@ public class ReportsController implements Initializable {
               + "FROM appointments "
               + "GROUP BY substr(Start, 6, 2)");
       ResultSet result1 = ps1.executeQuery();
-         java.sql.ResultSetMetaData rsmd = result1.getMetaData();
-   System.out.println("querying SELECT * FROM XXX");
-   int columnsNumber = rsmd.getColumnCount();
-   while (result1.next()) {
+      while (result1.next()) {
 
           Cita cita = new Cita();
           cita.setMonth(result1.getString("Month"));
@@ -269,6 +271,20 @@ public class ReportsController implements Initializable {
       }
       monthNumberTable.setItems(monthOL);   
       System.out.println("Updated tables");
+    }
+    
+    public void fillOwnTable() throws SQLException, Exception {
+        locationOL.clear();
+        PreparedStatement ps2;
+        ps2=DBConnection.startConnection().prepareStatement("SELECT Location, count(*) FROM appointments group by Location");
+        ResultSet result2 = ps2.executeQuery();
+        while (result2.next()) {
+            Cita cita = new Cita();
+            cita.setLocation(result2.getString("Location"));
+            cita.setManyLocation(result2.getInt("Count(*)"));
+            locationOL.addAll(cita);
+        }
+        locationTable.setItems(locationOL);
     }
     
     @FXML

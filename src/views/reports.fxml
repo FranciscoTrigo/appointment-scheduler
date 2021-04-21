@@ -71,7 +71,23 @@
                      </children>
                   </AnchorPane>
                </content></Tab>
-          <Tab fx:id="ownTab" text="??" />
+          <Tab fx:id="ownTab" text="Location report">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="-10.0" layoutY="-5.0" prefHeight="553.0" prefWidth="897.0">
+                           <children>
+                              <TableView fx:id="locationTable" layoutX="221.0" layoutY="58.0" prefHeight="364.0" prefWidth="317.0">
+                                <columns>
+                                  <TableColumn fx:id="locationReportColumn" prefWidth="199.0" text="Location" />
+                                  <TableColumn fx:id="locationManyColumn" prefWidth="94.0" text="Number" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </content></Tab>
         </tabs>
       </TabPane>
       <Button fx:id="backButton" layoutX="780.0" layoutY="638.0" mnemonicParsing="false" onAction="#backbuttonHandler" prefHeight="25.0" prefWidth="89.0" text="Back" />
