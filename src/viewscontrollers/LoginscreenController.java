@@ -196,7 +196,7 @@ public class LoginscreenController implements Initializable {
             alert.setHeaderText("Appointment is drawing near");
             DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.MINUTE, 15);
+            cal.add(Calendar.MINUTE, 13);
             alert.setContentText("You have an appointment within 15 minutes. "
                     + "\n Your appointment is at: " + dateFormat.format((cal.getTime())));
             Optional<ButtonType> result = alert.showAndWait();

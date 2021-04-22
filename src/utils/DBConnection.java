@@ -23,7 +23,7 @@ public class DBConnection {
     
     private static final String jdbcURL = protocol + vendorName + ipAddress + "?connectionimeZone=SERVER";
     
-    private static final String MYSQLJDBCDriver = "com.mysql.jdbc.Driver";
+    private static final String MYSQLJDBCDriver = "com.mysql.cj.jdbc.Driver";
     public static Connection conn = null;
     
     private static final String username = "U068kM";
