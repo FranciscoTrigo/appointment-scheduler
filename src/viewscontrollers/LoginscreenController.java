@@ -156,7 +156,7 @@ public class LoginscreenController implements Initializable {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Appointment notice");
                     alert.setHeaderText("You have an appointment near!!!");
-                    alert.setContentText("You have an appointment within 15 minutes.\n"
+                    alert.setContentText("You have an appointment scheduled within 15 minutes.\n"
                             + "Appointment starts at: " + result.getString("Start") + "\n"
                             + "Appointment takes place at: " + result.getString("Location"));
                     Optional<ButtonType> result2 = alert.showAndWait(); 
