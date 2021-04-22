@@ -181,7 +181,7 @@ public class CustomerscreenController implements Initializable {
     public void deleteCustomer() throws SQLException, Exception {
         // This functions deletes the selected customer in the table, if there are any related appointments, it will delete them all fisrt.
         //First we delete any related appoointment
-        PreparedStatement ps0 = DBConnection.startConnection().prepareStatement(""
+        PreparedStatement ps0 = DBConnection.getConnection().prepareStatement(""
                 + "DELETE FROM appointments "
                 + "WHERE Customer_ID = ?");
         String byeID = CustomerIDField.getText();
@@ -190,7 +190,7 @@ public class CustomerscreenController implements Initializable {
         
         
         System.out.println("Deleting selected customer....");
-        PreparedStatement ps = DBConnection.startConnection().prepareStatement(""
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(""
                 + "DELETE FROM customers "
                 + "WHERE Customer_ID = ?");
         System.out.println(byeID);
@@ -234,7 +234,7 @@ public class CustomerscreenController implements Initializable {
         // Fills in the area combo box with correct informtion depending on the country selected. Very neat 
         //statement creation
         PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement("SELECT Country_ID FROM countries WHERE Country = ?");
+        ps = DBConnection.getConnection().prepareStatement("SELECT Country_ID FROM countries WHERE Country = ?");
         ps.setString(1, CountryBox.getValue());
         int countryID = 0;
         ResultSet result = ps.executeQuery();
@@ -243,7 +243,7 @@ public class CustomerscreenController implements Initializable {
             }
 
         PreparedStatement ps1;
-        ps1 = DBConnection.startConnection().prepareStatement("SELECT Division FROM first_level_divisions WHERE Country_ID = ?");
+        ps1 = DBConnection.getConnection().prepareStatement("SELECT Division FROM first_level_divisions WHERE Country_ID = ?");
         ps1.setInt(1, countryID);
         ResultSet result2 = ps1.executeQuery();    
         while (result2.next()) {
@@ -255,7 +255,7 @@ public class CustomerscreenController implements Initializable {
     public void countryBoxFill() throws SQLException, Exception {
         // fill the country box with ocountries
         //statement creation
-        Statement stmt = DBConnection.startConnection().createStatement();
+        Statement stmt = DBConnection.getConnection().createStatement();
         String sqlStatement = "SELECT Country FROM countries";
         ResultSet result = stmt.executeQuery(sqlStatement);
         
@@ -273,7 +273,7 @@ public class CustomerscreenController implements Initializable {
                         // get Division ID
             System.out.println("Getting division ID");
             System.out.println(AreaBox.getValue());
-            PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Division_ID "
+            PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT Division_ID "
                     + "FROM first_level_divisions "
                     + "WHERE Division = ?");
            // String areaName = ""; Probably not need this time
@@ -289,7 +289,7 @@ public class CustomerscreenController implements Initializable {
             ///////////////////////////
             
             PreparedStatement ps;
-            ps = DBConnection.startConnection().prepareStatement(""
+            ps = DBConnection.getConnection().prepareStatement(""
                     + "UPDATE customers "
                     + "SET Customer_Name = ?, "
                     + "Address = ?, "
@@ -330,7 +330,7 @@ public class CustomerscreenController implements Initializable {
 //        customerUpdate = true;
 //        customerAdd = false;
         //System.out.println("cas");
-        PreparedStatement ps = DBConnection.startConnection().prepareStatement(
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(
                 "SELECT  Customer_ID, Customer_Name,  Address, Postal_Code, Phone, Division, Country "
                 + "FROM customers, first_level_divisions, countries "
                 + "WHERE customers.Customer_ID = ? "
@@ -395,7 +395,7 @@ public class CustomerscreenController implements Initializable {
             // get Division ID
             System.out.println("Getting division ID for SQL statement");
             System.out.println(AreaBox.getValue());
-            PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Division_ID "
+            PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT Division_ID "
                     + "FROM first_level_divisions "
                     + "WHERE Division = ?");
            // String areaName = ""; Probably not need this time
@@ -409,7 +409,7 @@ public class CustomerscreenController implements Initializable {
             System.out.println("Area ID IS: " + areaID);
             
             // now we add customer
-            PreparedStatement ps2 = DBConnection.startConnection().prepareStatement(""
+            PreparedStatement ps2 = DBConnection.getConnection().prepareStatement(""
                     + "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone, Division_ID, Created_By)"
                     +                "VALUES (?, ?, ?, ?, ?, ?)");
             ps2.setString(1, CustomerNameField.getText());

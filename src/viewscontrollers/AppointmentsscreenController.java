@@ -300,7 +300,7 @@ public class AppointmentsscreenController implements Initializable {
                   
               
               System.out.println("Deleting selected appointment");
-              PreparedStatement ps = DBConnection.startConnection().prepareStatement(""
+              PreparedStatement ps = DBConnection.getConnection().prepareStatement(""
                 + "DELETE FROM appointments "
                 + "WHERE Appointment_ID = ?");
         ps.setInt(1, selectedAppointmentID);

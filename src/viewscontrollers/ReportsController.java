@@ -198,7 +198,7 @@ public class ReportsController implements Initializable {
     public void contactBoxFill() throws SQLException, Exception {
         // Fill the contactBox to display only appoinrments for that contact!!!
         PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement("SELECT Contact_Name from contacts");
+        ps = DBConnection.getConnection().prepareStatement("SELECT Contact_Name from contacts");
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             contactBox.getItems().add(result.getString("Contact_Name"));
@@ -208,7 +208,7 @@ public class ReportsController implements Initializable {
     public void getContactID() throws SQLException, Exception {
         String contactName = contactBox.getValue();
         PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement("SELECT Contact_ID from contacts WHERE Contact_NAME = ?");
+        ps = DBConnection.getConnection().prepareStatement("SELECT Contact_ID from contacts WHERE Contact_NAME = ?");
         ps.setString(1, contactName);
         ResultSet result = ps.executeQuery();
         while (result.next()) {
@@ -221,7 +221,7 @@ public class ReportsController implements Initializable {
         System.out.println("Update report table");
         report1OL.clear();
         PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement("SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID "
+        ps = DBConnection.getConnection().prepareStatement("SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID "
                 + "FROM appointments "
                 + "WHERE Contact_ID = ?");
         ps.setInt(1, contactID);
@@ -247,7 +247,7 @@ public class ReportsController implements Initializable {
         typeOL.clear();
         
         PreparedStatement ps;
-        ps = DBConnection.startConnection().prepareStatement("SELECT Type, count(*) FROM appointments group by Type");
+        ps = DBConnection.getConnection().prepareStatement("SELECT Type, count(*) FROM appointments group by Type");
         ResultSet result = ps.executeQuery();
         while (result.next()) {
             Cita cita = new Cita();
@@ -264,7 +264,7 @@ public class ReportsController implements Initializable {
 //from appointments
 //GROUP BY substr(Start, 6, 2)
       PreparedStatement ps1;
-      ps1 = DBConnection.startConnection().prepareStatement("SELECT substr(Start, 6, 2) as Month, count(*) "
+      ps1 = DBConnection.getConnection().prepareStatement("SELECT substr(Start, 6, 2) as Month, count(*) "
               + "FROM appointments "
               + "GROUP BY substr(Start, 6, 2)");
       ResultSet result1 = ps1.executeQuery();
@@ -282,7 +282,7 @@ public class ReportsController implements Initializable {
     public void fillOwnTable() throws SQLException, Exception {
         locationOL.clear();
         PreparedStatement ps2;
-        ps2=DBConnection.startConnection().prepareStatement("SELECT Location, count(*) FROM appointments group by Location");
+        ps2=DBConnection.getConnection().prepareStatement("SELECT Location, count(*) FROM appointments group by Location");
         ResultSet result2 = ps2.executeQuery();
         while (result2.next()) {
             Cita cita = new Cita();

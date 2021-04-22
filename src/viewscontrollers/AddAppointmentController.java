@@ -208,7 +208,7 @@ public class AddAppointmentController implements Initializable {
     
     public void fillContactBox() throws SQLException, Exception {
         //statement creation
-        Statement stmt = DBConnection.startConnection().createStatement();
+        Statement stmt = DBConnection.getConnection().createStatement();
         String sqlStatement = "SELECT Contact_Name FROM contacts";
         ResultSet result = stmt.executeQuery(sqlStatement);
         
@@ -221,7 +221,7 @@ public class AddAppointmentController implements Initializable {
     
     public void fillCustomerBox() throws SQLException, Exception {
                 //statement creation
-        Statement stmt = DBConnection.startConnection().createStatement();
+        Statement stmt = DBConnection.getConnection().createStatement();
         String sqlStatement = "SELECT Customer_Name FROM customers";
         ResultSet result = stmt.executeQuery(sqlStatement);
         
@@ -236,7 +236,7 @@ public class AddAppointmentController implements Initializable {
         System.out.println("Saving the appointment...");
         
         // Getting the Customer_ID
-        PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Customer_ID "
+        PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT Customer_ID "
                     + "FROM customers "
                     + "WHERE Customer_Name = ?");
         ps1.setString(1, customerBox.getValue());
@@ -248,7 +248,7 @@ public class AddAppointmentController implements Initializable {
             //System.out.println("Customer ID IS: " + CustID);
             
         // Getting Contact ID
-                PreparedStatement ps2 = DBConnection.startConnection().prepareStatement("SELECT * "
+                PreparedStatement ps2 = DBConnection.getConnection().prepareStatement("SELECT * "
                     + "FROM contacts "
                     + "WHERE Contact_Name = ?");
         ps2.setString(1, contactBox.getValue());
@@ -279,7 +279,7 @@ public class AddAppointmentController implements Initializable {
         
         
         // Now we finally update it
-                    PreparedStatement ps3 = DBConnection.startConnection().prepareStatement(""
+                    PreparedStatement ps3 = DBConnection.getConnection().prepareStatement(""
                     + "INSERT INTO appointments (Title, Description, Location, Type, Start, End, Customer_ID, Contact_ID, Created_By)"
                     +                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ps3.setString(1, titleField.getText());

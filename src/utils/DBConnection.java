@@ -72,7 +72,7 @@ public class DBConnection {
 }
     
     // get connection to only have one connection and be faster!
-    public static Connection getConnetion()
+    public static Connection getConnection()
     {
         return conn;
     }

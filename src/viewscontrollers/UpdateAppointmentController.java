@@ -191,7 +191,7 @@ public class UpdateAppointmentController implements Initializable {
         
         // get customer_id ...
         String apptCustomer = "";
-        PreparedStatement ps0 = DBConnection.startConnection().prepareStatement("SELECT "
+        PreparedStatement ps0 = DBConnection.getConnection().prepareStatement("SELECT "
                 + "Customer_Name "
                 + "FROM customers "
                 + "WHERE Customer_ID = ? ");
@@ -204,7 +204,7 @@ public class UpdateAppointmentController implements Initializable {
         /////////////////
         // Get Contact ID
         String apptContact = "";
-        PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT "
+        PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT "
                 + "Contact_Name "
                 + "FROM contacts "
                 + "WHERE Contact_ID = ? ");
@@ -216,7 +216,7 @@ public class UpdateAppointmentController implements Initializable {
         
         
         System.out.println("Gathering information...");
-        PreparedStatement ps = DBConnection.startConnection().prepareStatement("SELECT "
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT "
                 + "Title, Description, Location, Type, Start, End, Customer_ID, User_ID, "
                 + "Contact_ID "
                 + "FROM appointments "
@@ -293,7 +293,7 @@ public class UpdateAppointmentController implements Initializable {
     
     public void fillContactBox() throws SQLException, Exception {
         //statement creation
-        Statement stmt = DBConnection.startConnection().createStatement();
+        Statement stmt = DBConnection.getConnection().createStatement();
         String sqlStatement = "SELECT Contact_Name FROM contacts";
         ResultSet result = stmt.executeQuery(sqlStatement);
         
@@ -306,7 +306,7 @@ public class UpdateAppointmentController implements Initializable {
     
     public void fillCustomerBox() throws SQLException, Exception {
                 //statement creation
-        Statement stmt = DBConnection.startConnection().createStatement();
+        Statement stmt = DBConnection.getConnection().createStatement();
         String sqlStatement = "SELECT Customer_Name FROM customers";
         ResultSet result = stmt.executeQuery(sqlStatement);
         
@@ -321,7 +321,7 @@ public class UpdateAppointmentController implements Initializable {
         System.out.println("Saving the appointment...");
         
         // Getting the Customer_ID
-        PreparedStatement ps1 = DBConnection.startConnection().prepareStatement("SELECT Customer_ID "
+        PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT Customer_ID "
                     + "FROM customers "
                     + "WHERE Customer_Name = ?");
         ps1.setString(1, customerBox.getValue());
@@ -333,7 +333,7 @@ public class UpdateAppointmentController implements Initializable {
             //System.out.println("Customer ID IS: " + CustID);
             
         // Getting Contact ID
-                PreparedStatement ps2 = DBConnection.startConnection().prepareStatement("SELECT * "
+                PreparedStatement ps2 = DBConnection.getConnection().prepareStatement("SELECT * "
                     + "FROM contacts "
                     + "WHERE Contact_Name = ?");
         ps2.setString(1, contactBox.getValue());
@@ -364,7 +364,7 @@ public class UpdateAppointmentController implements Initializable {
         
         
         // Now we finally update it
-                    PreparedStatement ps3 = DBConnection.startConnection().prepareStatement(""
+                    PreparedStatement ps3 = DBConnection.getConnection().prepareStatement(""
                     + "UPDATE appointments "
                     + "SET Title = ?,"
                     + " Description = ?,"

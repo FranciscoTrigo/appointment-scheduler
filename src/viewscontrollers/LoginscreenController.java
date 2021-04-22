@@ -147,7 +147,7 @@ public class LoginscreenController implements Initializable {
             return;
         } else {
             System.out.println("Checking to see if there are appointments drawing near...");
-            PreparedStatement ps = DBConnection.startConnection().prepareStatement("Select Start, Location FROM appointments");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("Select Start, Location FROM appointments");
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                // System.out.println(result.getString("Start"));
