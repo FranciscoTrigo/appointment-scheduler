@@ -77,12 +77,17 @@
                      <children>
                         <AnchorPane layoutX="-10.0" layoutY="-5.0" prefHeight="553.0" prefWidth="897.0">
                            <children>
-                              <TableView fx:id="locationTable" layoutX="221.0" layoutY="58.0" prefHeight="364.0" prefWidth="317.0">
+                              <TableView fx:id="locationTable" layoutX="291.0" layoutY="141.0" prefHeight="364.0" prefWidth="317.0">
                                 <columns>
                                   <TableColumn fx:id="locationReportColumn" prefWidth="199.0" text="Location" />
                                   <TableColumn fx:id="locationManyColumn" prefWidth="94.0" text="Number" />
                                 </columns>
                               </TableView>
+                              <Label layoutX="303.0" layoutY="74.0" text="Appointments by Location">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </AnchorPane>
                      </children>
