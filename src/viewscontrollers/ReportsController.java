@@ -98,7 +98,7 @@ public class ReportsController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> endColumn;
     @FXML
-    private TableColumn<Appointment, Integer> customerColumn;
+    private TableColumn<Appointment, String> customerColumn;
     
     @FXML
     private TableView<Cita> typeNumberTable;
@@ -160,7 +160,7 @@ public class ReportsController implements Initializable {
         PropertyValueFactory<Appointment, String> appointmentEnd = new PropertyValueFactory<>("endTime");
         endColumn.setCellValueFactory(appointmentEnd);
         
-        PropertyValueFactory<Appointment, Integer> appointmentCustomerFactory = new PropertyValueFactory<>("CustomerID");
+        PropertyValueFactory<Appointment, String> appointmentCustomerFactory = new PropertyValueFactory<>("customerName");
         customerColumn.setCellValueFactory(appointmentCustomerFactory);
                     //////////////////////////////////////
             //////////////////////////////////////////////////
@@ -221,9 +221,21 @@ public class ReportsController implements Initializable {
         System.out.println("Update report table");
         report1OL.clear();
         PreparedStatement ps;
-        ps = DBConnection.getConnection().prepareStatement("SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID "
+        ps = DBConnection.getConnection().prepareStatement("SELECT appointments.Appointment_ID, appointments.Title, appointments.Type, appointments.Description, appointments.Start, appointments.End, appointments.Customer_ID, customers.Customer_Name "
                 + "FROM appointments "
+                + "INNER JOIN customers ON appointments.Customer_ID = customers.Customer_ID "
                 + "WHERE Contact_ID = ?");
+        
+        
+//        "SELECT Appointment_ID, Title, Type, Description, Start, End, Customer_ID, customers.Customer_Name "
+//                + "FROM appointments "
+//                + "WHERE Contact_ID = ?");
+        
+//        SELECT appointments.Title, appointments.Customer_ID, customers.Customer_Name
+//FROM appointments
+//INNER JOIN customers ON appointments.Customer_ID = customers.Customer_ID
+//WHERE appointments.Contact_ID = 4
+        
         ps.setInt(1, contactID);
         ResultSet result = ps.executeQuery();
         while (result.next()) {
@@ -234,7 +246,8 @@ public class ReportsController implements Initializable {
             appointment.setDescription(result.getString("Description"));
             appointment.setStartTime(result.getString("Start"));
             appointment.setEndTime(result.getString("End"));
-            appointment.setCustomerID(result.getInt("Customer_ID"));
+            System.out.println(result.getString("Customer_Name"));
+            appointment.setCustomerName(result.getString("Customer_Name"));
             report1OL.addAll(appointment);                   
         }
         contactTable.setItems(report1OL);

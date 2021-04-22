@@ -27,6 +27,7 @@ public class Appointment {
     private String type;
     private String startTime;
     private String endTime; 
+    private String customerName;
 
     
     //constructor
@@ -43,10 +44,12 @@ public class Appointment {
         type = null;
         startTime = null;
         endTime = null;
+        customerName = null;
+        
         
     }
     
-    public Appointment(int appointmentID, int CustomerID, int userID, String title, String description, String location, String type, String startTime, String endTime){
+    public Appointment(int appointmentID, int CustomerID, int userID, String title, String description, String location, String type, String startTime, String endTime, String customerName){
         this.appointmentID = appointmentID;
         this.customerID= CustomerID;
         this.userID = userID;
@@ -56,6 +59,7 @@ public class Appointment {
         this.type = type;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.customerName = customerName;
         
     }
 //    
@@ -77,6 +81,10 @@ public class Appointment {
     // waaa
     
     // get em
+    
+    public String getCustomerName() {
+        return customerName;
+    }
     
     public  int getAppointmentID(){
         return appointmentID;
@@ -115,6 +123,10 @@ public class Appointment {
     }
     
     // set them
+    
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
     
     public  void setAppointmentID(int appointmentID) {
         this.appointmentID = appointmentID;
