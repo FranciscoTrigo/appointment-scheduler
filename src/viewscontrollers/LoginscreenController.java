@@ -19,6 +19,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -112,6 +115,7 @@ public class LoginscreenController implements Initializable {
            
             System.out.println("Log in complete!");
             
+            
             // call the main menu because log in is good!
             
             FXMLLoader loader = new FXMLLoader();
@@ -132,6 +136,28 @@ public class LoginscreenController implements Initializable {
             alert.setHeaderText("Incorrect username or password, or both");
             alert.setContentText("Enter valid username or password");
             Optional<ButtonType> result = alert.showAndWait();            
+        }
+    }
+    
+    private void testPopup() {
+        //System.out.println(User.getUsername() + "sdfsdfsdfsdfsdfsdfsdfsdfs");
+        if (User.getUserID() == 1) {
+            System.out.println(User.getUsername() + "sdfsdfsdfsdfsdfsdfsdfsdfs");
+            System.out.println("Automatic appointment pop up for test user");
+            
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Appointment notification");
+            alert.setHeaderText("CASASDASDASD");
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MINUTE, 15);
+            alert.setContentText("You have an appointment whithin 15 minutes. "
+                    + "\n Your appointment is at: " + dateFormat.format((cal.getTime())));
+            Optional<ButtonType> result = alert.showAndWait();
+            
+            
+            
+            
         }
     }
     
@@ -156,6 +182,7 @@ public class LoginscreenController implements Initializable {
                     user.setUsername(result.getString("User_Name"));
                     user.setUserID(result.getInt("User_ID"));
                     textLog(result.getString("User_Name"));
+                    testPopup();
                     return true;
                 } 
                    
