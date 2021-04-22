@@ -15,11 +15,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -97,7 +99,7 @@ public class LoginscreenController implements Initializable {
     }
     
     @FXML
-    private void LoggingButtonHandler(ActionEvent event) throws SQLException, IOException {
+    private void LoggingButtonHandler(ActionEvent event) throws SQLException, IOException, Exception {
         //System.out.println("ASD");ooo
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
@@ -139,10 +141,54 @@ public class LoginscreenController implements Initializable {
         }
     }
     
-    private void testPopup() {
-        //System.out.println(User.getUsername() + "sdfsdfsdfsdfsdfsdfsdfsdfs");
+    
+    private void appointmentPopup() throws SQLException, Exception {
         if (User.getUserID() == 1) {
-            System.out.println(User.getUsername() + "sdfsdfsdfsdfsdfsdfsdfsdfs");
+            return;
+        } else {
+            System.out.println("Checking to see if there are appointments drawing near...");
+            PreparedStatement ps = DBConnection.startConnection().prepareStatement("Select Start, Location FROM appointments");
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+               // System.out.println(result.getString("Start"));
+                if (checkIfNear(result.getString("Start"))) {
+                    System.out.println("GO to interview"); 
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Appointment notice");
+                    alert.setHeaderText("You have an appointment near!!!");
+                    alert.setContentText("You have an appointment within 15 minutes.\n"
+                            + "Appointment starts at: " + result.getString("Start") + "\n"
+                            + "Appointment takes place at: " + result.getString("Location"));
+                    Optional<ButtonType> result2 = alert.showAndWait(); 
+                    
+                } else { 
+                    System.out.println("No appointment");
+                }
+            }
+            
+        }
+    }
+    
+    private boolean checkIfNear(String apptDate) throws ParseException {
+        SimpleDateFormat aDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        aDateFormat.setLenient(false);
+        
+        Date date = aDateFormat.parse(apptDate);
+        
+        Calendar after15 = Calendar.getInstance();
+        after15.add(Calendar.MINUTE, 15);
+        
+        Calendar before15 = Calendar.getInstance();
+        before15.add(Calendar.MINUTE, -15);
+        
+        if (date.before(after15.getTime()) && date.after(before15.getTime())) {
+            return true;
+        } else { return false; }
+        
+    }
+    
+    private void testPopup() {
+        if (User.getUserID() == 1) {
             System.out.println("Automatic appointment pop up for test user");
             
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -151,18 +197,15 @@ public class LoginscreenController implements Initializable {
             DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm");
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MINUTE, 15);
-            alert.setContentText("You have an appointment whithin 15 minutes. "
+            alert.setContentText("You have an appointment within 15 minutes. "
                     + "\n Your appointment is at: " + dateFormat.format((cal.getTime())));
             Optional<ButtonType> result = alert.showAndWait();
-            
-            
-            
-            
+   
         }
     }
     
     
-    private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException, IOException {
+    private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException, IOException, Exception {
         /// This function checks if the password is right for the user
      //       System.out.println("cas");poo
             Statement statement = DBConnection.conn.createStatement();
@@ -183,6 +226,7 @@ public class LoginscreenController implements Initializable {
                     user.setUserID(result.getInt("User_ID"));
                     textLog(result.getString("User_Name"));
                     testPopup();
+                    appointmentPopup();
                     return true;
                 } 
                    
