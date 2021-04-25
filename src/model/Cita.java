@@ -6,8 +6,9 @@
 package model;
 
 /**
- *
- * @author yamif
+ * This is a class that I made to make it easier to fill out the required reports.
+ * It stores the possible appointment types, locations, month, and how many occurrences of each type/location/month are in the appointments table at the moment of running
+ * @author Francisco Trigo
  */
 public class Cita {
     private String type;
@@ -20,11 +21,24 @@ public class Cita {
 
 
 //constructor
+
+    /**
+     *
+     */
 public Cita() {
 
 }
 
-public Cita(String type, int manyType, String month, int manyMonth, String location, int manyLocation) {
+    /**
+     *
+     * @param type - String for Type of appointment
+     * @param manyType - How many appointments with the particular type are on the table at the moment
+     * @param month - This saves the month that the appointment takes place. Taken form the Start value
+     * @param manyMonth - Stores how many instances of each month are there in the table
+     * @param location - String for location of appointment
+     * @param manyLocation - Stores how many times the location repeats
+     */
+    public Cita(String type, int manyType, String month, int manyMonth, String location, int manyLocation) {
     setType(type);
     setManyType(manyType);
     setMonth(month);
@@ -33,53 +47,103 @@ public Cita(String type, int manyType, String month, int manyMonth, String locat
     setManyLocation(manyLocation);
 }
 
-public String getType() {
+    /**
+     *
+     * @return the appointment type
+     */
+    public String getType() {
     return type;
 }
 
-public int getManyType() {
+    /**
+     *
+     * @return how many instances of this.Type are in the table
+     */
+    public int getManyType() {
     return manyType;
 }
 
-public String getMonth() {
+    /**
+     *
+     * @return the month, most likely in the form a number. IE April = 04
+     */
+    public String getMonth() {
     return month;
 }
 
-public int getManyMonth() {
+    /**
+     *
+     * @return how many instances of this.month are in the table
+     */
+    public int getManyMonth() {
     return manyMonth;
 }
 
-public String getLocation() {
+    /**
+     *
+     * @return the appointment location
+     */
+    public String getLocation() {
     return location;
 }
 
-public int getManyLocation() {
+    /**
+     *
+     * @return how many instances of this.location are on the table
+     */
+    public int getManyLocation() {
     return manyLocation;
 }
 
 
 /////////////////////////
 
+    /**
+     *
+     * @param type the Appointment type, from appointments table
+     */
+
 public void setType(String type) {
     this.type = type;
 }
 
-public void setManyType(int manyType) {
+    /**
+     *
+     * @param manyType - How many instances of Type are in the table
+     */
+    public void setManyType(int manyType) {
     this.manyType = manyType;
 }
 
-public void setMonth(String month) {
+    /**
+     *
+     * @param month Small string(might be a number) from the Start column in the appointments table. 
+     */
+    public void setMonth(String month) {
     this.month = month;
 }
 
-public void setManyMonth(int manyMonth) {
+    /**
+     *
+     * @param manyMonth How many instances of month are in the table
+     */
+    public void setManyMonth(int manyMonth) {
     this.manyMonth = manyMonth;
 }
 
-public void setLocation(String location) {
+    /**
+     *
+     * @param location Location of the appointment, taken form the appointments table
+     */
+    public void setLocation(String location) {
     this.location = location;
 }
 
+    
+    /**
+     * 
+     * @param manyLocation how many instances of location in the table
+     */
 public void setManyLocation(int manyLocation) {
     this.manyLocation = manyLocation;
 }

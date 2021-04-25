@@ -30,6 +30,12 @@ import javafx.stage.Stage;
 /**
  *
  * @author Francisco Trigo
+ * @version 0.8
+ * @since 2021-04-01
+ * 
+ * This is the program for the C195 class at WGU
+ * Its a appointment scheduler application that interfaces with a SQL database, and lets you add, edit, and remove customers.
+ * It also lets you add, edit and remove appointments. And store and edit the information on the SQL database
  */
 public class FranciscoScheduler extends Application{
     
@@ -39,13 +45,14 @@ public class FranciscoScheduler extends Application{
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Scheduler");
-        //System.out.println("ca324324324234ca");
         stage.show();
     }
     
 
     /**
      * @param args the command line arguments
+     * @throws Exception  -
+     * @throws SQLException - 
      */
     public static void main(String[] args) throws SQLException, Exception {
         

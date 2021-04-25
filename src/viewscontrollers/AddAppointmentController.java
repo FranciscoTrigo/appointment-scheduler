@@ -69,7 +69,8 @@ import model.Appointment;
 
 /**
  * FXML Controller class
- *
+ * This is the controller for the Add appointment screen
+ * It is used to add appointments to the appointment table thru the use of text fields, combo boxes, and date picker
  * @author yamif
  */
 
@@ -140,17 +141,23 @@ public class AddAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println(User.getUserID());
         try {
+            // call the functions to fill the combo boxes
             fillTimeBoxes();
             fillLocationBox();
             fillTypeBox();
             fillCustomerBox();
             fillContactBox();
-            // TODO
+         
         } catch (Exception ex) {
             Logger.getLogger(AddAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }    
     
+    /**
+     *  This function will fill out the four combo Boxes dedicated to set up start time and end time
+     *  It works in a 24 hour system. There are separate combo box for hour and for minute, and it repeats for end time.
+     * 
+     */
     public void fillTimeBoxes() {
         for (int i = 0; i <= 23; i++){
             if (i < 10) {
@@ -175,6 +182,11 @@ public class AddAppointmentController implements Initializable {
                 
         }}
     
+    /**
+     * Function to go back to the main appointment screen
+     * @throws IOException --
+     */
+    
     public void goBack() throws IOException {
                 root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
         stage = (Stage) cancelButton.getScene().getWindow();
@@ -183,6 +195,11 @@ public class AddAppointmentController implements Initializable {
         stage.show(); 
             }
     
+    
+    /**
+     * Fills out the location comboBox.
+     * This is done so we have a finite amount of possible locations, which makes it easier to manage because there are no typos or very specific locations now.
+     */
     
     public void fillLocationBox() {
         locationBox.getItems().addAll(
@@ -197,6 +214,11 @@ public class AddAppointmentController implements Initializable {
         );         
     }
     
+    /**
+     * Fills out the type comboBox.
+     * Its done so there are a finite amount to available types
+     */
+    
     public void fillTypeBox() {
         typeBox.getItems().addAll(
         "Meeting",
@@ -205,6 +227,13 @@ public class AddAppointmentController implements Initializable {
         "type ",
         "Other");
     }
+    
+    
+    /**
+     * Fills the contact box with contact names. It will get available contacts from the contacts table
+     * @throws SQLException --
+     * @throws Exception --
+     */
     
     public void fillContactBox() throws SQLException, Exception {
         //statement creation
@@ -219,6 +248,12 @@ public class AddAppointmentController implements Initializable {
         result.close();
     }
     
+    /**
+     * Fills the customer contact box with customer names. Gets names from customers table
+     * @throws SQLException --
+     * @throws Exception --
+     */
+    
     public void fillCustomerBox() throws SQLException, Exception {
                 //statement creation
         Statement stmt = DBConnection.getConnection().createStatement();
@@ -231,6 +266,24 @@ public class AddAppointmentController implements Initializable {
         stmt.close();
         result.close();
     }
+    
+    /**
+     * Saves the information currently written/selected on the fields into a new appointment using sql.
+     * It makes 3 different queries to the db.
+     * 
+     * It first will use the Contact Name from the contact comboBox to get the contact Name, using the contacts table.
+     * It does the same with the Customer Name.
+     * 
+     * It also creates two strings, for the Start and End time, it generates the strings by
+     * combining the date from the datePicker and the hour comboBox.
+     * 
+     * Once it has all the information, it will insert a new appointment into the appointment table. 
+     * 
+     * Once the appointment is saved, it automatically returns to main appointments screen
+     * 
+     * @throws SQLException --
+     * @throws Exception --
+     */
     
     public void saveAppointment() throws SQLException, Exception {
         System.out.println("Saving the appointment...");
@@ -310,7 +363,11 @@ public class AddAppointmentController implements Initializable {
     private void selectDateBoxHandler (ActionEvent event) {
         
     }
-    
+    /**
+     * Calls the save appointment function
+     * @param event
+     * @throws Exception 
+     */
     @FXML
     private void saveButtonHandler (ActionEvent event) throws Exception {
         saveAppointment();
@@ -326,7 +383,11 @@ public class AddAppointmentController implements Initializable {
     private void typeBoxHandler (ActionEvent event) {
         
     }
-    
+    /**
+     * Returns to main appointments screen
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void cancelButtonHandler (ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));

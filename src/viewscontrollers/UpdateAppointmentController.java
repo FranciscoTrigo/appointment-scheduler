@@ -138,6 +138,8 @@ public class UpdateAppointmentController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url url
+     * @param rb resource
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -156,12 +158,19 @@ public class UpdateAppointmentController implements Initializable {
         }
     }    
     
+    /**
+     *
+     * @param dateString its the date
+     * @return 
+     */
     public static final LocalDate LOCAL_DATE (String dateString){
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     LocalDate localDate = LocalDate.parse(dateString, formatter);
     return localDate;
 }
-    
+    /**
+     * Fill out the comboBoxes to select start and end time
+     */
     public void fillTimeBoxes() {
         for (int i = 0; i <= 23; i++){
             if (i < 10) {
@@ -185,7 +194,11 @@ public class UpdateAppointmentController implements Initializable {
                
                 
         }}
-    
+    /**
+     * Gets the information for the selected appointment and populates it onto the fields for latter edition
+     * @throws SQLException --
+     * @throws Exception  --
+     */
     public void getAppointmentInfo() throws SQLException, Exception {
         // Fill uout the information to latter edit it
         
@@ -259,7 +272,10 @@ public class UpdateAppointmentController implements Initializable {
         
         
     }
-    
+    /**
+     * goes back
+     * @throws IOException --
+     */
     public void goBack() throws IOException {
                 root = FXMLLoader.load(getClass().getResource("/views/appointmentsscreen.fxml"));
         stage = (Stage) cancelButton.getScene().getWindow();
@@ -268,7 +284,9 @@ public class UpdateAppointmentController implements Initializable {
         stage.show(); 
             }
     
-    
+    /**
+     * Fills the location information 
+     */
     public void fillLocationBox() {
         locationBox.getItems().addAll(
         "McDonalds",
@@ -281,7 +299,9 @@ public class UpdateAppointmentController implements Initializable {
         "Other"
         );         
     }
-    
+    /**
+     * Fills out the type options
+     */
     public void fillTypeBox() {
         typeBox.getItems().addAll(
         "Meeting",
@@ -290,7 +310,11 @@ public class UpdateAppointmentController implements Initializable {
         "type ",
         "Other");
     }
-    
+   /**
+    * Fills out the contact options and information form the db
+    * @throws SQLException --
+    * @throws Exception --
+    */
     public void fillContactBox() throws SQLException, Exception {
         //statement creation
         Statement stmt = DBConnection.getConnection().createStatement();
@@ -303,7 +327,11 @@ public class UpdateAppointmentController implements Initializable {
         stmt.close();
         result.close();
     }
-    
+    /**
+     * Fills out the customer information options from the db
+     * @throws SQLException --
+     * @throws Exception --
+     */
     public void fillCustomerBox() throws SQLException, Exception {
                 //statement creation
         Statement stmt = DBConnection.getConnection().createStatement();
@@ -316,7 +344,11 @@ public class UpdateAppointmentController implements Initializable {
         stmt.close();
         result.close();
     }
-    
+    /**
+     * Saves(updates) current appointment with the information currently entered into the fields
+     * @throws SQLException --
+     * @throws Exception --
+     */
     public void saveAppointment() throws SQLException, Exception {
         System.out.println("Saving the appointment...");
         
@@ -406,7 +438,11 @@ public class UpdateAppointmentController implements Initializable {
     private void selectDateBoxHandler (ActionEvent event) {
         
     }
-    
+    /**
+     * saves
+     * @param event --
+     * @throws Exception --
+     */
     @FXML
     private void saveButtonHandler (ActionEvent event) throws Exception {
         saveAppointment();

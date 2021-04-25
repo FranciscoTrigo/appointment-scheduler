@@ -70,6 +70,8 @@ public class LoginscreenController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url url 
+     * @param rb resource bundle
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -141,18 +143,25 @@ public class LoginscreenController implements Initializable {
         }
     }
     
-    
+    /**
+     * Checks if there is an appointment scheduled in the next 15 minutes or less and gives a popup notice if true
+     * @throws SQLException --
+     * @throws Exception  -- 
+     */
     private void appointmentPopup() throws SQLException, Exception {
+        // Do nothing if current user is test user
         if (User.getUserID() == 1) {
             return;
         } else {
+            // Checks the Start time of all appointments and dows a while loop
             System.out.println("Checking to see if there are appointments drawing near...");
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("Select Start, Location FROM appointments");
             ResultSet result = ps.executeQuery();
             while (result.next()) {
+                // Checks if appointment is close...
                // System.out.println(result.getString("Start"));
                 if (checkIfNear(result.getString("Start"))) {
-                    System.out.println("GO to interview"); 
+                    System.out.println("Go to appointment!"); 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Appointment notice");
                     alert.setHeaderText("You have an appointment near!!!");
@@ -168,7 +177,12 @@ public class LoginscreenController implements Initializable {
             
         }
     }
-    
+    /**
+     * This function checks if the provided date and time happens within 15 minutes from right now
+     * @param apptDate This is the date taken from the Start column in the appointments table
+     * @return true or false depending on if within 15 minutes or not
+     * @throws ParseException  -- 
+     */
     private boolean checkIfNear(String apptDate) throws ParseException {
         SimpleDateFormat aDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         aDateFormat.setLenient(false);
@@ -186,7 +200,9 @@ public class LoginscreenController implements Initializable {
         } else { return false; }
         
     }
-    
+    /**
+     * This is an appointment test popup for the test user only. It will always activate
+     */
     private void testPopup() {
         if (User.getUserID() == 1) {
             System.out.println("Automatic appointment pop up for test user");
@@ -204,23 +220,30 @@ public class LoginscreenController implements Initializable {
         }
     }
     
-    
+    /**
+     * Checks If the input username and password are correct and a pair, will return true if true
+     * @param usernameInput username taken from the username text field
+     * @param passwordInput password taken from the password text field
+     * @return returns true is pair is good
+     * @throws SQLException --
+     * @throws IOException --
+     * @throws Exception --
+     */
     private boolean isValidPassword( String usernameInput, String passwordInput) throws SQLException, IOException, Exception {
         /// This function checks if the password is right for the user
-     //       System.out.println("cas");poo
+
             Statement statement = DBConnection.conn.createStatement();
+            // statement to select user_ID, password and user_name where username = input username, if adequate
             String sqlStatement = "SELECT password, User_ID, User_Name FROM users WHERE User_Name ='" + usernameInput + "'";;
             ResultSet result = statement.executeQuery(sqlStatement);
-           // Appointment appointment = new Appointment();
-           // Create dummy object to keep appt info later on...
+
             Dummy dummy = new Dummy();
       
 
             
             while (result.next()) {
+                // checks if the input password is correct for the user
                 if (result.getString("password").equals(passwordInput)) {
-                   // currentUser = result.getString("User_ID");
-                   // create user object that will be used thru the app
                     User user = new User();
                     user.setUsername(result.getString("User_Name"));
                     user.setUserID(result.getInt("User_ID"));
@@ -236,7 +259,11 @@ public class LoginscreenController implements Initializable {
             return false;            
         }
     
-    
+    /**
+     * Logs in a txt file every time a bad log in is attempted.
+     * @param user Username that had attempt to log in. To save it.
+     * @throws IOException 
+     */
         private void textLogBad(String user) throws IOException {
             // Logs to a txt file if the login is unsucessful. It logs in attempted username, result of the operation and timestamp
         try {
@@ -252,7 +279,12 @@ public class LoginscreenController implements Initializable {
             System.out.println("Error: " + e);           
         }; 
     };
-    private void textLog(String user) throws IOException {
+    /**
+     * Log into txt file when logins are successful
+     * @param user username that attempted log in
+     * @throws IOException --
+     */
+        private void textLog(String user) throws IOException {
         // logs to txt file when log in is successful. logs username, result, and timestamp
         try {
             String fileName = "login_activity.txt";

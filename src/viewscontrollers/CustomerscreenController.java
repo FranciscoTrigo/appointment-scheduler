@@ -123,6 +123,8 @@ public class CustomerscreenController implements Initializable {
     Parent root;
     Stage stage;
     
+    
+    // create some lists for the tableview and combobox
     ObservableList<Customer> customerOL = FXCollections.observableArrayList();
     ObservableList<String> areaOptions = FXCollections.observableArrayList();
     ObservableList<String> countryOptions = FXCollections.observableArrayList();
@@ -178,6 +180,12 @@ public class CustomerscreenController implements Initializable {
         });
     }  
     
+    
+    /**
+     *  Deletes the selected customer from the db. It does so by using the customer_ID 
+     * @throws SQLException -- 
+     * @throws Exception --
+     */
     public void deleteCustomer() throws SQLException, Exception {
         // This functions deletes the selected customer in the table, if there are any related appointments, it will delete them all fisrt.
         //First we delete any related appoointment
@@ -207,6 +215,11 @@ public class CustomerscreenController implements Initializable {
         
     }
     
+    /**
+     * Updates currently selected customer, it enables the fields so they can be edited
+     * @throws SQLException - - 
+     */
+    
     public void updateCustomerTable() throws SQLException {
         // We will update the customer table with the latest info from SQL tables
         System.out.println("Updating customer table.......... .");
@@ -230,9 +243,16 @@ public class CustomerscreenController implements Initializable {
         System.out.println("Customer table updated!");
     }
     
+    /**
+     * Fills out the areaBox depending on the country that has been selected
+     * @throws SQLException --
+     * @throws Exception  --
+     */
+    
     public void areaBoxFill() throws SQLException, Exception {
         // Fills in the area combo box with correct informtion depending on the country selected. Very neat 
         //statement creation
+        // It first gets the Country_ID using the Country_Name from the countruyBOx
         PreparedStatement ps;
         ps = DBConnection.getConnection().prepareStatement("SELECT Country_ID FROM countries WHERE Country = ?");
         ps.setString(1, CountryBox.getValue());
@@ -241,7 +261,8 @@ public class CustomerscreenController implements Initializable {
         while (result.next()) {
                 countryID = result.getInt("Country_ID");
             }
-
+        
+        // It will then get and fill the areabox from the first_level_division table using the country_ID form earlier
         PreparedStatement ps1;
         ps1 = DBConnection.getConnection().prepareStatement("SELECT Division FROM first_level_divisions WHERE Country_ID = ?");
         ps1.setInt(1, countryID);
@@ -251,6 +272,12 @@ public class CustomerscreenController implements Initializable {
             }
         AreaBox.setDisable(false);
     }
+    
+    /**
+     * Fills out the countryBox with data from the countries table
+     * @throws SQLException --
+     * @throws Exception  --
+     */
     
     public void countryBoxFill() throws SQLException, Exception {
         // fill the country box with ocountries
@@ -265,7 +292,12 @@ public class CustomerscreenController implements Initializable {
         stmt.close();
         result.close();
     }
-        
+    
+
+    /**
+     * Updates the currenctly selected customer to the db
+     * @throws Exception -- 
+     */
     private void updateCustomer() throws Exception {
         // updates the selected customer in the table, with info from the text fields and combobox
         System.out.println("Updating customer with ID: " + CustomerIDField.getText());
@@ -317,6 +349,12 @@ public class CustomerscreenController implements Initializable {
         }   
     }
     
+    /**
+     * Fills out the textFields and comboBoxes with customer information from the selected customer in the tableview
+     * @param customer currently selected customer from the table
+     * @throws SQLException -- 
+     * @throws Exception --
+     */
     public void listenCustomer(Customer customer) throws SQLException, Exception {
         //Looks at what customer is selected in the table and fills in the information in the text fields for close reviewing or edit
         System.out.println("Updating customer fields...");
@@ -356,6 +394,10 @@ public class CustomerscreenController implements Initializable {
         disableFields();
             }
     
+    
+    /**
+     * Quickly disable all the fields to avoid bad things to happen
+     */
     public void disableFields() {
         CustomerIDField.setDisable(true);
         CustomerNameField.setDisable(true);
@@ -365,7 +407,9 @@ public class CustomerscreenController implements Initializable {
         AreaBox.setDisable(true);
         CountryBox.setDisable(true);
     }
-    
+    /**
+     * Enable fields to edit them
+     */
     public void enableFields() {
         CustomerIDField.setDisable(false);
         CustomerNameField.setDisable(false);
@@ -376,7 +420,9 @@ public class CustomerscreenController implements Initializable {
         CountryBox.setDisable(false);
         
     }
-    
+    /**
+     * Clear all the fields after adding/updating customer or when canceling
+     */
     public void clearFields() {
         CustomerIDField.setText("");
         CustomerNameField.setText("");
@@ -387,7 +433,10 @@ public class CustomerscreenController implements Initializable {
         CountryBox.setValue(null);
              
     }
-    
+    /**
+     * Saves the customer using the information entered into the fields. This is a for  a new customer
+     * @throws Exception -- -
+     */
     public void saveCustomer() throws Exception {
         //Saves the csutomer to the table
         System.out.println("SAVING CUSTOMER");
@@ -458,7 +507,10 @@ public class CustomerscreenController implements Initializable {
     private void PhoneFieldHandler (ActionEvent event) {
         
     }
-    
+    /**
+     * Runs the areaBoxFill once a country has been selected
+     * @param event --
+     */
     @FXML
     private void CountryBoxHandler (ActionEvent event) {
         try {
@@ -474,6 +526,10 @@ public class CustomerscreenController implements Initializable {
         
     }
     
+    /**
+     * Checks wether there is a customer selected or not(by checking if the customerID text field is null) and runs saveCustomer() or updateCustomer() as necessary
+     * @param event --
+     */
     @FXML
     private void SaveCustomerHandler (ActionEvent event) {
         // Checks if the CustomerID text field is populated to decide whether to save new customer or update exsisting one.
@@ -501,13 +557,21 @@ public class CustomerscreenController implements Initializable {
 
         }
     
-    
+    /**
+     * Cancels current operation
+     * @param event --
+     */
     @FXML
     private void CancelHandler (ActionEvent event){
         clearFields();
         disableFields();
     }
     
+    /**
+     * Goes back to main menu
+     * @param event --
+     * @throws IOException --
+     */
     @FXML
     private void BackHandler (ActionEvent event)throws IOException{
         root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
@@ -517,7 +581,10 @@ public class CustomerscreenController implements Initializable {
         stage.show(); 
         
     }
-    
+    /**
+     * Deletes currently selected customer
+     * @param event --
+     */
     @FXML
     private void DeleteCustomerHandler (ActionEvent event) {
         try {
@@ -529,13 +596,20 @@ public class CustomerscreenController implements Initializable {
         
     }
     
+    /**
+     * Clears and enables fields to add a new customre
+     * @param event --
+     */
     @FXML
     private void AddCustomerHandler (ActionEvent event){
         enableFields();
         clearFields();
         
     }
-    
+    /**
+     * Enable fields to edit
+     * @param event --
+     */
     @FXML
     private void EditCustomerHandler (ActionEvent event) {
         enableFields();

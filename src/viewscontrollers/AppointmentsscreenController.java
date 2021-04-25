@@ -132,18 +132,20 @@ public class AppointmentsscreenController implements Initializable {
     
     
     private final DateTimeFormatter datetimeDTF = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    //private final ZoneId localZoneID = ZoneId.of("UTC-8");
-//    private final ZoneId localZoneID = ZoneId.systemDefault();
-//    private final ZoneId utcZoneID = ZoneId.of("UTC");
+
                 
     ObservableList<Appointment> appointmentsOL = FXCollections.observableArrayList();
     
     private static Appointment selectedAppointment = new Appointment();
     
+    /**
+     * Used to grab and save the appointment id of the selected appointment in the table
+     */
     public int selectedAppointmentID;
 
     /**
      * Initializes the controller class.
+     * @param url
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -199,7 +201,7 @@ public class AppointmentsscreenController implements Initializable {
         }
         
         
-        // this part looks for the selected row and do something!
+        // this part looks for the selected row and do something with it. saves appointment id to a variable
         
         appTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             Appointment selectedApp = new Appointment();
@@ -218,7 +220,12 @@ public class AppointmentsscreenController implements Initializable {
         );
     } 
     
-    
+    /**
+     * Used to update the tableview with the latest information from the appointments table.
+     * IT will then filter them by week, month, or no filter depending on the selection
+     * @throws SQLException --
+     * @throws Exception --
+     */
     public void updateApptTable() throws SQLException, Exception {
         // Grabs all the info from sql appointment table and puts it into the table
         System.out.println("Updating Appt table");
@@ -243,7 +250,7 @@ public class AppointmentsscreenController implements Initializable {
             appt.setCustomerID(rs.getInt("Customer_ID"));
             
             appointmentsOL.addAll(appt);
-            System.out.println(appt.getAppointmentID() + " " + appt.getContactID() + " " + appt.getTitle());
+           // System.out.println(appt.getAppointmentID() + " " + appt.getContactID() + " " + appt.getTitle());
 
         }
         appTable.setItems(appointmentsOL);
@@ -262,6 +269,10 @@ public class AppointmentsscreenController implements Initializable {
         }
     }
     
+    /**
+     * Filters the appointments by within a month
+     * @param appointmentsOL
+     */
     public void filterMonth(ObservableList appointmentsOL) {
         // WE are gonna try to filter the table by week now
         LocalDate now = LocalDate.now();
@@ -276,6 +287,10 @@ public class AppointmentsscreenController implements Initializable {
         appTable.setItems(filteredData);
     }
     
+    /**
+     * Filters appointments by within a week
+     * @param appointmentsOL --
+     */
     public void filterWeek(ObservableList appointmentsOL) {
         // filer week
         LocalDate now = LocalDate.now();
@@ -289,7 +304,13 @@ public class AppointmentsscreenController implements Initializable {
         appTable.setItems(filteredData);
     }
     
-    
+    /**
+     * Deletes selected appointment from appointment table view.
+     * It uses the saved appointment_ID variable
+     * If nothing is selected, it will print to console
+     * @throws SQLException --
+     * @throws Exception --
+     */
     public void deleteAppointment() throws SQLException, Exception{
 
               System.out.println(selectedAppointmentID);
@@ -313,7 +334,11 @@ public class AppointmentsscreenController implements Initializable {
         }
 
     /////////////////////////////////////////////////////////////////////
-    
+    /**
+     * Calls out the add appointment screen
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void AddAppointmentHandler (ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("/views/addAppointment.fxml"));
@@ -324,13 +349,21 @@ public class AppointmentsscreenController implements Initializable {
             
         
     }
-    
+    /**
+     * calls the delete appointment function
+     * @param event
+     * @throws Exception 
+     */
     @FXML
     private void DeleteHandler (ActionEvent event) throws Exception {
         deleteAppointment();
         
     }
     
+    
+    /**
+     * Calls the update appointment view, only when an appointment is selected
+    */
     @FXML
     private void UpdateHandler (ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("/views/UpdateAppointment.fxml"));
@@ -340,7 +373,10 @@ public class AppointmentsscreenController implements Initializable {
         stage.show(); 
         
     }
-    
+    /**
+     * Applies the by week filter
+     * @param event 
+     */
     @FXML
     private void weekRadioHandler (ActionEvent event){
         isWeek = true;
@@ -353,6 +389,10 @@ public class AppointmentsscreenController implements Initializable {
         
     }
     
+    /**
+     * applies the by month filter
+     * @param event 
+     */
     @FXML
     private void monthRadioHandler (ActionEvent event) {
         isWeek = false;
@@ -364,7 +404,10 @@ public class AppointmentsscreenController implements Initializable {
         }
         
     }
-    
+    /**
+     * applies the no filter filter
+     * @param event 
+     */
     @FXML
     private void noFilterRadioHandler (ActionEvent event) {
         isWeek = false;
@@ -376,7 +419,11 @@ public class AppointmentsscreenController implements Initializable {
         }
         
     }
-    
+    /**
+     * Goes back to previous screen, the main menu
+     * @param event
+     * @throws IOException 
+     */
     
     @FXML
     private void BackHandler (ActionEvent event) throws IOException{

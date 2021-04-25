@@ -72,7 +72,7 @@ import model.Dummy;
 /**
  * FXML Controller class
  *
- * @author yamif
+ * @author francisco trigo
  */
 
 
@@ -194,7 +194,11 @@ public class ReportsController implements Initializable {
         }
     }    
 
-    
+    /**
+     * Fills out the contact combobox with contact names from the contacts table in the db
+     * @throws SQLException -
+     * @throws Exception -
+     */
     public void contactBoxFill() throws SQLException, Exception {
         // Fill the contactBox to display only appoinrments for that contact!!!
         PreparedStatement ps;
@@ -204,6 +208,12 @@ public class ReportsController implements Initializable {
             contactBox.getItems().add(result.getString("Contact_Name"));
         }
     }
+    
+    /**
+     * Grabs the contact ID that corresponds to the contact name selected in the contact name combo box
+     * @throws SQLException  --
+     * @throws Exception  --
+     */
     
     public void getContactID() throws SQLException, Exception {
         String contactName = contactBox.getValue();
@@ -217,6 +227,12 @@ public class ReportsController implements Initializable {
         updateReportTable(contactID);
     }
     
+    /**
+     * Updates the tables with appointments that matches the contact that has been selected in the combobox
+     * @param contactID Contact ID taken form the getContactID() function
+     * @throws SQLException --
+     * @throws Exception  --
+     */
     public void updateReportTable(int contactID) throws SQLException, Exception {
         System.out.println("Update report table");
         report1OL.clear();
@@ -254,11 +270,15 @@ public class ReportsController implements Initializable {
         System.out.println("Updated table");
     }
     
-    
+    /**
+     * Fills out the second report tab tables with information from the db
+     * @throws SQLException --
+     * @throws Exception  --
+     */
     public void fillSecondTabTable() throws SQLException, Exception {
         monthOL.clear();
         typeOL.clear();
-        
+        //Fill out with Type and number of instances
         PreparedStatement ps;
         ps = DBConnection.getConnection().prepareStatement("SELECT Type, count(*) FROM appointments group by Type");
         ResultSet result = ps.executeQuery();
@@ -292,6 +312,12 @@ public class ReportsController implements Initializable {
       System.out.println("Updated tables");
     }
     
+    
+    /**
+     * Fills out the last table with a report that tells you how many appointments are taking place in each possible location
+     * @throws SQLException --
+     * @throws Exception --
+     */
     public void fillOwnTable() throws SQLException, Exception {
         locationOL.clear();
         PreparedStatement ps2;
@@ -310,7 +336,11 @@ public class ReportsController implements Initializable {
     private void contactBoxController(ActionEvent event) throws Exception {
         getContactID();
     }
-    
+    /**
+     * Goes back
+     * @param event --
+     * @throws IOException --
+     */
         @FXML
     private void backbuttonHandler (ActionEvent event) throws IOException{
         root = FXMLLoader.load(getClass().getResource("/views/MainMenu.fxml"));
