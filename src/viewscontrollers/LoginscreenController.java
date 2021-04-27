@@ -169,9 +169,18 @@ public class LoginscreenController implements Initializable {
                             + "Appointment starts at: " + result.getString("Start") + "\n"
                             + "Appointment takes place at: " + result.getString("Location"));
                     Optional<ButtonType> result2 = alert.showAndWait(); 
+                    break;
                     
-                } else { 
+                } 
+                
+                if (checkIfNear(result.getString("Start")) == false) {
                     System.out.println("No appointment");
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("No appointment notice");
+                    alert.setHeaderText("You do not have upcoming appointments");
+                    alert.setContentText("You do not have any appointments in the next 15 minutes");
+                    Optional<ButtonType> result3 = alert.showAndWait();
+                    break;
                 }
             }
             
