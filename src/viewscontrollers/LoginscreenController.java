@@ -53,6 +53,7 @@ import javafx.stage.Stage;
 
 public class LoginscreenController implements Initializable {
     boolean noApp;
+    boolean yesApp = false;
     String currentUser = "0";
     
     @FXML
@@ -172,6 +173,7 @@ public class LoginscreenController implements Initializable {
                             + "Appointment starts at: " + result.getString("Start") + "\n"
                             + "Appointment takes place at: " + result.getString("Location"));
                     Optional<ButtonType> result2 = alert.showAndWait();
+                    yesApp = true;
                     break;
                     
                 }
@@ -183,7 +185,7 @@ public class LoginscreenController implements Initializable {
                     
                 }
             }
-            if (noApp == true) { 
+            if (noApp == true && yesApp == false) { 
                 noAppPopup();
                 // no app popup 
                 
@@ -196,7 +198,7 @@ public class LoginscreenController implements Initializable {
                            System.out.println("No appointment");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("No appointment notice");
-                    alert.setHeaderText("You do not have upcoming appointments");
+                    alert.setHeaderText("You do not have any upcoming appointments");
                     alert.setContentText("You do not have any appointments in the next 15 minutes");
                     Optional<ButtonType> result3 = alert.showAndWait();
    }
