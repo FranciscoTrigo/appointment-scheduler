@@ -485,6 +485,13 @@ public class CustomerscreenController implements Initializable {
 
     }
     
+    public void checkIfRight() {
+        // checks if all fields are populated and right
+        if (CustomerNameField.getText().equals("")) {
+            System.out.println("BAD THING");
+        }
+    }
+    
 
     @FXML
     private void CustomerIDFieldHandler (ActionEvent event) {
@@ -537,6 +544,7 @@ public class CustomerscreenController implements Initializable {
     private void SaveCustomerHandler (ActionEvent event) {
         // Checks if the CustomerID text field is populated to decide whether to save new customer or update exsisting one.
         // CustomerID field is disabled to user and only populated when a editing a current customer.
+        checkIfRight();
       if ( CustomerIDField.getText().equals("")) {
           System.out.println("Saving New Customer");
           try {
