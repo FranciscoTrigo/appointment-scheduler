@@ -169,7 +169,7 @@ public class LoginscreenController implements Initializable {
                             + "Appointment starts at: " + result.getString("Start") + "\n"
                             + "Appointment takes place at: " + result.getString("Location"));
                     Optional<ButtonType> result2 = alert.showAndWait(); 
-                    break;
+                    
                     
                 } 
                 
