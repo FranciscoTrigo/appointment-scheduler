@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import static java.time.temporal.TemporalQueries.zone;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -42,6 +43,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.time.ZoneId;  
 
 /**
  * FXML Controller class
@@ -76,20 +78,27 @@ public class LoginscreenController implements Initializable {
      * @param url url 
      * @param rb resource bundle
      */
+    
+    ResourceBundle rb = ResourceBundle.getBundle("Resources/login", Locale.getDefault());
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        // currentUser = 0;
         
-        System.out.println("Getting resource bundle...");
+setLanguage();
+    }
+    
+    private void setLanguage() {
         try {
-            rb = ResourceBundle.getBundle("Properties.login", Locale.getDefault());
-            System.out.println("Bundle adquired");
-            titleLabel.setText(rb.getString("title"));
-            UsernameTextField.setPromptText(rb.getString("username"));
-            PasswordTextField.setPromptText(rb.getString("password"));
-            LoginButton.setText(rb.getString("login"));
-        } catch (MissingResourceException e) {
-            System.out.println("Where is the resource file?");
+//        ResourceBundle rb = ResourceBundle.getBundle("Resources/login", Locale.getDefault());
+        ZoneId zone = ZoneId.systemDefault();
+        String zoone = zone.getId();
+        LoginButton.setText(rb.getString("login"));
+        titleLabel.setText(rb.getString("title"));
+        UsernameTextField.setPromptText(rb.getString("username"));
+        PasswordTextField.setPromptText(rb.getString("password"));
+        locationLabel.setText(zoone);
+        } catch(MissingResourceException e) {
+            System.out.println("Where is the resource file?" + e);
         }
     }
     
@@ -109,6 +118,7 @@ public class LoginscreenController implements Initializable {
         String usernameInput = UsernameTextField.getText();
         String passwordInput = PasswordTextField.getText();
         
+        
  
         //Parent root;
         Stage stage;
@@ -120,7 +130,7 @@ public class LoginscreenController implements Initializable {
             
           
            
-            System.out.println("Log in complete!");
+            System.out.println(rb.getString("completeLogin"));
             
             
             // call the main menu because log in is good!
@@ -139,9 +149,9 @@ public class LoginscreenController implements Initializable {
         } else {
             textLogBad(UsernameTextField.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("WRONG");
-            alert.setHeaderText("Incorrect username or password, or both");
-            alert.setContentText("Enter valid username or password");
+            alert.setTitle(rb.getString("WRONG"));
+            alert.setHeaderText(rb.getString("incorrect"));
+            alert.setContentText(rb.getString("correctIt"));
             Optional<ButtonType> result = alert.showAndWait();            
         }
     }
@@ -187,7 +197,7 @@ public class LoginscreenController implements Initializable {
             }
             if (noApp == true && yesApp == false) { 
                 noAppPopup();
-                // no app popup 
+                // no appt popup 
                 
             }
             

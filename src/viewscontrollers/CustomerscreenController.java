@@ -517,7 +517,7 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private void CountryBoxHandler (ActionEvent event) {
         try {
-            
+            AreaBox.getItems().clear();
             areaBoxFill();
         } catch (Exception ex) {
             Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, ex);

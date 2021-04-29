@@ -114,3 +114,9 @@ Succesful login: test at 2021-04-29 06:17:11.575
 Succesful login: admin at 2021-04-29 06:18:21.599
 Succesful login: admin at 2021-04-29 06:21:45.733
 Succesful login: admin at 2021-04-29 06:22:22.998
+WRONG login:  at 2021-04-29 07:35:17.505
+WRONG login: casd at 2021-04-29 08:05:27.712
+Succesful login: test at 2021-04-29 08:05:42.709
+WRONG login:  at 2021-04-29 08:07:21.916
+Succesful login: test at 2021-04-29 08:13:46.441
+Succesful login: test at 2021-04-29 08:18:15.245
