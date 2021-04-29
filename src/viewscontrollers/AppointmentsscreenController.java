@@ -364,7 +364,7 @@ public class AppointmentsscreenController implements Initializable {
        var alert = new Alert(AlertType.CONFIRMATION);
        alert.setTitle("Confirm Delete");
        alert.setHeaderText("Please confirm or cancel");
-       alert.setContentText("Do you want to delete the selected appointment with ID number: "
+       alert.setContentText("Delete the selected appointment with ID number: \n"
                + selectedAppointmentID + ", which is a " + selectedAppointmentType + "?");
        alert.showAndWait().ifPresent((btnType) -> {
            if (btnType == ButtonType.OK) {

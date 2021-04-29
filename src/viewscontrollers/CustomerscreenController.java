@@ -594,7 +594,8 @@ public class CustomerscreenController implements Initializable {
         alert.setTitle("Confirm Delete");
         alert.setHeaderText("Please confirm or cancel");
         alert.setContentText("Do you want to delete the selected customer: " + custNm + "?"
-                + "\n You will also delete ANY related appointment due to primary key constraints. ");
+                + "\n You will also delete ANY related appointment due to primary\n"
+                + " key constraints. ");
         alert.showAndWait().ifPresent((btnType) -> { 
             if (btnType == ButtonType.OK) {
              System.out.println("DELETE");
