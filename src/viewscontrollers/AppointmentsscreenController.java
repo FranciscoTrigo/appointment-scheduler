@@ -47,6 +47,7 @@ import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -142,6 +143,7 @@ public class AppointmentsscreenController implements Initializable {
      * Used to grab and save the appointment id of the selected appointment in the table
      */
     public int selectedAppointmentID;
+    public String selectedAppointmentType;
 
     /**
      * Initializes the controller class.
@@ -211,6 +213,7 @@ public class AppointmentsscreenController implements Initializable {
             } else {
             // When selected, it puts the appt ID to a variable for later deletion, and also puts info into the dummy object for editing
             selectedAppointmentID = selectedApp.getAppointmentID();
+            selectedAppointmentType = selectedApp.getType();
             Dummy.setAppointmentID(selectedAppointmentID);
             Dummy.setContactID(selectedApp.getContactID());
             Dummy.setCustomerID(selectedApp.getCustomerID());
@@ -356,9 +359,27 @@ public class AppointmentsscreenController implements Initializable {
      */
     @FXML
     private void DeleteHandler (ActionEvent event) throws Exception {
-        deleteAppointment();
+        //deleteAppointment();
         
-    }
+       var alert = new Alert(AlertType.CONFIRMATION);
+       alert.setTitle("Confirm Delete");
+       alert.setHeaderText("Please confirm or cancel");
+       alert.setContentText("Do you want to delete the selected appointment with ID number: "
+               + selectedAppointmentID + ", which is a " + selectedAppointmentType + "?");
+       alert.showAndWait().ifPresent((btnType) -> {
+           if (btnType == ButtonType.OK) {
+               System.out.println("DELETE");
+               try {
+                   deleteAppointment();
+               } catch (Exception ex) {
+                   Logger.getLogger(AppointmentsscreenController.class.getName()).log(Level.SEVERE, null, ex);
+               }
+               } else { 
+               System.out.println("Deletion aborted!");}
+           });
+       };
+        
+
     
     
     /**

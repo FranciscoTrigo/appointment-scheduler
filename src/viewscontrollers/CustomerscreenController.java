@@ -41,6 +41,7 @@ import javafx.fxml.LoadException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -132,6 +133,7 @@ public class CustomerscreenController implements Initializable {
     private static Customer selectedCustomer = new Customer();
     
 //    Static int currentUser = 0;
+    public String custNm = "";
     
     
     /**
@@ -362,6 +364,7 @@ public class CustomerscreenController implements Initializable {
         Customer cust = new Customer();
         cust = customer;
         String custName = cust.getCustomerName();
+        custNm = cust.getCustomerName();
         int custId = cust.getCustomerID();
         ObservableList<Customer> CustomerOL = FXCollections.observableArrayList();
         
@@ -582,22 +585,33 @@ public class CustomerscreenController implements Initializable {
         
     }
     /**
-     * Deletes currently selected customer
+     * Deletes currently selected customer, after user confirmation
      * @param event --
      */
     @FXML
-    private void DeleteCustomerHandler (ActionEvent event) {
-        try {
-            deleteCustomer();
-        } catch (Exception e) {
-            System.out.println("Error " + e.getMessage());
-            Logger.getLogger(CustomerscreenController.class.getName()).log(Level.SEVERE, null, e);
-        }
+    private void DeleteCustomerHandler (ActionEvent event) { 
+        var alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Please confirm or cancel");
+        alert.setContentText("Do you want to delete the selected customer: " + custNm + "?"
+                + "\n You will also delete ANY related appointment due to primary key constraints. ");
+        alert.showAndWait().ifPresent((btnType) -> { 
+            if (btnType == ButtonType.OK) {
+             System.out.println("DELETE");
+             try {
+                 deleteCustomer();
+             } catch (Exception e) {
+                 System.out.println("Error: " + e.getMessage());
+             }
+            } else {
+            System.out.println("Deletion aborted");
+            }           
+        });
         
     }
     
     /**
-     * Clears and enables fields to add a new customre
+     * Clears and enables fields to add a new customer
      * @param event --
      */
     @FXML

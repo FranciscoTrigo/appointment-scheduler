@@ -49,8 +49,10 @@ import javafx.stage.Stage;
  * @author Francisco Trigo
  */
 
+
+
 public class LoginscreenController implements Initializable {
-    
+    boolean noApp;
     String currentUser = "0";
     
     @FXML
@@ -155,7 +157,7 @@ public class LoginscreenController implements Initializable {
         } else {
             // Checks the Start time of all appointments and dows a while loop
             System.out.println("Checking to see if there are appointments drawing near...");
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("Select Start, Location FROM appointments");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("Select Start,Appointment_ID, Location FROM appointments");
             ResultSet result = ps.executeQuery();
             while (result.next()) {
                 // Checks if appointment is close...
@@ -164,28 +166,40 @@ public class LoginscreenController implements Initializable {
                     System.out.println("Go to appointment!"); 
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Appointment notice");
-                    alert.setHeaderText("You have an appointment near!!!");
+                    alert.setHeaderText("You have an upcoming appointment!!!");
                     alert.setContentText("You have an appointment scheduled within 15 minutes.\n"
+                            + "Appointment ID: " + result.getString("Appointment_ID") + "\n"
                             + "Appointment starts at: " + result.getString("Start") + "\n"
                             + "Appointment takes place at: " + result.getString("Location"));
-                    Optional<ButtonType> result2 = alert.showAndWait(); 
+                    Optional<ButtonType> result2 = alert.showAndWait();
+                    break;
                     
-                    
-                } 
+                }
                 
                 if (checkIfNear(result.getString("Start")) == false) {
-                    System.out.println("No appointment");
+                    //noAppPopup();
+                    noApp = true;
+                    
+                    
+                }
+            }
+            if (noApp == true) { 
+                noAppPopup();
+                // no app popup 
+                
+            }
+            
+        }
+    }
+    
+   private void noAppPopup() {
+                           System.out.println("No appointment");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("No appointment notice");
                     alert.setHeaderText("You do not have upcoming appointments");
                     alert.setContentText("You do not have any appointments in the next 15 minutes");
                     Optional<ButtonType> result3 = alert.showAndWait();
-                    break;
-                }
-            }
-            
-        }
-    }
+   }
     /**
      * This function checks if the provided date and time happens within 15 minutes from right now
      * @param apptDate This is the date taken from the Start column in the appointments table
