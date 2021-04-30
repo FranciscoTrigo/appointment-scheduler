@@ -366,7 +366,7 @@ public class AddAppointmentController implements Initializable {
         
 //        int startHInt = Integer.parseInt(startH);
 //        int endHInt = Integer.parseInt(endH);
-      System.out.println(Integer.parseInt(startH));
+     // System.out.println(Integer.parseInt(startH));
         
         
         String messageError = "";
@@ -392,7 +392,7 @@ public class AddAppointmentController implements Initializable {
         if ((startH == null || startH.length() == 0) || ( startM == null || startM.length() == 0)) {
             messageError += "Please choose a start time\n";
         }
-        if ((Integer.parseInt(startH) < 8 && Integer.parseInt(startH) > 22) || (Integer.parseInt(endH) > 22)) {
+        if (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) > 22 || (Integer.parseInt(endH) > 22)) {
             messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
         }
         if ((endH == null || endH.length() == 0) || ( endM == null || endM.length() == 0)) {
