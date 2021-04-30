@@ -349,6 +349,64 @@ public class AddAppointmentController implements Initializable {
             goBack();
     }
     
+    
+    private boolean checkIfRight() {
+        // Check if the appointment is filled with all needed data
+        String title = titleField.getText();
+        String description = descriptionField.getText();
+        String location = locationBox.getValue();
+        String type = typeBox.getValue();
+        String contact = contactBox.getValue();
+        String customer = customerBox.getValue();
+        String startH = startHourCombo.getValue();
+        String startM = startMinuteCombo.getValue();
+        String endH = endHourCombo.getValue();
+        String endM = endMinuteCombo.getValue();
+        //String date = selectDateBox.getValue();
+        
+        String messageError = "";
+        
+        if (title == null || title.length() == 0) {
+            messageError += "Please enter a title.\n";
+            }
+        if (description == null || description.length() == 0) {
+            messageError += "Please enter a description.\n";
+            }
+        if (location == null || location.length() == 0) {
+            messageError += "Please choose a location\n"; 
+        }
+        if (type == null || type.length() == 0) {
+            messageError += "Please choose a type\n";
+            }
+        if (customer == null || customer.length() == 0){
+            messageError += "Please choose a customer\n";
+        }
+        if (contact == null || contact.length() == 0) {
+            messageError += "Please choose a contact\n";
+        }
+        if ((startH == null || startH.length() == 0) || ( startM == null || startM.length() == 0)) {
+            messageError += "Please choose a start time\n";
+        }
+        if ((endH == null || endH.length() == 0) || ( endM == null || endM.length() == 0)) {
+            messageError += "Please chose an end time\n";
+        }
+        if (selectDateBox.getValue() == null) {
+            messageError += "Please select a date";
+        }
+        if (messageError.length() == 0){
+            return true;
+        } else {
+            // error message
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Invalid appointment");
+            alert.setContentText(messageError);
+            Optional<ButtonType> result = alert.showAndWait();
+            return false;
+        }  
+    }
+        
+    
     @FXML
     private void contactBoxHandler (ActionEvent event) {
         
@@ -370,7 +428,9 @@ public class AddAppointmentController implements Initializable {
      */
     @FXML
     private void saveButtonHandler (ActionEvent event) throws Exception {
-        saveAppointment();
+        if (checkIfRight()){
+            saveAppointment();
+        }
         
     }
     

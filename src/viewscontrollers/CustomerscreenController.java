@@ -673,6 +673,7 @@ public class CustomerscreenController implements Initializable {
     @FXML
     private void EditCustomerHandler (ActionEvent event) {
         enableFields();
+         AreaBox.setDisable(false);
         
     }
     
