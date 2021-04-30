@@ -432,6 +432,7 @@ public class UpdateAppointmentController implements Initializable {
                     + "Customer_ID = ?,"
                     + " Contact_ID = ?, "
                     + "Last_Updated_By = ? "
+                            + "User_ID = ?"
                     + "WHERE Appointment_ID = ?"
                     );
             ps3.setString(1, titleField.getText());
@@ -444,6 +445,7 @@ public class UpdateAppointmentController implements Initializable {
             ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
             ps3.setInt(10, Dummy.getAppointmentID());
+            ps3.setInt(11, User.getUserID());
             int resultado = ps3.executeUpdate();
             System.out.println("Appointment updated!");
             goBack();
