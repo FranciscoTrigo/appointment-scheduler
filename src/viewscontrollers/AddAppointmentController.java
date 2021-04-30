@@ -392,9 +392,9 @@ public class AddAppointmentController implements Initializable {
         if ((startH == null || startH.length() == 0) || ( startM == null || startM.length() == 0)) {
             messageError += "Please choose a start time\n";
         }
-        if (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) > 22 || (Integer.parseInt(endH) > 22)) {
-            messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
-        }
+//        if (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) > 22 || (Integer.parseInt(endH) > 22)) {
+//            messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
+//        }
         if ((endH == null || endH.length() == 0) || ( endM == null || endM.length() == 0)) {
             messageError += "Please chose an end time\n";
         }
@@ -414,7 +414,32 @@ public class AddAppointmentController implements Initializable {
             return false;
         }  
     }
+    
+    
+    public boolean checkHours() {
+        String startH = startHourCombo.getValue();
+        String startM = startMinuteCombo.getValue();
+        String endH = endHourCombo.getValue();
+        String endM = endMinuteCombo.getValue();
+        int startHInt = Integer.parseInt(startH);
+        int endHInt = Integer.parseInt(endH);
+        String messageError = "";
         
+      if  (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) >= 22 || (Integer.parseInt(endH) > 22) || endHInt < 8) {
+          messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
+        }
+              if (messageError.length() == 0){
+            return true;
+        } else {
+            // error message
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Invalid appointment");
+            alert.setContentText(messageError);
+            Optional<ButtonType> result = alert.showAndWait();
+            return false;
+        }  
+    }
     
     /**
      * Checks if this new appointment has a conflict with an existing one, time wise
@@ -492,12 +517,12 @@ public class AddAppointmentController implements Initializable {
     private void saveButtonHandler (ActionEvent event) throws Exception {
 
         if (checkIfRight()){
-            
-            if(checkIfConflict()){
+            if (checkHours()) {
+              if(checkIfConflict()){
                 
             } else {
             saveAppointment();
-            }
+            }}
         }
     }
     

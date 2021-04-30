@@ -194,6 +194,31 @@ public class UpdateAppointmentController implements Initializable {
                
                 
         }}
+    
+        public boolean checkHours() {
+        String startH = startHourCombo.getValue();
+        String startM = startMinuteCombo.getValue();
+        String endH = endHourCombo.getValue();
+        String endM = endMinuteCombo.getValue();
+        int startHInt = Integer.parseInt(startH);
+        int endHInt = Integer.parseInt(endH);
+        String messageError = "";
+        
+      if  (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) >= 22 || (Integer.parseInt(endH) > 22) || endHInt < 8) {
+          messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
+        }
+              if (messageError.length() == 0){
+            return true;
+        } else {
+            // error message
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setHeaderText("Invalid appointment");
+            alert.setContentText(messageError);
+            Optional<ButtonType> result = alert.showAndWait();
+            return false;
+        }  
+    }
     /**
      * Gets the information for the selected appointment and populates it onto the fields for latter edition
      * @throws SQLException --
@@ -556,12 +581,12 @@ public class UpdateAppointmentController implements Initializable {
     private void saveButtonHandler (ActionEvent event) throws Exception {
 
         if (checkIfRight()){
-            
-            if(checkIfConflict()){
+            if (checkHours()) {
+              if(checkIfConflict()){
                 
             } else {
             saveAppointment();
-            }
+            }}
         }
     }
     
