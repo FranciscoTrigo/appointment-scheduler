@@ -494,16 +494,75 @@ public class UpdateAppointmentController implements Initializable {
             return false;
         }  
     }
-    /**
-     * saves
-     * @param event --
-     * @throws Exception --
+        
+        /**
+     * Checks if this new appointment has a conflict with an existing one, time wise
+     * @return true if conflict with existing appointment
+     */
+    public boolean checkIfConflict() throws SQLException {
+        //create strings to check
+        String thisDate = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String thisStart = startHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";
+        String checkThis = thisDate + " " + thisStart;
+        System.out.println("Conflict? " + checkThis);
+        String testTitle = "no";
+   
+        
+        String contactID = "";
+        
+        // Getting Contact ID
+        PreparedStatement ps2 = DBConnection.getConnection().prepareStatement("SELECT * "
+                + "FROM contacts "
+                + "WHERE Contact_Name = ?");
+        ps2.setString(1, contactBox.getValue());
+        ResultSet result1 = ps2.executeQuery();
+            while (result1.next()) {
+                contactID = result1.getString("Contact_ID");
+            }
+            
+        // Now we grab all appointments for that one contact ID and compare it
+        PreparedStatement ps3 = DBConnection.getConnection().prepareStatement("SELECT * "
+                + "FROM appointments "
+                + "WHERE (? BETWEEN Start AND End) AND Contact_ID = ?");
+        ps3.setString(1, checkThis);
+        ps3.setString(2, contactID);
+        ResultSet result = ps3.executeQuery();
+        while (result.next()) {
+            testTitle = result.getString("Start");
+            System.out.println(result.getString("Start"));
+        }
+        if (testTitle != "no") {
+            System.out.println("There seems to be scheduling conflicts " + testTitle);
+            
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Schedulling error");
+            alert.setHeaderText("This appointment can not happen");
+            alert.setContentText("Looks like " + contactBox.getValue() + "already has\nan appointment\n"
+                    + "booked at " + testTitle
+                    + "\nPlease select another time or date.");
+            Optional<ButtonType> result2 = alert.showAndWait();
+            return true;
+        }
+        System.out.println("No conflict");
+        return false;
+    }
+    
+     /**
+     * Calls the save appointment function
+     * @param event
+     * @throws Exception 
      */
     @FXML
     private void saveButtonHandler (ActionEvent event) throws Exception {
-        if (checkIfRight()) {
+
+        if (checkIfRight()){
+            
+            if(checkIfConflict()){
+                
+            } else {
             saveAppointment();
-        }        
+            }
+        }
     }
     
     @FXML

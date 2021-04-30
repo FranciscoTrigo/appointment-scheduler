@@ -364,6 +364,11 @@ public class AddAppointmentController implements Initializable {
         String endM = endMinuteCombo.getValue();
         //String date = selectDateBox.getValue();
         
+//        int startHInt = Integer.parseInt(startH);
+//        int endHInt = Integer.parseInt(endH);
+      System.out.println(Integer.parseInt(startH));
+        
+        
         String messageError = "";
         
         if (title == null || title.length() == 0) {
@@ -386,6 +391,9 @@ public class AddAppointmentController implements Initializable {
         }
         if ((startH == null || startH.length() == 0) || ( startM == null || startM.length() == 0)) {
             messageError += "Please choose a start time\n";
+        }
+        if ((Integer.parseInt(startH) < 8 && Integer.parseInt(startH) > 22) || (Integer.parseInt(endH) > 22)) {
+            messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
         }
         if ((endH == null || endH.length() == 0) || ( endM == null || endM.length() == 0)) {
             messageError += "Please chose an end time\n";
@@ -450,8 +458,8 @@ public class AddAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Schedulling error");
             alert.setHeaderText("This appointment can not happen");
-            alert.setContentText("Looks like " + contactBox.getValue() + "\n already has an appointment\n"
-                    + "booked at at time... "
+            alert.setContentText("Looks like " + contactBox.getValue() + "already has\nan appointment\n"
+                    + "booked at " + testTitle
                     + "\nPlease select another time or date.");
             Optional<ButtonType> result2 = alert.showAndWait();
             return true;
