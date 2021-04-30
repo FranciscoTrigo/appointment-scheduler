@@ -257,7 +257,6 @@ public class AppointmentsscreenController implements Initializable {
 
         }
         appTable.setItems(appointmentsOL);
-        System.out.println(appointmentsOL.sorted());
         //looks at what filter is selected and applies it
         if (isWeek == true && noFilter == false) {
             System.out.println("Week filter");
