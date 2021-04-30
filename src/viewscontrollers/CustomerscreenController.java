@@ -485,13 +485,49 @@ public class CustomerscreenController implements Initializable {
 
     }
     
-    public void checkIfRight() {
-        // checks if all fields are populated and right
-        if (CustomerNameField.getText().equals("")) {
-            System.out.println("BAD THING");
-        }
-    }
     
+    /**
+     * This checks if the information entered is correct
+     * @return false or true depending if correct or not
+     * 
+     */
+    public boolean checkIfRight() {
+        String name = CustomerNameField.getText().trim();
+        String address = AddressField.getText().trim();
+        String ZIP = ZIPField.getText().trim();
+        String Phone = PhoneField.getText().trim();
+        String area = AreaBox.getValue();
+        // I think we dont need to check for the country box, since it does not get saved to the db.
+        // And the areaBox can only be populated if country box has a value already.
+        
+        String messageError = "";
+        if (name == null || name.length() == 0) {
+            messageError += "Please enter a name for the customer.\n";
+            }
+        if (address == null || address.length() == 0) {
+            messageError += "Please enter an address for the customer.\n";
+        }
+        if (ZIP == null || ZIP.length() == 0) {
+            messageError += "Please enter a ZIP code for the customer.\n";
+                 }
+        if (Phone == null || Phone.length() == 0) {
+            messageError += "Please enter a phone number for the customer.\n";
+        }
+        if (area == null || area.length() == 0) {
+            messageError += "Please select a country and area for the customer.";
+        }
+        if (messageError.length() == 0) {
+            return true;
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("CUSTOMER ERROR");
+            alert.setHeaderText("Invalid customer!");
+            alert.setContentText(messageError);
+            Optional<ButtonType> result = alert.showAndWait();
+            return false;
+        }     
+           
+    }
 
     @FXML
     private void CustomerIDFieldHandler (ActionEvent event) {
@@ -544,7 +580,7 @@ public class CustomerscreenController implements Initializable {
     private void SaveCustomerHandler (ActionEvent event) {
         // Checks if the CustomerID text field is populated to decide whether to save new customer or update exsisting one.
         // CustomerID field is disabled to user and only populated when a editing a current customer.
-        checkIfRight();
+        if(checkIfRight()) {
       if ( CustomerIDField.getText().equals("")) {
           System.out.println("Saving New Customer");
           try {
@@ -567,6 +603,7 @@ public class CustomerscreenController implements Initializable {
       }
 
         }
+    }
     
     /**
      * Cancels current operation
