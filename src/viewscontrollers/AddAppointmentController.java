@@ -98,6 +98,8 @@ public class AddAppointmentController implements Initializable {
     private Label endLabel;
     @FXML
     private Label appointmentIDLabel;
+    @FXML
+    private Label usrLabel;
     
     @FXML
     private TextField titleField;
@@ -123,6 +125,8 @@ public class AddAppointmentController implements Initializable {
     private ComboBox<String> locationBox;
     @FXML
     private ComboBox<String> typeBox;
+    @FXML
+    private ComboBox<String> userBox;
    
     
     @FXML
@@ -147,6 +151,7 @@ public class AddAppointmentController implements Initializable {
             fillTypeBox();
             fillCustomerBox();
             fillContactBox();
+            fillUserBox();
          
         } catch (Exception ex) {
             Logger.getLogger(AddAppointmentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -235,6 +240,17 @@ public class AddAppointmentController implements Initializable {
      * @throws Exception --
      */
     
+    public void fillUserBox() throws SQLException, Exception {
+        Statement stmt = DBConnection.getConnection().createStatement();
+        String sqlStatement = "SELECT User_Name FROM users";
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        while (result.next()) {
+            userBox.getItems().add(result.getString("User_Name"));
+        }
+        stmt.close();
+        result.close();
+    }
+    
     public void fillContactBox() throws SQLException, Exception {
         //statement creation
         Statement stmt = DBConnection.getConnection().createStatement();
@@ -287,6 +303,19 @@ public class AddAppointmentController implements Initializable {
     
     public void saveAppointment() throws SQLException, Exception {
         System.out.println("Saving the appointment...");
+        
+        
+        //Get user ID
+        PreparedStatement ps5 = DBConnection.getConnection().prepareStatement("SELECT User_ID "
+                + "FROM users "
+                + "WHERE User_Name = ?");
+        ps5.setString(1, userBox.getValue());
+        int usID = 0;
+        ResultSet result5 = ps5.executeQuery();
+        while (result5.next()) {
+            usID = result5.getInt("User_ID");
+        }
+        
         
         // Getting the Customer_ID
         PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT Customer_ID "
@@ -344,7 +373,7 @@ public class AddAppointmentController implements Initializable {
             ps3.setInt(7, CustID);
             ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
-            ps3.setInt(10, User.getUserID());
+            ps3.setInt(10, usID);
             int resultado = ps3.executeUpdate();
             System.out.println("Appointment saved!");
             goBack();
@@ -363,6 +392,7 @@ public class AddAppointmentController implements Initializable {
         String startM = startMinuteCombo.getValue();
         String endH = endHourCombo.getValue();
         String endM = endMinuteCombo.getValue();
+        String IDuser = userBox.getValue();
         //String date = selectDateBox.getValue();
         
 //        int startHInt = Integer.parseInt(startH);
@@ -400,7 +430,10 @@ public class AddAppointmentController implements Initializable {
             messageError += "Please chose an end time\n";
         }
         if (selectDateBox.getValue() == null) {
-            messageError += "Please select a date";
+            messageError += "Please select a date\n";
+        }
+                if (IDuser == null || IDuser.length() == 0) {
+            messageError += "Please select an user. \n";
         }
 
         if (messageError.length() == 0){

@@ -125,6 +125,8 @@ public class UpdateAppointmentController implements Initializable {
     private ComboBox<String> locationBox;
     @FXML
     private ComboBox<String> typeBox;
+    @FXML
+    private ComboBox<String> userBox;
    
     
     @FXML
@@ -151,6 +153,7 @@ public class UpdateAppointmentController implements Initializable {
             fillTypeBox();
             fillCustomerBox();
             fillContactBox();
+            fillUserBox();
             getAppointmentInfo();
             // TODO
         } catch (Exception ex) {
@@ -168,6 +171,17 @@ public class UpdateAppointmentController implements Initializable {
     LocalDate localDate = LocalDate.parse(dateString, formatter);
     return localDate;
 }
+    
+        public void fillUserBox() throws SQLException, Exception {
+        Statement stmt = DBConnection.getConnection().createStatement();
+        String sqlStatement = "SELECT User_Name FROM users";
+        ResultSet result = stmt.executeQuery(sqlStatement);
+        while (result.next()) {
+            userBox.getItems().add(result.getString("User_Name"));
+        }
+        stmt.close();
+        result.close();
+    }
     /**
      * Fill out the comboBoxes to select start and end time
      */
@@ -377,6 +391,17 @@ public class UpdateAppointmentController implements Initializable {
     public void saveAppointment() throws SQLException, Exception {
         System.out.println("Saving the appointment...");
         
+              //Get user ID
+        PreparedStatement ps5 = DBConnection.getConnection().prepareStatement("SELECT User_ID "
+                + "FROM users "
+                + "WHERE User_Name = ?");
+        ps5.setString(1, userBox.getValue());
+        int usID = 0;
+        ResultSet result5 = ps5.executeQuery();
+        while (result5.next()) {
+            usID = result5.getInt("User_ID");
+        }
+        
         // Getting the Customer_ID
         PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT Customer_ID "
                     + "FROM customers "
@@ -431,8 +456,8 @@ public class UpdateAppointmentController implements Initializable {
                     + "End = ?, "
                     + "Customer_ID = ?,"
                     + " Contact_ID = ?, "
-                    + "Last_Updated_By = ? "
-                            + "User_ID = ?"
+                    + "Last_Updated_By = ?, "
+                    + "User_ID = ? "
                     + "WHERE Appointment_ID = ?"
                     );
             ps3.setString(1, titleField.getText());
@@ -444,8 +469,8 @@ public class UpdateAppointmentController implements Initializable {
             ps3.setInt(7, CustID);
             ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
-            ps3.setInt(10, Dummy.getAppointmentID());
-            ps3.setInt(11, User.getUserID());
+            ps3.setInt(11, Dummy.getAppointmentID());
+            ps3.setInt(10, usID);
             int resultado = ps3.executeUpdate();
             System.out.println("Appointment updated!");
             goBack();
@@ -478,6 +503,7 @@ public class UpdateAppointmentController implements Initializable {
         String startM = startMinuteCombo.getValue();
         String endH = endHourCombo.getValue();
         String endM = endMinuteCombo.getValue();
+        String IDuser = userBox.getValue();
         //String date = selectDateBox.getValue();
         
         String messageError = "";
@@ -507,7 +533,10 @@ public class UpdateAppointmentController implements Initializable {
             messageError += "Please chose an end time\n";
         }
         if (selectDateBox.getValue() == null) {
-            messageError += "Please select a date";
+            messageError += "Please select a date\n";
+        }
+                        if (IDuser == null || IDuser.length() == 0) {
+            messageError += "Please select an user. \n";
         }
         if (messageError.length() == 0){
             return true;
@@ -550,9 +579,10 @@ public class UpdateAppointmentController implements Initializable {
         // Now we grab all appointments for that one contact ID and compare it
         PreparedStatement ps3 = DBConnection.getConnection().prepareStatement("SELECT * "
                 + "FROM appointments "
-                + "WHERE (? BETWEEN Start AND End) AND Contact_ID = ?");
+                + "WHERE (? BETWEEN Start AND End) AND Contact_ID = ? AND Appointment_ID != ?");
         ps3.setString(1, checkThis);
         ps3.setString(2, contactID);
+        ps3.setString(3, appointmentTextField.getText());
         ResultSet result = ps3.executeQuery();
         while (result.next()) {
             testTitle = result.getString("Start");
