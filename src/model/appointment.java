@@ -125,6 +125,10 @@ public class Appointment {
         return appointmentID;
     }
     
+    public int getUserID(){
+        return userID;
+    }
+    
     /**
      *
      * @return will return customer_ID from sql table
@@ -200,6 +204,10 @@ public class Appointment {
     
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+    
+    public void setUserID(int userID) {
+        this.setUserID(userID);
     }
     
     /**

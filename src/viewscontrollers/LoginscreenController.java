@@ -219,10 +219,11 @@ setLanguage();
      * @throws ParseException  -- 
      */
     private boolean checkIfNear(String apptDate) throws ParseException {
+        String checkingApp = utils.timeConvert.toLocal(apptDate);
         SimpleDateFormat aDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         aDateFormat.setLenient(false);
         
-        Date date = aDateFormat.parse(apptDate);
+        Date date = aDateFormat.parse(checkingApp);
         
         Calendar after15 = Calendar.getInstance();
         after15.add(Calendar.MINUTE, 15);

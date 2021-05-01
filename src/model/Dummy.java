@@ -25,6 +25,7 @@ public class Dummy {
     private static int appointmentID;
     private static int customerID;
     private static int contactID;
+    private static int userID;
 
     /**
      *  defaults to 0
@@ -33,6 +34,7 @@ public class Dummy {
         appointmentID = 0;
         customerID = 0;
         contactID = 0;
+        userID = 0;
 
 
     }
@@ -46,10 +48,12 @@ public class Dummy {
      * @param customerID - the customerID for the currently appointment selected
      * @param contactID - contactID for the selected appointment
      */
-    public Dummy(int appointmentiD, int customerID, int contactID) {
+    public Dummy(int appointmentiD, int customerID, int contactID, int userID) {
         this.appointmentID = appointmentID;
         this.customerID = customerID;
         this.contactID = contactID;
+        this.userID = userID;
+        
 
     }
 
@@ -71,6 +75,9 @@ public class Dummy {
     return customerID;
 }
 
+    public static int getUserID() {
+        return userID;
+    }
     /**
      *
      * @return returns the contactID, used for filling the contact combo box
@@ -96,6 +103,10 @@ public class Dummy {
      */
     public static void setContactID(int contactID) {
         Dummy.contactID = contactID;
+    }
+    
+    public static void setUserID(int userID) {
+        Dummy.userID = userID;
     }
     
     /**

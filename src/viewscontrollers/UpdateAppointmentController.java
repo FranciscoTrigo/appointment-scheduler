@@ -219,7 +219,7 @@ public class UpdateAppointmentController implements Initializable {
         String messageError = "";
         
       if  (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) >= 22 || (Integer.parseInt(endH) > 22) || endHInt < 8) {
-          messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
+          messageError += "Appointment must start and end between\n 8 and 10 P.M (22 hours)";
         }
               if (messageError.length() == 0){
             return true;
@@ -240,8 +240,31 @@ public class UpdateAppointmentController implements Initializable {
      */
     public void getAppointmentInfo() throws SQLException, Exception {
         // Fill uout the information to latter edit it
+        int apptUserID = 0;
+        PreparedStatement ps01 = DBConnection.getConnection().prepareStatement("Select "
+                + "User_ID "
+                + "FROM appointments "
+                + "WHERE Appointment_ID = ?");
+        ps01.setInt(1, Dummy.getAppointmentID());
+        ResultSet result01 = ps01.executeQuery();
+        while (result01.next()) {
+            apptUserID = result01.getInt("User_ID");
+        }
         
-        // get customer_id ...
+        
+        String apptUser = "";
+        PreparedStatement ps00 = DBConnection.getConnection().prepareStatement("SELECT "
+                + "User_Name "
+                + "FROM users "
+                + "WHERE User_ID = ?");
+        ps00.setInt(1, apptUserID);
+        ResultSet result00 = ps00.executeQuery();
+        while (result00.next()) {
+            apptUser = result00.getString("User_Name");
+        }
+
+        
+        // get customer_name ...
         String apptCustomer = "";
         PreparedStatement ps0 = DBConnection.getConnection().prepareStatement("SELECT "
                 + "Customer_Name "
@@ -254,7 +277,7 @@ public class UpdateAppointmentController implements Initializable {
         }
         
         /////////////////
-        // Get Contact ID
+        // Get Contact name
         String apptContact = "";
         PreparedStatement ps1 = DBConnection.getConnection().prepareStatement("SELECT "
                 + "Contact_Name "
@@ -279,20 +302,25 @@ public class UpdateAppointmentController implements Initializable {
 //        ps.setString(2, apptCustomer);
 //        ps.setString(3, apptContact);
         ResultSet result = ps.executeQuery();
-        String thedate = "";
-        String thedate2 = "";
+        String thedateUTC = "";
+        String thedate2UTC = "";
         while (result.next()) {
             titleField.setText(result.getString("Title"));
             descriptionField.setText(result.getString("Description"));
             locationBox.setValue(result.getString("Location"));
             typeBox.setValue(result.getString("Type"));
-            thedate = result.getString("Start");
-            thedate2 = result.getString("End");
+            thedateUTC = result.getString("Start");
+            thedate2UTC = result.getString("End");
+            
             customerBox.setValue(apptCustomer);
             contactBox.setValue(apptContact);
+            userBox.setValue(apptUser);
             appointmentTextField.setText(Integer.toString(Dummy.getAppointmentID()));
    
         }
+        
+        String thedate = utils.timeConvert.toLocal(thedateUTC);
+        String thedate2 = utils.timeConvert.toLocal(thedate2UTC);
         // 1029-09-09 hh:mm:ss
         //Fill out the datepicker
         String year = thedate.substring(0,10);
@@ -434,6 +462,7 @@ public class UpdateAppointmentController implements Initializable {
         //System.out.println(startHour);
         String startTime = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + startHour;
         //System.out.println(startTime);
+        String startUTC = utils.timeConvert.toUTC(startTime);
         
         
         // END
@@ -443,6 +472,7 @@ public class UpdateAppointmentController implements Initializable {
         //System.out.println(endHour);
         String endTime = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + endHour;
         // System.out.println(endTime);
+        String endUTC = utils.timeConvert.toUTC(endTime);
         
         
         // Now we finally update it
@@ -464,8 +494,8 @@ public class UpdateAppointmentController implements Initializable {
             ps3.setString(2, descriptionField.getText());
             ps3.setString(3, locationBox.getValue());
             ps3.setString(4, typeBox.getValue());
-            ps3.setString(5, startTime);
-            ps3.setString(6, endTime);
+            ps3.setString(5, startUTC);
+            ps3.setString(6, endUTC);
             ps3.setInt(7, CustID);
             ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
@@ -558,8 +588,9 @@ public class UpdateAppointmentController implements Initializable {
     public boolean checkIfConflict() throws SQLException {
         //create strings to check
         String thisDate = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String thisStart = startHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";
-        String checkThis = thisDate + " " + thisStart;
+        String thisStart = startHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";      
+        String almostCheckThis = thisDate + " " + thisStart;
+        String checkThis = utils.timeConvert.toUTC(almostCheckThis);
         System.out.println("Conflict? " + checkThis);
         String testTitle = "no";
    
@@ -594,8 +625,8 @@ public class UpdateAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Schedulling error");
             alert.setHeaderText("This appointment can not happen");
-            alert.setContentText("Looks like " + contactBox.getValue() + "already has\nan appointment\n"
-                    + "booked at " + testTitle
+            alert.setContentText("Looks like " + contactBox.getValue() + " already has\nan appointment\n"
+                    + "booked at " + utils.timeConvert.toLocal(testTitle)
                     + "\nPlease select another time or date.");
             Optional<ButtonType> result2 = alert.showAndWait();
             return true;

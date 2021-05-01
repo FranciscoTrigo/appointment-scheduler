@@ -26,12 +26,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Date;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Optional;
@@ -349,6 +351,17 @@ public class AddAppointmentController implements Initializable {
         //System.out.println(startHour);
         String startTime = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + startHour;
         //System.out.println(startTime);
+//        Timestamp startStamp = Timestamp.valueOf(startTime);
+//        LocalDateTime startldt = startStamp.toLocalDateTime();
+//        ZonedDateTime startzdt = startldt.atZone(ZoneId.of(ZoneId.systemDefault().toString()));
+//        ZonedDateTime startutczdt = startzdt.withZoneSameInstant(ZoneId.of("UTC"));
+//        LocalDateTime startldtIn = startutczdt.toLocalDateTime();
+//        String startUTC = startldtIn.format(DateTimeFormatter.ofPattern("yyy-MM-dd HH:mm:00"));
+        String startUTC = utils.timeConvert.toUTC(startTime);
+        
+            
+         
+         
         
         
         // END
@@ -358,6 +371,7 @@ public class AddAppointmentController implements Initializable {
         //System.out.println(endHour);
         String endTime = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) + " " + endHour;
         // System.out.println(endTime);
+        String endUTC = utils.timeConvert.toUTC(endTime);
         
         
         // Now we finally update it
@@ -368,8 +382,8 @@ public class AddAppointmentController implements Initializable {
             ps3.setString(2, descriptionField.getText());
             ps3.setString(3, locationBox.getValue());
             ps3.setString(4, typeBox.getValue());
-            ps3.setString(5, startTime);
-            ps3.setString(6, endTime);
+            ps3.setString(5, startUTC);
+            ps3.setString(6, endUTC);
             ps3.setInt(7, CustID);
             ps3.setString(9, User.getUsername());
             ps3.setInt(8, ContactID);
@@ -460,7 +474,7 @@ public class AddAppointmentController implements Initializable {
         String messageError = "";
         
       if  (Integer.parseInt(startH) < 8 || Integer.parseInt(startH) >= 22 || (Integer.parseInt(endH) > 22) || endHInt < 8) {
-          messageError += "Appointment must start and end between 8 and 10 P.M (22 hours)";
+          messageError += "Appointment must start and end between\n 8 and 10 P.M (22 hours)";
         }
               if (messageError.length() == 0){
             return true;
@@ -483,7 +497,8 @@ public class AddAppointmentController implements Initializable {
         //create strings to check
         String thisDate = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         String thisStart = startHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";
-        String checkThis = thisDate + " " + thisStart;
+        String almostCheckThis = thisDate + " " + thisStart;
+        String checkThis = utils.timeConvert.toUTC(almostCheckThis);
         System.out.println("Conflict? " + checkThis);
         String testTitle = "no";
    
@@ -517,7 +532,7 @@ public class AddAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Schedulling error");
             alert.setHeaderText("This appointment can not happen");
-            alert.setContentText("Looks like " + contactBox.getValue() + "already has\nan appointment\n"
+            alert.setContentText("Looks like " + contactBox.getValue() + " already has\nan appointment\n"
                     + "booked at " + testTitle
                     + "\nPlease select another time or date.");
             Optional<ButtonType> result2 = alert.showAndWait();

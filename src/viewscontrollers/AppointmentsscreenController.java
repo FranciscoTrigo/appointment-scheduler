@@ -217,6 +217,7 @@ public class AppointmentsscreenController implements Initializable {
             Dummy.setAppointmentID(selectedAppointmentID);
             Dummy.setContactID(selectedApp.getContactID());
             Dummy.setCustomerID(selectedApp.getCustomerID());
+            Dummy.setUserID(selectedApp.getUserID());
             UpdateButton.setDisable(false);
             }           
             }
@@ -248,8 +249,8 @@ public class AppointmentsscreenController implements Initializable {
             appt.setDescription(rs.getString("Description"));
             appt.setLocation(rs.getString("Location"));
             appt.setType(rs.getString("Type"));
-            appt.setStartTime(rs.getString("Start"));
-            appt.setEndTime(rs.getString("End"));
+            appt.setStartTime(utils.timeConvert.toLocal(rs.getString("Start")));
+            appt.setEndTime(utils.timeConvert.toLocal(rs.getString("End")));
             appt.setCustomerID(rs.getInt("Customer_ID"));
             
             appointmentsOL.addAll(appt);
