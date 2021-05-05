@@ -163,7 +163,7 @@ setLanguage();
      */
     private void appointmentPopup() throws SQLException, Exception {
         // Do nothing if current user is test user
-        if (User.getUserID() == 1) {
+        if (User.getUserID() == 9999) {
             return;
         } else {
             // Checks the Start time of all appointments and dows a while loop
@@ -205,7 +205,7 @@ setLanguage();
     }
     
    private void noAppPopup() {
-                           System.out.println("No appointment");
+                    System.out.println("No appointment");
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("No appointment notice");
                     alert.setHeaderText("You do not have any upcoming appointments");

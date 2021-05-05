@@ -629,10 +629,10 @@ public class UpdateAppointmentController implements Initializable {
                     + "booked at " + utils.timeConvert.toLocal(testTitle)
                     + "\nPlease select another time or date.");
             Optional<ButtonType> result2 = alert.showAndWait();
-            return true;
+            return false;
         }
         System.out.println("No conflict");
-        return false;
+        return true;
     }
     
      /**
@@ -642,14 +642,12 @@ public class UpdateAppointmentController implements Initializable {
      */
     @FXML
     private void saveButtonHandler (ActionEvent event) throws Exception {
-
-        if (checkIfRight()){
-            if (checkHours()) {
-              if(checkIfConflict()){
-                
-            } else {
-            saveAppointment();
-            }}
+        if (checkIfRight()) {
+            if ( checkHours()) {
+                if (checkIfConflict()){
+                    saveAppointment();
+                }
+            }
         }
     }
     
