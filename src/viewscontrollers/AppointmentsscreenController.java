@@ -274,7 +274,9 @@ public class AppointmentsscreenController implements Initializable {
     
     /**
      * Filters the appointments by within a month
-     * @param appointmentsOL
+     * This function uses lambda to check if the Start date of the appointment falls between todays date and today+1 month date,
+     * if true, it will pass the filter and display in the table
+     * @param appointmentsOL The complete list of appointments
      */
     public void filterMonth(ObservableList appointmentsOL) {
         // WE are gonna try to filter the table by week now
@@ -292,7 +294,9 @@ public class AppointmentsscreenController implements Initializable {
     
     /**
      * Filters appointments by within a week
-     * @param appointmentsOL --
+     * This functions uses lambda to check the Start date of the appointment and sees if It falls between todays date and today+1 week,
+     * if true, it will pass the filter and display in the table
+     * @param appointmentsOL Complete list of appointments
      */
     public void filterWeek(ObservableList appointmentsOL) {
         // filer week
