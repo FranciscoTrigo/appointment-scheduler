@@ -207,6 +207,7 @@ Succesful login: admin at 2021-05-01 06:31:45.683
 Succesful login: test at 2021-05-01 06:33:44.52
 Succesful login: test at 2021-05-01 06:35:43.595
 Succesful login: test at 2021-05-01 06:43:26.826
+<<<<<<< Updated upstream
 Succesful login: admin at 2021-05-04 00:35:12.687
 Succesful login: test at 2021-05-04 00:44:17.112
 Succesful login: admin at 2021-05-04 00:52:09.706
@@ -236,3 +237,8 @@ Succesful login: test at 2021-05-06 08:22:08.766
 Succesful login: test at 2021-05-06 08:25:40.543
 Succesful login: test at 2021-05-06 08:31:38.296
 Succesful login: test at 2021-05-06 08:38:55.238
+=======
+Succesful login: test at 2021-05-01 11:54:26.186
+Succesful login: admin at 2021-05-01 11:55:21.677
+Succesful login: admin at 2021-05-03 19:55:41.736
+>>>>>>> Stashed changes
