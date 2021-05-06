@@ -588,11 +588,16 @@ public class UpdateAppointmentController implements Initializable {
     public boolean checkIfConflict() throws SQLException {
         //create strings to check
         String thisDate = selectDateBox.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String thisStart = startHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";      
+        String thisStart = startHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";
         String almostCheckThis = thisDate + " " + thisStart;
-        String checkThis = utils.timeConvert.toUTC(almostCheckThis);
-        System.out.println("Conflict? " + checkThis);
+        String checkThisStart = utils.timeConvert.toUTC(almostCheckThis);
+        
+        String thisEnd = endHourCombo.getValue() + ":" + startMinuteCombo.getValue() + ":00";
+        String checkThisEnd = utils.timeConvert.toUTC(thisDate + " " + thisEnd);
+        
+        System.out.println("Conflict? " + checkThisStart);
         String testTitle = "no";
+        String Titletest = "no";
    
         
         String contactID = "";
@@ -610,25 +615,30 @@ public class UpdateAppointmentController implements Initializable {
         // Now we grab all appointments for that one contact ID and compare it
         PreparedStatement ps3 = DBConnection.getConnection().prepareStatement("SELECT * "
                 + "FROM appointments "
-                + "WHERE (? BETWEEN Start AND End) AND Contact_ID = ? AND Appointment_ID != ?");
-        ps3.setString(1, checkThis);
+                + "WHERE (? BETWEEN Start AND End AND Contact_ID = ?) OR (Start BETWEEN ? AND ? AND Contact_ID = ?)");
+        ps3.setString(1, checkThisStart);
         ps3.setString(2, contactID);
-        ps3.setString(3, appointmentTextField.getText());
+        ps3.setString(3, checkThisStart);
+        ps3.setString(4, checkThisEnd);
+        ps3.setString(5, contactID);
         ResultSet result = ps3.executeQuery();
         while (result.next()) {
             testTitle = result.getString("Start");
+            Titletest = result.getString("End");
             System.out.println(result.getString("Start"));
-        }
+        }      
+            
+        
         if (testTitle != "no") {
             System.out.println("There seems to be scheduling conflicts " + testTitle);
             
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Schedulling error");
             alert.setHeaderText("This appointment can not happen");
-            alert.setContentText("Looks like " + contactBox.getValue() + " already has\nan appointment\n"
-                    + "booked at " + utils.timeConvert.toLocal(testTitle)
+            alert.setContentText("Looks like " + contactBox.getValue() + " already has\nan appointment "
+                    + "booked from\n " + utils.timeConvert.toLocal(testTitle) +" to " + utils.timeConvert.toLocal(Titletest)
                     + "\nPlease select another time or date.");
-            Optional<ButtonType> result2 = alert.showAndWait();
+            Optional<ButtonType> result9 = alert.showAndWait();
             return false;
         }
         System.out.println("No conflict");
