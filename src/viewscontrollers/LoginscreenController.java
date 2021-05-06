@@ -180,7 +180,7 @@ setLanguage();
                     alert.setHeaderText("You have an upcoming appointment!!!");
                     alert.setContentText("You have an appointment scheduled within 15 minutes.\n"
                             + "Appointment ID: " + result.getString("Appointment_ID") + "\n"
-                            + "Appointment starts at: " + result.getString("Start") + "\n"
+                            + "Appointment starts at: " + utils.timeConvert.toLocal(result.getString("Start")) + "\n"
                             + "Appointment takes place at: " + result.getString("Location"));
                     Optional<ButtonType> result2 = alert.showAndWait();
                     yesApp = true;
@@ -284,7 +284,7 @@ setLanguage();
                     user.setUsername(result.getString("User_Name"));
                     user.setUserID(result.getInt("User_ID"));
                     textLog(result.getString("User_Name"));
-                    testPopup();
+                    //testPopup();
                     appointmentPopup();
                     return true;
                 } 
