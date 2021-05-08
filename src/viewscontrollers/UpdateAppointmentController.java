@@ -613,7 +613,8 @@ public class UpdateAppointmentController implements Initializable {
             }
         
         int checkedID = 0;    
-        // Now we grab all appointments for that one contact ID and compare it
+        // Now we grab all appointments for that one contact ID and compare it, we also try to exclude the current appointment by using the ID, it does not seem to work correctly in the query,  but 
+        // we can make it work nonetheles by cheking variable after
         PreparedStatement ps3 = DBConnection.getConnection().prepareStatement("SELECT * "
                 + "FROM appointments "
                 + "WHERE (? BETWEEN Start AND End AND Contact_ID = ?) OR (Start BETWEEN ? AND ? AND Contact_ID = ?) AND Appointment_ID != ?");
