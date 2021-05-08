@@ -242,3 +242,12 @@ Succesful login: test at 2021-05-01 11:54:26.186
 Succesful login: admin at 2021-05-01 11:55:21.677
 Succesful login: admin at 2021-05-03 19:55:41.736
 >>>>>>> Stashed changes
+
+Succesful login: test at 2021-05-07 20:16:01.85
+WRONG login: admin at 2021-05-07 20:19:19.693
+Succesful login: admin at 2021-05-07 20:19:26.354
+Succesful login: test at 2021-05-07 20:26:04.018
+Succesful login: test at 2021-05-07 20:34:07.639
+Succesful login: test at 2021-05-07 20:40:23.529
+Succesful login: test at 2021-05-07 20:47:11.816
+Succesful login: test at 2021-05-07 20:53:31.522

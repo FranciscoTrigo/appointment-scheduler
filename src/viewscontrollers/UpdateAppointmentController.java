@@ -611,25 +611,28 @@ public class UpdateAppointmentController implements Initializable {
             while (result1.next()) {
                 contactID = result1.getString("Contact_ID");
             }
-            
+        
+        int checkedID = 0;    
         // Now we grab all appointments for that one contact ID and compare it
         PreparedStatement ps3 = DBConnection.getConnection().prepareStatement("SELECT * "
                 + "FROM appointments "
-                + "WHERE (? BETWEEN Start AND End AND Contact_ID = ?) OR (Start BETWEEN ? AND ? AND Contact_ID = ?)");
+                + "WHERE (? BETWEEN Start AND End AND Contact_ID = ?) OR (Start BETWEEN ? AND ? AND Contact_ID = ?) AND Appointment_ID != ?");
         ps3.setString(1, checkThisStart);
         ps3.setString(2, contactID);
         ps3.setString(3, checkThisStart);
         ps3.setString(4, checkThisEnd);
         ps3.setString(5, contactID);
+        ps3.setInt(6,  Dummy.getAppointmentID());
         ResultSet result = ps3.executeQuery();
         while (result.next()) {
             testTitle = result.getString("Start");
             Titletest = result.getString("End");
             System.out.println(result.getString("Start"));
+            checkedID = result.getInt("Appointment_ID");
         }      
             
         
-        if (testTitle != "no") {
+        if (testTitle != "no" & checkedID != Dummy.getAppointmentID()) {
             System.out.println("There seems to be scheduling conflicts " + testTitle);
             
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -641,6 +644,8 @@ public class UpdateAppointmentController implements Initializable {
             Optional<ButtonType> result9 = alert.showAndWait();
             return false;
         }
+        
+        
         System.out.println("No conflict");
         return true;
     }
