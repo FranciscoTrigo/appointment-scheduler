@@ -1,9 +1,14 @@
-## WGU C195 - Software II Advanced Java Concepts
+## Appointment Scheduling application written in Java
 
-This is the full completeded project to pass this class at Western Governors University.
+This app was made as a project to pass the Software II course at school.
 
-It connects to a SQL database and lets the user review, remove, edit and add appointments and store them in the database.
-It also lets the user manage customers that are going to be linked to the appointments. 
+### Features 
+
+- Connects to a SQL database and lets the user review, remove, edit and add appointments and store them in the database.
+- Lets the user manage customers that are going to be linked to the appointments. 
+- Saves appointment dates in UTC and converts to local time for viewing
+- Supports language translation depending on locale
+- Logs user login attempts 
 
 IDE: Apache NetBeans IDE 12.2  
 Java version: Java SE 15.0.2  
