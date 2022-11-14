@@ -10,7 +10,7 @@ The course focused on more advanced Java and a SQL database usage.
 - Lets the user manage customers that are going to be linked to the appointments.
 - Manage associates that will meet with customers for the appointments
 - Checks current existing appointments and won't allot to create new ones when they overlap
-- Saves appointment dates in UTC and converts to local time for viewing
+- Appointments are stored using UTC time on the database, but the interaction for the user is in local time
 - Supports language translation depending on locale
 - Logs user login attempts 
 
